@@ -2,12 +2,12 @@
 
 To install, see [Quick start](https://github.com/SNodeC/Packages/blob/main/README.md#quick-start).
 
-Page generated 2026-10-11 06:58 UTC.
+Page generated 2026-10-11 08:19 UTC.
 
 <details>
 <summary>Unfinished or unsuccessful attempts</summary>
 
-- [Debian sid](#debian-sid): `armhf` SNode.C: running; `armhf` MQTTSuite: skipped
+- [Debian sid](#debian-sid): `armhf` SNode.C: cancelled; `armhf` MQTTSuite: skipped
 
 </details>
 
@@ -158,7 +158,7 @@ Jobs report build start, build end and publication directly. Each state has an i
 | --- | :---: | :---: | --- | --- |
 | `amd64` | `2.0.0-9~sid`<br>[![snode.c: published](../status/badges/published.svg)](https://github.com/SNodeC/snode.c/actions/runs/38074650868) | `1.0.2-9~sid`<br>[![mqttsuite: published](../status/badges/published.svg)](https://github.com/SNodeC/mqttsuite/actions/runs/38080510193) | [2026-10-10](../debian/dists/sid/build.json) | [Packages](../debian/pool/sid/) |
 | `arm64` | `2.0.0-9~sid`<br>[![snode.c: published](../status/badges/published.svg)](https://github.com/SNodeC/snode.c/actions/runs/38074650868) | `1.0.2-9~sid`<br>[![mqttsuite: published](../status/badges/published.svg)](https://github.com/SNodeC/mqttsuite/actions/runs/38082582992) | [2026-10-10](../debian/dists/sid/build.json) | [Packages](../debian/pool/sid/) |
-| `armhf` | `2.0.0-5~sid`<br>[![snode.c: running](../status/badges/running.svg)](https://github.com/SNodeC/snode.c/actions/runs/38074650868) | `1.0.2-5~sid`<br>[![mqttsuite: skipped](../status/badges/skipped.svg)](https://github.com/SNodeC/snode.c/actions/runs/38074650868) | [2026-10-09](../debian/dists/sid/build.json) | [Packages](../debian/pool/sid/) |
+| `armhf` | `2.0.0-5~sid`<br>[![snode.c: cancelled](../status/badges/cancelled.svg)](https://github.com/SNodeC/snode.c/actions/runs/38074650868) | `1.0.2-5~sid`<br>[![mqttsuite: skipped](../status/badges/skipped.svg)](https://github.com/SNodeC/snode.c/actions/runs/38074650868) | [2026-10-09](../debian/dists/sid/build.json) | [Packages](../debian/pool/sid/) |
 | `riscv64` | `2.0.0-9~sid`<br>[![snode.c: published](../status/badges/published.svg)](https://github.com/SNodeC/snode.c/actions/runs/38074650868) | `1.0.2-9~sid`<br>[![mqttsuite: published](../status/badges/published.svg)](https://github.com/SNodeC/mqttsuite/actions/runs/38106777849) | [2026-10-11](../debian/dists/sid/build.json) | [Packages](../debian/pool/sid/) |
 
 ## Ubuntu
