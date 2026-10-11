@@ -15,49 +15,24 @@ Signed packages for the SNode.C ecosystem. Choose a project and distribution, in
 <a href="docs/architecture.md#page-overview"><img src="docs/media/menu/architecture.svg" alt="Architecture"></a>
 <a href="#contributing"><img src="docs/media/menu/contribute.svg" alt="Contribute"></a>
 </p>
-<a id="installation"></a>
-
-## Quick start
-
-Check your [distribution guide](#install) first for prerequisites, especially CRB/EPEL on Rocky Linux. Keep official repositories enabled for dependencies.
-
-**Linux — Raspberry Pi OS, Debian, Ubuntu, Rocky Linux or Fedora:**
-
-```sh
-# Download the installer; curl and CA certificates must be installed.
-curl -fsSL https://raw.githubusercontent.com/SNodeC/Packages/main/install/install.sh \
-  -o /tmp/snodec-install-feed.sh &&
-sudo sh /tmp/snodec-install-feed.sh
-# For preparation only, replace the last command with:
-# sudo sh /tmp/snodec-install-feed.sh --prepare
-```
-
-**OpenWrt — run as root:**
-
-```sh
-# Download the installer with HTTPS-capable wget.
-wget -O /tmp/snodec-install-feed.sh \
-  https://raw.githubusercontent.com/SNodeC/Packages/main/install/install.sh &&
-sh /tmp/snodec-install-feed.sh
-# For preparation only, replace the last command with:
-# sh /tmp/snodec-install-feed.sh --prepare
-```
-
-The installer checks the target, configures its signed package source and installs the configured complete sets; `--prepare` only configures the source and refreshes indexes. Prefer manual setup? See your distribution guide.
-
-
 <a id="packages"></a>
 
 ## Projects
 
-Available targets refer to published packages, not the success of a replacement build. Open the [project directory](status/README.md#page-overview) for package catalogs and per-project status.
-
 <!-- packages:begin projects -->
-| Project | Package catalog | Availability and builds | Available targets |
-| --- | --- | --- | --- |
-| [SNode.C](https://github.com/SNodeC/snode.c#project-overview) | [Packages](docs/snodec-package-options.md#page-overview) | [Status](status/snodec.md#page-overview) | 76 / 76 |
-| [MQTTSuite](https://github.com/SNodeC/mqttsuite#project-overview) | [Packages](docs/mqttsuite-package-options.md#page-overview) | [Status](status/mqttsuite.md#page-overview) | 76 / 76 |
+| Project | Latest release | Status |
+| --- | --- | --- |
+| [SNode.C](https://github.com/SNodeC/snode.c#project-overview) | 2.0.0 · r9 | [SNode.C status →](status/snodec.md#page-overview) |
+| [MQTTSuite](https://github.com/SNodeC/mqttsuite#project-overview) | 1.0.2 · r9 | [MQTTSuite status →](status/mqttsuite.md#page-overview) |
 <!-- packages:end projects -->
+
+<a id="installation"></a>
+
+## Quick start
+
+1. Choose a project above; its status page shows the latest captured release and the packages actually available for each target.
+2. Open your distribution guide below and check its requirements, including CRB/EPEL on Rocky Linux.
+3. Choose **complete sets** or **selected packages** before installing. The guide provides both routes and manual signed-repository setup; dependencies are installed automatically.
 
 ## Platforms
 
@@ -86,29 +61,14 @@ The supported release and architecture matrix is generated from the publisher's 
 <a href="docs/rocky.md#page-overview"><img src="docs/media/menu/rocky.svg" alt="Rocky Linux"></a>
 <a href="docs/fedora.md#page-overview"><img src="docs/media/menu/fedora.svg" alt="Fedora"></a>
 </p>
+
 Select the guide matching your installed distribution, release and package architecture. Each guide covers requirements, quick installation, manual repository setup and updates. To install selected components rather than the complete sets, use the [project catalogs](#projects).
 
 ## Signing keys
 
-### opkg / usign
+[![Signing keys](docs/media/menu/keys.svg)](keys/README.md#page-overview)
 
-```text
-f6fd78dca70698e8
-```
-
-### apk / SHA-256 of DER public key
-
-```text
-293fb661ae75b821a15fa14f1399cd432d2f444bec138ba0e9ac397c81dbe645
-```
-
-### APT and RPM / OpenPGP
-
-```text
-8BBFD49E3C826FDB1416C79E60046744B15B0E05
-```
-
-[Download public keys](https://github.com/SNodeC/Packages/tree/main/keys). APT and RPM use the same key. Keep signature verification enabled.
+The key guide identifies each verification key, its supported distributions, fingerprints and installation method. Keys do not vary by architecture. Keep signature verification enabled.
 
 <a id="help"></a>
 

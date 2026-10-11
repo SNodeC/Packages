@@ -3,9 +3,11 @@
 
 [![Packages](../docs/media/page-banner.svg)](../README.md#project-overview)
 
+[![Installation](menu/installation.svg)](../README.md#install) [![Troubleshooting](menu/troubleshooting.svg)](../docs/troubleshooting.md#page-overview)
+
 # Package status
 
-- [SNode.C](snodec.md#page-overview): 76 / 76 targets have available packages; attention: 1 · [Package catalog](../docs/snodec-package-options.md#page-overview).
-- [MQTTSuite](mqttsuite.md#page-overview): 76 / 76 targets have available packages; attention: 1 · [Package catalog](../docs/mqttsuite-package-options.md#page-overview).
-
-Available packages and the latest attempt are separate facts. Open a project for distribution details.
+| Project | Latest release | Status |
+| --- | --- | --- |
+| [SNode.C](https://github.com/SNodeC/snode.c#project-overview) | 2.0.0 · r9 | [SNode.C status →](snodec.md#page-overview) |
+| [MQTTSuite](https://github.com/SNodeC/mqttsuite#project-overview) | 1.0.2 · r9 | [MQTTSuite status →](mqttsuite.md#page-overview) |

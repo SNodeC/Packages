@@ -3,205 +3,237 @@
 
 [![Packages](../docs/media/page-banner.svg)](../README.md#project-overview)
 
-# MQTTSuite package status
+[![All projects](menu/all-projects.svg)](README.md#page-overview) [![Installation](menu/installation.svg)](../README.md#install) [![Package catalog](menu/package-catalog.svg)](../docs/mqttsuite-package-options.md#page-overview) [![Troubleshooting](menu/troubleshooting.svg)](../docs/troubleshooting.md#page-overview)
 
-[All projects](README.md#page-overview) · [Installation](../README.md#install) · [Troubleshooting](../docs/troubleshooting.md#page-overview)
+# MQTTSuite package status · latest release 1.0.2 · r9
 
-**Available** is the version in the signed feed; an unfinished replacement does not remove it. **Latest attempt** shows the upstream source tag and separately allocated package revision. Captured is source-capture time, not tag-push time. Started, built, published and changed are recorded event times in UTC; old events say “not recorded.” A feed record's timestamp may belong to a different project's publication, so it is never relabelled as this project's time.
+**OpenWrt** [![24.10](menu/24-10.svg)](#openwrt-2410) [![25.12](menu/25-12.svg)](#openwrt-2512)
 
-Files opens the feed directory (APT pools contain multiple architectures); Record opens its source manifest. Run opens the recorded job or capture run; viewing GitHub Actions logs may require sign-in. Package managers select architecture-compatible files from signed indexes.
+**Raspberry Pi OS** [![bookworm](menu/bookworm.svg)](#raspberrypios-bookworm) [![trixie](menu/trixie.svg)](#raspberrypios-trixie)
 
-## Needs attention
+**Debian** [![trixie](menu/trixie.svg)](#debian-trixie) [![forky](menu/forky.svg)](#debian-forky) [![sid](menu/sid.svg)](#debian-sid)
 
-- [debian sid / `armhf`](#debian-sid): Skipped · SNode.C: cancelled
+**Ubuntu** [![noble](menu/noble.svg)](#ubuntu-noble) [![resolute](menu/resolute.svg)](#ubuntu-resolute)
+
+**Rocky Linux** [![9](menu/9.svg)](#rocky-9) [![10](menu/10.svg)](#rocky-10)
+
+**Fedora** [![43](menu/43.svg)](#fedora-43) [![44](menu/44.svg)](#fedora-44)
 
 ## OpenWrt
 
-[Installation guide](../docs/openwrt.md#page-overview)
+[![Install guide](menu/install-guide.svg)](../docs/openwrt.md#page-overview)
 
 <a id="openwrt-2410"></a>
 
 ### OpenWrt 24.10
 
-| Architecture | Available | Latest attempt | Links |
-| --- | --- | --- | --- |
-| `aarch64_cortex-a53` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:59 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38082692197) · [Files](../openwrt/24.10/aarch64_cortex-a53/) · [Record](../openwrt/24.10/aarch64_cortex-a53/build.json) |
-| `aarch64_cortex-a72` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:41 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38081250909) · [Files](../openwrt/24.10/aarch64_cortex-a72/) · [Record](../openwrt/24.10/aarch64_cortex-a72/build.json) |
-| `aarch64_cortex-a76` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:42 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38081316651) · [Files](../openwrt/24.10/aarch64_cortex-a76/) · [Record](../openwrt/24.10/aarch64_cortex-a76/build.json) |
-| `aarch64_generic` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:28 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38080616682) · [Files](../openwrt/24.10/aarch64_generic/) · [Record](../openwrt/24.10/aarch64_generic/build.json) |
-| `arm_cortex-a15_neon-vfpv4` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:53 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38082351400) · [Files](../openwrt/24.10/arm_cortex-a15_neon-vfpv4/) · [Record](../openwrt/24.10/arm_cortex-a15_neon-vfpv4/build.json) |
-| `arm_cortex-a5_vfpv4` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:30 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38080691575) · [Files](../openwrt/24.10/arm_cortex-a5_vfpv4/) · [Record](../openwrt/24.10/arm_cortex-a5_vfpv4/build.json) |
-| `arm_cortex-a7` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:05 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38083242127) · [Files](../openwrt/24.10/arm_cortex-a7/) · [Record](../openwrt/24.10/arm_cortex-a7/build.json) |
-| `arm_cortex-a7_neon-vfpv4` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:52 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38082223823) · [Files](../openwrt/24.10/arm_cortex-a7_neon-vfpv4/) · [Record](../openwrt/24.10/arm_cortex-a7_neon-vfpv4/build.json) |
-| `arm_cortex-a7_vfpv4` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:14 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38084467415) · [Files](../openwrt/24.10/arm_cortex-a7_vfpv4/) · [Record](../openwrt/24.10/arm_cortex-a7_vfpv4/build.json) |
-| `arm_cortex-a8_vfpv3` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 19:29 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38076677756) · [Files](../openwrt/24.10/arm_cortex-a8_vfpv3/) · [Record](../openwrt/24.10/arm_cortex-a8_vfpv3/build.json) |
-| `arm_cortex-a9` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:38 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38081062460) · [Files](../openwrt/24.10/arm_cortex-a9/) · [Record](../openwrt/24.10/arm_cortex-a9/build.json) |
-| `arm_cortex-a9_neon` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 19:27 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38076534432) · [Files](../openwrt/24.10/arm_cortex-a9_neon/) · [Record](../openwrt/24.10/arm_cortex-a9_neon/build.json) |
-| `arm_cortex-a9_vfpv3-d16` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:52 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38082167811) · [Files](../openwrt/24.10/arm_cortex-a9_vfpv3-d16/) · [Record](../openwrt/24.10/arm_cortex-a9_vfpv3-d16/build.json) |
-| `i386_pentium-mmx` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 19:51 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38078087994) · [Files](../openwrt/24.10/i386_pentium-mmx/) · [Record](../openwrt/24.10/i386_pentium-mmx/build.json) |
-| `i386_pentium4` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 19:20 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38076369795) · [Files](../openwrt/24.10/i386_pentium4/) · [Record](../openwrt/24.10/i386_pentium4/build.json) |
-| `loongarch64_generic` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 18:41 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38076006813) · [Files](../openwrt/24.10/loongarch64_generic/) · [Record](../openwrt/24.10/loongarch64_generic/build.json) |
-| `mips64_octeonplus` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 19:35 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38077176953) · [Files](../openwrt/24.10/mips64_octeonplus/) · [Record](../openwrt/24.10/mips64_octeonplus/build.json) |
-| `mips_24kc` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:11 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38084121847) · [Files](../openwrt/24.10/mips_24kc/) · [Record](../openwrt/24.10/mips_24kc/build.json) |
-| `mipsel_24kc` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:32 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38080824606) · [Files](../openwrt/24.10/mipsel_24kc/) · [Record](../openwrt/24.10/mipsel_24kc/build.json) |
-| `mipsel_24kc_24kf` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:35 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38080945334) · [Files](../openwrt/24.10/mipsel_24kc_24kf/) · [Record](../openwrt/24.10/mipsel_24kc_24kf/build.json) |
-| `mipsel_74kc` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:04 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38078698932) · [Files](../openwrt/24.10/mipsel_74kc/) · [Record](../openwrt/24.10/mipsel_74kc/build.json) |
-| `powerpc_464fp` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 19:15 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38076223505) · [Files](../openwrt/24.10/powerpc_464fp/) · [Record](../openwrt/24.10/powerpc_464fp/build.json) |
-| `powerpc_8548` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 19:56 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38078248669) · [Files](../openwrt/24.10/powerpc_8548/) · [Record](../openwrt/24.10/powerpc_8548/build.json) |
-| `riscv64_riscv64` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 19:34 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38076901255) · [Files](../openwrt/24.10/riscv64_riscv64/) · [Record](../openwrt/24.10/riscv64_riscv64/build.json) |
-| `x86_64` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:56 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38082455528) · [Files](../openwrt/24.10/x86_64/) · [Record](../openwrt/24.10/x86_64/build.json) |
+[![↑ menu](menu/menu.svg)](#page-overview)
+
+| Architecture | Available | Published (UTC) | In build | Links |
+| --- | --- | --- | --- | --- |
+| `aarch64_cortex-a53` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:59 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38082692197) · [Packages](../openwrt/24.10/aarch64_cortex-a53/) |
+| `aarch64_cortex-a72` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:41 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38081250909) · [Packages](../openwrt/24.10/aarch64_cortex-a72/) |
+| `aarch64_cortex-a76` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:42 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38081316651) · [Packages](../openwrt/24.10/aarch64_cortex-a76/) |
+| `aarch64_generic` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:28 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38080616682) · [Packages](../openwrt/24.10/aarch64_generic/) |
+| `arm_cortex-a15_neon-vfpv4` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:53 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38082351400) · [Packages](../openwrt/24.10/arm_cortex-a15_neon-vfpv4/) |
+| `arm_cortex-a5_vfpv4` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:30 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38080691575) · [Packages](../openwrt/24.10/arm_cortex-a5_vfpv4/) |
+| `arm_cortex-a7` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 21:05 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38083242127) · [Packages](../openwrt/24.10/arm_cortex-a7/) |
+| `arm_cortex-a7_neon-vfpv4` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:52 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38082223823) · [Packages](../openwrt/24.10/arm_cortex-a7_neon-vfpv4/) |
+| `arm_cortex-a7_vfpv4` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 21:14 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38084467415) · [Packages](../openwrt/24.10/arm_cortex-a7_vfpv4/) |
+| `arm_cortex-a8_vfpv3` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 19:29 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38076677756) · [Packages](../openwrt/24.10/arm_cortex-a8_vfpv3/) |
+| `arm_cortex-a9` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:38 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38081062460) · [Packages](../openwrt/24.10/arm_cortex-a9/) |
+| `arm_cortex-a9_neon` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 19:27 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38076534432) · [Packages](../openwrt/24.10/arm_cortex-a9_neon/) |
+| `arm_cortex-a9_vfpv3-d16` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:52 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38082167811) · [Packages](../openwrt/24.10/arm_cortex-a9_vfpv3-d16/) |
+| `i386_pentium-mmx` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 19:51 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38078087994) · [Packages](../openwrt/24.10/i386_pentium-mmx/) |
+| `i386_pentium4` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 19:20 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38076369795) · [Packages](../openwrt/24.10/i386_pentium4/) |
+| `loongarch64_generic` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 18:41 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38076006813) · [Packages](../openwrt/24.10/loongarch64_generic/) |
+| `mips64_octeonplus` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 19:35 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38077176953) · [Packages](../openwrt/24.10/mips64_octeonplus/) |
+| `mips_24kc` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 21:11 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38084121847) · [Packages](../openwrt/24.10/mips_24kc/) |
+| `mipsel_24kc` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:32 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38080824606) · [Packages](../openwrt/24.10/mipsel_24kc/) |
+| `mipsel_24kc_24kf` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:35 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38080945334) · [Packages](../openwrt/24.10/mipsel_24kc_24kf/) |
+| `mipsel_74kc` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:04 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38078698932) · [Packages](../openwrt/24.10/mipsel_74kc/) |
+| `powerpc_464fp` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 19:15 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38076223505) · [Packages](../openwrt/24.10/powerpc_464fp/) |
+| `powerpc_8548` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 19:56 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38078248669) · [Packages](../openwrt/24.10/powerpc_8548/) |
+| `riscv64_riscv64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 19:34 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38076901255) · [Packages](../openwrt/24.10/riscv64_riscv64/) |
+| `x86_64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:56 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38082455528) · [Packages](../openwrt/24.10/x86_64/) |
 
 <a id="openwrt-2512"></a>
 
 ### OpenWrt 25.12
 
-| Architecture | Available | Latest attempt | Links |
-| --- | --- | --- | --- |
-| `aarch64_cortex-a53` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:36 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38081006612) · [Files](../openwrt/25.12/aarch64_cortex-a53/) · [Record](../openwrt/25.12/aarch64_cortex-a53/build.json) |
-| `aarch64_cortex-a72` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:06 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38083370567) · [Files](../openwrt/25.12/aarch64_cortex-a72/) · [Record](../openwrt/25.12/aarch64_cortex-a72/build.json) |
-| `aarch64_cortex-a76` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:45 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38081411870) · [Files](../openwrt/25.12/aarch64_cortex-a76/) · [Record](../openwrt/25.12/aarch64_cortex-a76/build.json) |
-| `aarch64_generic` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 19:01 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38076141727) · [Files](../openwrt/25.12/aarch64_generic/) · [Record](../openwrt/25.12/aarch64_generic/build.json) |
-| `arm_cortex-a15_neon-vfpv4` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:54 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38082404422) · [Files](../openwrt/25.12/arm_cortex-a15_neon-vfpv4/) · [Record](../openwrt/25.12/arm_cortex-a15_neon-vfpv4/build.json) |
-| `arm_cortex-a5_vfpv4` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 19:46 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38077635440) · [Files](../openwrt/25.12/arm_cortex-a5_vfpv4/) · [Record](../openwrt/25.12/arm_cortex-a5_vfpv4/build.json) |
-| `arm_cortex-a7` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:27 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38080562739) · [Files](../openwrt/25.12/arm_cortex-a7/) · [Record](../openwrt/25.12/arm_cortex-a7/build.json) |
-| `arm_cortex-a7_neon-vfpv4` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:44 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38081529219) · [Files](../openwrt/25.12/arm_cortex-a7_neon-vfpv4/) · [Record](../openwrt/25.12/arm_cortex-a7_neon-vfpv4/build.json) |
-| `arm_cortex-a7_vfpv4` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:51 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38082086004) · [Files](../openwrt/25.12/arm_cortex-a7_vfpv4/) · [Record](../openwrt/25.12/arm_cortex-a7_vfpv4/build.json) |
-| `arm_cortex-a8_vfpv3` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:09 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38083789918) · [Files](../openwrt/25.12/arm_cortex-a8_vfpv3/) · [Record](../openwrt/25.12/arm_cortex-a8_vfpv3/build.json) |
-| `arm_cortex-a9` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 19:46 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38077878332) · [Files](../openwrt/25.12/arm_cortex-a9/) · [Record](../openwrt/25.12/arm_cortex-a9/build.json) |
-| `arm_cortex-a9_neon` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:01 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38082932752) · [Files](../openwrt/25.12/arm_cortex-a9_neon/) · [Record](../openwrt/25.12/arm_cortex-a9_neon/build.json) |
-| `arm_cortex-a9_vfpv3-d16` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:57 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38082516147) · [Files](../openwrt/25.12/arm_cortex-a9_vfpv3-d16/) · [Record](../openwrt/25.12/arm_cortex-a9_vfpv3-d16/build.json) |
-| `i386_pentium-mmx` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:15 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38084619309) · [Files](../openwrt/25.12/i386_pentium-mmx/) · [Record](../openwrt/25.12/i386_pentium-mmx/build.json) |
-| `i386_pentium4` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:50 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38081883395) · [Files](../openwrt/25.12/i386_pentium4/) · [Record](../openwrt/25.12/i386_pentium4/build.json) |
-| `loongarch64_generic` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:04 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38083179161) · [Files](../openwrt/25.12/loongarch64_generic/) · [Record](../openwrt/25.12/loongarch64_generic/build.json) |
-| `mips64_octeonplus` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:00 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38078599179) · [Files](../openwrt/25.12/mips64_octeonplus/) · [Record](../openwrt/25.12/mips64_octeonplus/build.json) |
-| `mips_24kc` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 19:40 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38077486768) · [Files](../openwrt/25.12/mips_24kc/) · [Record](../openwrt/25.12/mips_24kc/build.json) |
-| `mipsel_24kc` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:13 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38079708021) · [Files](../openwrt/25.12/mipsel_24kc/) · [Record](../openwrt/25.12/mipsel_24kc/build.json) |
-| `mipsel_24kc_24kf` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:03 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38083103506) · [Files](../openwrt/25.12/mipsel_24kc_24kf/) · [Record](../openwrt/25.12/mipsel_24kc_24kf/build.json) |
-| `mipsel_74kc` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:11 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38079585435) · [Files](../openwrt/25.12/mipsel_74kc/) · [Record](../openwrt/25.12/mipsel_74kc/build.json) |
-| `powerpc_464fp` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:00 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38082816103) · [Files](../openwrt/25.12/powerpc_464fp/) · [Record](../openwrt/25.12/powerpc_464fp/build.json) |
-| `powerpc_8548` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:22 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38080230478) · [Files](../openwrt/25.12/powerpc_8548/) · [Record](../openwrt/25.12/powerpc_8548/build.json) |
-| `riscv64_generic` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:33 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38080882362) · [Files](../openwrt/25.12/riscv64_generic/) · [Record](../openwrt/25.12/riscv64_generic/build.json) |
-| `x86_64` | `1.0.2-r9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:47 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38081710312) · [Files](../openwrt/25.12/x86_64/) · [Record](../openwrt/25.12/x86_64/build.json) |
+[![↑ menu](menu/menu.svg)](#page-overview)
+
+| Architecture | Available | Published (UTC) | In build | Links |
+| --- | --- | --- | --- | --- |
+| `aarch64_cortex-a53` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:36 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38081006612) · [Packages](../openwrt/25.12/aarch64_cortex-a53/) |
+| `aarch64_cortex-a72` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 21:06 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38083370567) · [Packages](../openwrt/25.12/aarch64_cortex-a72/) |
+| `aarch64_cortex-a76` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:45 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38081411870) · [Packages](../openwrt/25.12/aarch64_cortex-a76/) |
+| `aarch64_generic` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 19:01 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38076141727) · [Packages](../openwrt/25.12/aarch64_generic/) |
+| `arm_cortex-a15_neon-vfpv4` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:54 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38082404422) · [Packages](../openwrt/25.12/arm_cortex-a15_neon-vfpv4/) |
+| `arm_cortex-a5_vfpv4` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 19:46 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38077635440) · [Packages](../openwrt/25.12/arm_cortex-a5_vfpv4/) |
+| `arm_cortex-a7` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:27 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38080562739) · [Packages](../openwrt/25.12/arm_cortex-a7/) |
+| `arm_cortex-a7_neon-vfpv4` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:44 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38081529219) · [Packages](../openwrt/25.12/arm_cortex-a7_neon-vfpv4/) |
+| `arm_cortex-a7_vfpv4` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:51 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38082086004) · [Packages](../openwrt/25.12/arm_cortex-a7_vfpv4/) |
+| `arm_cortex-a8_vfpv3` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 21:09 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38083789918) · [Packages](../openwrt/25.12/arm_cortex-a8_vfpv3/) |
+| `arm_cortex-a9` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 19:46 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38077878332) · [Packages](../openwrt/25.12/arm_cortex-a9/) |
+| `arm_cortex-a9_neon` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 21:01 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38082932752) · [Packages](../openwrt/25.12/arm_cortex-a9_neon/) |
+| `arm_cortex-a9_vfpv3-d16` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:57 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38082516147) · [Packages](../openwrt/25.12/arm_cortex-a9_vfpv3-d16/) |
+| `i386_pentium-mmx` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 21:15 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38084619309) · [Packages](../openwrt/25.12/i386_pentium-mmx/) |
+| `i386_pentium4` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:50 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38081883395) · [Packages](../openwrt/25.12/i386_pentium4/) |
+| `loongarch64_generic` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 21:04 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38083179161) · [Packages](../openwrt/25.12/loongarch64_generic/) |
+| `mips64_octeonplus` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:00 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38078599179) · [Packages](../openwrt/25.12/mips64_octeonplus/) |
+| `mips_24kc` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 19:40 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38077486768) · [Packages](../openwrt/25.12/mips_24kc/) |
+| `mipsel_24kc` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:13 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38079708021) · [Packages](../openwrt/25.12/mipsel_24kc/) |
+| `mipsel_24kc_24kf` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 21:03 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38083103506) · [Packages](../openwrt/25.12/mipsel_24kc_24kf/) |
+| `mipsel_74kc` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:11 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38079585435) · [Packages](../openwrt/25.12/mipsel_74kc/) |
+| `powerpc_464fp` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 21:00 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38082816103) · [Packages](../openwrt/25.12/powerpc_464fp/) |
+| `powerpc_8548` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:22 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38080230478) · [Packages](../openwrt/25.12/powerpc_8548/) |
+| `riscv64_generic` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:33 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38080882362) · [Packages](../openwrt/25.12/riscv64_generic/) |
+| `x86_64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-r9` | 2026-10-10 20:47 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38081710312) · [Packages](../openwrt/25.12/x86_64/) |
 
 ## Raspberry Pi OS
 
-[Installation guide](../docs/raspberrypi.md#page-overview)
+[![Install guide](menu/install-guide.svg)](../docs/raspberrypi.md#page-overview)
 
 <a id="raspberrypios-bookworm"></a>
 
 ### Raspberry Pi OS bookworm
 
-| Architecture | Available | Latest attempt | Links |
-| --- | --- | --- | --- |
-| `arm64` | `1.0.2-9~bookworm`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:45 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38081809621) · [Files](../raspberrypios/pool/bookworm/) · [Record](../raspberrypios/dists/bookworm/build.json) |
+[![↑ menu](menu/menu.svg)](#page-overview)
+
+| Architecture | Available | Published (UTC) | In build | Links |
+| --- | --- | --- | --- | --- |
+| `arm64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9~bookworm` | 2026-10-10 20:45 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38081809621) · [Packages](../raspberrypios/pool/bookworm/) |
 
 <a id="raspberrypios-trixie"></a>
 
 ### Raspberry Pi OS trixie
 
-| Architecture | Available | Latest attempt | Links |
-| --- | --- | --- | --- |
-| `arm64` | `1.0.2-9~trixie`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:19 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38080153515) · [Files](../raspberrypios/pool/trixie/) · [Record](../raspberrypios/dists/trixie/build.json) |
+[![↑ menu](menu/menu.svg)](#page-overview)
+
+| Architecture | Available | Published (UTC) | In build | Links |
+| --- | --- | --- | --- | --- |
+| `arm64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9~trixie` | 2026-10-10 20:19 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38080153515) · [Packages](../raspberrypios/pool/trixie/) |
 
 ## Debian
 
-[Installation guide](../docs/debian.md#page-overview)
-
-<a id="debian-forky"></a>
-
-### Debian forky
-
-| Architecture | Available | Latest attempt | Links |
-| --- | --- | --- | --- |
-| `amd64` | `1.0.2-9~forky`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:14 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38079927596) · [Files](../debian/pool/forky/) · [Record](../debian/dists/forky/build.json) |
-| `arm64` | `1.0.2-9~forky`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:07 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38083580387) · [Files](../debian/pool/forky/) · [Record](../debian/dists/forky/build.json) |
-| `armhf` | `1.0.2-9~forky`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-11 00:09 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38096152130) · [Files](../debian/pool/forky/) · [Record](../debian/dists/forky/build.json) |
-| `riscv64` | `1.0.2-9~forky`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-11 06:58 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38117741326) · [Files](../debian/pool/forky/) · [Record](../debian/dists/forky/build.json) |
-
-<a id="debian-sid"></a>
-
-### Debian sid
-
-| Architecture | Available | Latest attempt | Links |
-| --- | --- | --- | --- |
-| `amd64` | `1.0.2-9~sid`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:25 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38080510193) · [Files](../debian/pool/sid/) · [Record](../debian/dists/sid/build.json) |
-| `arm64` | `1.0.2-9~sid`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:55 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38082582992) · [Files](../debian/pool/sid/) · [Record](../debian/dists/sid/build.json) |
-| `armhf` | `1.0.2-5~sid`<br>Captured: not recorded<br>Published: 2026-10-09 05:05 UTC | ![skipped](badges/skipped.svg)<br>Skipped · SNode.C: cancelled<br>Source: `v1.0.2` · r9 · attempt 0<br>Changed: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/snode.c/actions/runs/38074650868) · [Files](../debian/pool/sid/) · [Record](../debian/dists/sid/build.json) |
-| `riscv64` | `1.0.2-9~sid`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-11 03:19 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38106777849) · [Files](../debian/pool/sid/) · [Record](../debian/dists/sid/build.json) |
+[![Install guide](menu/install-guide.svg)](../docs/debian.md#page-overview)
 
 <a id="debian-trixie"></a>
 
 ### Debian trixie
 
-| Architecture | Available | Latest attempt | Links |
-| --- | --- | --- | --- |
-| `amd64` | `1.0.2-9~trixie`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:21 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38080369758) · [Files](../debian/pool/trixie/) · [Record](../debian/dists/trixie/build.json) |
-| `arm64` | `1.0.2-9~trixie`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:49 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38081935871) · [Files](../debian/pool/trixie/) · [Record](../debian/dists/trixie/build.json) |
-| `armhf` | `1.0.2-9~trixie`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:21 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38086096224) · [Files](../debian/pool/trixie/) · [Record](../debian/dists/trixie/build.json) |
-| `riscv64` | `1.0.2-9~trixie`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 22:46 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38090630742) · [Files](../debian/pool/trixie/) · [Record](../debian/dists/trixie/build.json) |
+[![↑ menu](menu/menu.svg)](#page-overview)
+
+| Architecture | Available | Published (UTC) | In build | Links |
+| --- | --- | --- | --- | --- |
+| `amd64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9~trixie` | 2026-10-10 20:21 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38080369758) · [Packages](../debian/pool/trixie/) |
+| `arm64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9~trixie` | 2026-10-10 20:49 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38081935871) · [Packages](../debian/pool/trixie/) |
+| `armhf` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9~trixie` | 2026-10-10 21:21 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38086096224) · [Packages](../debian/pool/trixie/) |
+| `riscv64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9~trixie` | 2026-10-10 22:46 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38090630742) · [Packages](../debian/pool/trixie/) |
+
+<a id="debian-forky"></a>
+
+### Debian forky
+
+[![↑ menu](menu/menu.svg)](#page-overview)
+
+| Architecture | Available | Published (UTC) | In build | Links |
+| --- | --- | --- | --- | --- |
+| `amd64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9~forky` | 2026-10-10 20:14 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38079927596) · [Packages](../debian/pool/forky/) |
+| `arm64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9~forky` | 2026-10-10 21:07 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38083580387) · [Packages](../debian/pool/forky/) |
+| `armhf` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9~forky` | 2026-10-11 00:09 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38096152130) · [Packages](../debian/pool/forky/) |
+| `riscv64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9~forky` | 2026-10-11 06:58 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38117741326) · [Packages](../debian/pool/forky/) |
+
+<a id="debian-sid"></a>
+
+### Debian sid
+
+[![↑ menu](menu/menu.svg)](#page-overview)
+
+| Architecture | Available | Published (UTC) | In build | Links |
+| --- | --- | --- | --- | --- |
+| `amd64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9~sid` | 2026-10-10 20:25 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38080510193) · [Packages](../debian/pool/sid/) |
+| `arm64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9~sid` | 2026-10-10 20:55 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38082582992) · [Packages](../debian/pool/sid/) |
+| `armhf` | <img src="badges/outdated.svg" alt="outdated" title="Outdated" width="14" height="14" align="absmiddle"> `1.0.2-5~sid` | 2026-10-09 05:05 | <img src="badges/skipped.svg" alt="skipped" title="Skipped" width="14" height="14" align="absmiddle"> `1.0.2-9~sid` | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38074650868) · [Packages](../debian/pool/sid/) |
+| `riscv64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9~sid` | 2026-10-11 03:19 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38106777849) · [Packages](../debian/pool/sid/) |
 
 ## Ubuntu
 
-[Installation guide](../docs/ubuntu.md#page-overview)
+[![Install guide](menu/install-guide.svg)](../docs/ubuntu.md#page-overview)
 
 <a id="ubuntu-noble"></a>
 
 ### Ubuntu noble
 
-| Architecture | Available | Latest attempt | Links |
-| --- | --- | --- | --- |
-| `amd64` | `1.0.2-9~noble`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:12 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38084516882) · [Files](../ubuntu/pool/noble/) · [Record](../ubuntu/dists/noble/build.json) |
-| `arm64` | `1.0.2-9~noble`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:01 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38083034123) · [Files](../ubuntu/pool/noble/) · [Record](../ubuntu/dists/noble/build.json) |
+[![↑ menu](menu/menu.svg)](#page-overview)
+
+| Architecture | Available | Published (UTC) | In build | Links |
+| --- | --- | --- | --- | --- |
+| `amd64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9~noble` | 2026-10-10 21:12 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38084516882) · [Packages](../ubuntu/pool/noble/) |
+| `arm64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9~noble` | 2026-10-10 21:01 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38083034123) · [Packages](../ubuntu/pool/noble/) |
 
 <a id="ubuntu-resolute"></a>
 
 ### Ubuntu resolute
 
-| Architecture | Available | Latest attempt | Links |
-| --- | --- | --- | --- |
-| `amd64` | `1.0.2-9~resolute`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:07 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38083640277) · [Files](../ubuntu/pool/resolute/) · [Record](../ubuntu/dists/resolute/build.json) |
-| `arm64` | `1.0.2-9~resolute`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 20:58 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38082632759) · [Files](../ubuntu/pool/resolute/) · [Record](../ubuntu/dists/resolute/build.json) |
+[![↑ menu](menu/menu.svg)](#page-overview)
+
+| Architecture | Available | Published (UTC) | In build | Links |
+| --- | --- | --- | --- | --- |
+| `amd64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9~resolute` | 2026-10-10 21:07 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38083640277) · [Packages](../ubuntu/pool/resolute/) |
+| `arm64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9~resolute` | 2026-10-10 20:58 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38082632759) · [Packages](../ubuntu/pool/resolute/) |
 
 ## Rocky Linux
 
-[Installation guide](../docs/rocky.md#page-overview)
-
-<a id="rocky-10"></a>
-
-### Rocky Linux 10
-
-| Architecture | Available | Latest attempt | Links |
-| --- | --- | --- | --- |
-| `aarch64` | `1.0.2-9.el10`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:09 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38083951759) · [Files](../rocky/10/aarch64/Packages/) · [Record](../rocky/10/aarch64/build.json) |
-| `x86_64` | `1.0.2-9.el10`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:17 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38085179971) · [Files](../rocky/10/x86_64/Packages/) · [Record](../rocky/10/x86_64/build.json) |
+[![Install guide](menu/install-guide.svg)](../docs/rocky.md#page-overview)
 
 <a id="rocky-9"></a>
 
 ### Rocky Linux 9
 
-| Architecture | Available | Latest attempt | Links |
-| --- | --- | --- | --- |
-| `aarch64` | `1.0.2-9.el9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:17 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38085050233) · [Files](../rocky/9/aarch64/Packages/) · [Record](../rocky/9/aarch64/build.json) |
-| `x86_64` | `1.0.2-9.el9`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:10 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38084002864) · [Files](../rocky/9/x86_64/Packages/) · [Record](../rocky/9/x86_64/build.json) |
+[![↑ menu](menu/menu.svg)](#page-overview)
+
+| Architecture | Available | Published (UTC) | In build | Links |
+| --- | --- | --- | --- | --- |
+| `aarch64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9.el9` | 2026-10-10 21:17 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38085050233) · [Packages](../rocky/9/aarch64/Packages/) |
+| `x86_64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9.el9` | 2026-10-10 21:10 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38084002864) · [Packages](../rocky/9/x86_64/Packages/) |
+
+<a id="rocky-10"></a>
+
+### Rocky Linux 10
+
+[![↑ menu](menu/menu.svg)](#page-overview)
+
+| Architecture | Available | Published (UTC) | In build | Links |
+| --- | --- | --- | --- | --- |
+| `aarch64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9.el10` | 2026-10-10 21:09 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38083951759) · [Packages](../rocky/10/aarch64/Packages/) |
+| `x86_64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9.el10` | 2026-10-10 21:17 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38085179971) · [Packages](../rocky/10/x86_64/Packages/) |
 
 ## Fedora
 
-[Installation guide](../docs/fedora.md#page-overview)
+[![Install guide](menu/install-guide.svg)](../docs/fedora.md#page-overview)
 
 <a id="fedora-43"></a>
 
 ### Fedora 43
 
-| Architecture | Available | Latest attempt | Links |
-| --- | --- | --- | --- |
-| `aarch64` | `1.0.2-9.fc43`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:08 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38083729271) · [Files](../fedora/43/aarch64/Packages/) · [Record](../fedora/43/aarch64/build.json) |
-| `x86_64` | `1.0.2-9.fc43`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:14 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38084664815) · [Files](../fedora/43/x86_64/Packages/) · [Record](../fedora/43/x86_64/build.json) |
+[![↑ menu](menu/menu.svg)](#page-overview)
+
+| Architecture | Available | Published (UTC) | In build | Links |
+| --- | --- | --- | --- | --- |
+| `aarch64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9.fc43` | 2026-10-10 21:08 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38083729271) · [Packages](../fedora/43/aarch64/Packages/) |
+| `x86_64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9.fc43` | 2026-10-10 21:14 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38084664815) · [Packages](../fedora/43/x86_64/Packages/) |
 
 <a id="fedora-44"></a>
 
 ### Fedora 44
 
-| Architecture | Available | Latest attempt | Links |
-| --- | --- | --- | --- |
-| `aarch64` | `1.0.2-9.fc44`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:11 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38084259902) · [Files](../fedora/44/aarch64/Packages/) · [Record](../fedora/44/aarch64/build.json) |
-| `x86_64` | `1.0.2-9.fc44`<br>Captured: 2026-10-10 18:09 UTC<br>Published: 2026-10-10 21:16 UTC | ![published](badges/published.svg)<br>Published<br>Source: `v1.0.2` · r9 · attempt 1<br>Published: not recorded<br>Captured: 2026-10-10 18:09 UTC | [Run](https://github.com/SNodeC/mqttsuite/actions/runs/38084849913) · [Files](../fedora/44/x86_64/Packages/) · [Record](../fedora/44/x86_64/build.json) |
+[![↑ menu](menu/menu.svg)](#page-overview)
+
+| Architecture | Available | Published (UTC) | In build | Links |
+| --- | --- | --- | --- | --- |
+| `aarch64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9.fc44` | 2026-10-10 21:11 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38084259902) · [Packages](../fedora/44/aarch64/Packages/) |
+| `x86_64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-9.fc44` | 2026-10-10 21:16 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38084849913) · [Packages](../fedora/44/x86_64/Packages/) |
+
+**Legend:** <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> Current · <img src="badges/outdated.svg" alt="outdated" title="Outdated" width="14" height="14" align="absmiddle"> Outdated · <img src="badges/pending.svg" alt="pending" title="Pending" width="14" height="14" align="absmiddle"> Pending · <img src="badges/running.svg" alt="running" title="Running" width="14" height="14" align="absmiddle"> Running · <img src="badges/publishing.svg" alt="publishing" title="Publishing" width="14" height="14" align="absmiddle"> Publishing · <img src="badges/published.svg" alt="published" title="Published" width="14" height="14" align="absmiddle"> Published · <img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed · <img src="badges/cancelled.svg" alt="cancelled" title="Cancelled" width="14" height="14" align="absmiddle"> Cancelled · <img src="badges/skipped.svg" alt="skipped" title="Skipped" width="14" height="14" align="absmiddle"> Skipped · <img src="badges/superseded.svg" alt="superseded" title="Superseded" width="14" height="14" align="absmiddle"> Superseded · <img src="badges/not-built.svg" alt="not-built" title="Not-built" width="14" height="14" align="absmiddle"> Not built. `—`: unrecorded or no replacement. Hover a circle for its exact state; image alternative text also names it.
