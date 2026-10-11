@@ -156,7 +156,7 @@
 | `amd64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `2.0.0-10~sid` | 2026-10-11 13:40 | — | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746/job/114464292565) · [Packages](../debian/pool/sid/) |
 | `arm64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `2.0.0-10~sid` | 2026-10-11 14:13 | — | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746/job/114464292916) · [Packages](../debian/pool/sid/) |
 | `armhf` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `2.0.0-10~sid` | 2026-10-11 14:49 | — | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746/job/114464291727) · [Packages](../debian/pool/sid/) |
-| `riscv64` | <img src="badges/outdated.svg" alt="outdated" title="Outdated" width="14" height="14" align="absmiddle"> `2.0.0-9~sid` | — | <img src="badges/running.svg" alt="running" title="Running" width="14" height="14" align="absmiddle"> `2.0.0-10~sid` | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746/job/114464291752) · [Packages](../debian/pool/sid/) |
+| `riscv64` | <img src="badges/outdated.svg" alt="outdated" title="Outdated" width="14" height="14" align="absmiddle"> `2.0.0-9~sid` | — | <img src="badges/cancelled.svg" alt="cancelled" title="Cancelled" width="14" height="14" align="absmiddle"> `2.0.0-10~sid` | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746/job/114464291752) · [Packages](../debian/pool/sid/) |
 
 ## Ubuntu
 

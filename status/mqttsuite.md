@@ -156,7 +156,7 @@
 | `amd64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-10~sid` | 2026-10-11 14:33 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38144103111/job/114483794050) · [Packages](../debian/pool/sid/) |
 | `arm64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-10~sid` | 2026-10-11 14:58 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38146293151/job/114490280252) · [Packages](../debian/pool/sid/) |
 | `armhf` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-10~sid` | 2026-10-11 15:12 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38148730221/job/114497527155) · [Packages](../debian/pool/sid/) |
-| `riscv64` | <img src="badges/outdated.svg" alt="outdated" title="Outdated" width="14" height="14" align="absmiddle"> `1.0.2-9~sid` | 2026-10-11 03:19 | <img src="badges/pending.svg" alt="pending" title="Pending" width="14" height="14" align="absmiddle"> `1.0.2-10~sid` | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746) · [Packages](../debian/pool/sid/) |
+| `riscv64` | <img src="badges/outdated.svg" alt="outdated" title="Outdated" width="14" height="14" align="absmiddle"> `1.0.2-9~sid` | 2026-10-11 03:19 | <img src="badges/skipped.svg" alt="skipped" title="Skipped" width="14" height="14" align="absmiddle"> `1.0.2-10~sid` | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746) · [Packages](../debian/pool/sid/) |
 
 ## Ubuntu
 
