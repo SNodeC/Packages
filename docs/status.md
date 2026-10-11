@@ -14,14 +14,14 @@ Status now has [one page per project](../status/README.md#page-overview). Existi
 
 ### OpenWrt 24.10
 
-[![SNode.C](../status/menu/snode-c.svg)](../status/snodec.md#openwrt-2410) [![MQTTSuite](../status/menu/mqttsuite.svg)](../status/mqttsuite.md#openwrt-2410)
+<a href="../status/snodec.md#openwrt-2410"><img src="../status/menu/snode-c.svg" alt="SNode.C" title="SNode.C" align="absmiddle"></a> <a href="../status/mqttsuite.md#openwrt-2410"><img src="../status/menu/mqttsuite.svg" alt="MQTTSuite" title="MQTTSuite" align="absmiddle"></a>
 
 <a id="2512"></a>
 <a id="openwrt-2512"></a>
 
 ### OpenWrt 25.12
 
-[![SNode.C](../status/menu/snode-c.svg)](../status/snodec.md#openwrt-2512) [![MQTTSuite](../status/menu/mqttsuite.svg)](../status/mqttsuite.md#openwrt-2512)
+<a href="../status/snodec.md#openwrt-2512"><img src="../status/menu/snode-c.svg" alt="SNode.C" title="SNode.C" align="absmiddle"></a> <a href="../status/mqttsuite.md#openwrt-2512"><img src="../status/menu/mqttsuite.svg" alt="MQTTSuite" title="MQTTSuite" align="absmiddle"></a>
 
 ## Raspberry Pi OS
 
@@ -30,37 +30,37 @@ Status now has [one page per project](../status/README.md#page-overview). Existi
 
 ### Raspberry Pi OS bookworm
 
-[![SNode.C](../status/menu/snode-c.svg)](../status/snodec.md#raspberrypios-bookworm) [![MQTTSuite](../status/menu/mqttsuite.svg)](../status/mqttsuite.md#raspberrypios-bookworm)
+<a href="../status/snodec.md#raspberrypios-bookworm"><img src="../status/menu/snode-c.svg" alt="SNode.C" title="SNode.C" align="absmiddle"></a> <a href="../status/mqttsuite.md#raspberrypios-bookworm"><img src="../status/menu/mqttsuite.svg" alt="MQTTSuite" title="MQTTSuite" align="absmiddle"></a>
 
 <a id="trixie"></a>
 <a id="raspberry-pi-os-trixie"></a>
 
 ### Raspberry Pi OS trixie
 
-[![SNode.C](../status/menu/snode-c.svg)](../status/snodec.md#raspberrypios-trixie) [![MQTTSuite](../status/menu/mqttsuite.svg)](../status/mqttsuite.md#raspberrypios-trixie)
+<a href="../status/snodec.md#raspberrypios-trixie"><img src="../status/menu/snode-c.svg" alt="SNode.C" title="SNode.C" align="absmiddle"></a> <a href="../status/mqttsuite.md#raspberrypios-trixie"><img src="../status/menu/mqttsuite.svg" alt="MQTTSuite" title="MQTTSuite" align="absmiddle"></a>
 
 ## Debian
-
-<a id="forky"></a>
-<a id="debian-forky"></a>
-
-### Debian forky
-
-[![SNode.C](../status/menu/snode-c.svg)](../status/snodec.md#debian-forky) [![MQTTSuite](../status/menu/mqttsuite.svg)](../status/mqttsuite.md#debian-forky)
-
-<a id="sid"></a>
-<a id="debian-sid"></a>
-
-### Debian sid
-
-[![SNode.C](../status/menu/snode-c.svg)](../status/snodec.md#debian-sid) [![MQTTSuite](../status/menu/mqttsuite.svg)](../status/mqttsuite.md#debian-sid)
 
 <a id="trixie-1"></a>
 <a id="debian-trixie"></a>
 
 ### Debian trixie
 
-[![SNode.C](../status/menu/snode-c.svg)](../status/snodec.md#debian-trixie) [![MQTTSuite](../status/menu/mqttsuite.svg)](../status/mqttsuite.md#debian-trixie)
+<a href="../status/snodec.md#debian-trixie"><img src="../status/menu/snode-c.svg" alt="SNode.C" title="SNode.C" align="absmiddle"></a> <a href="../status/mqttsuite.md#debian-trixie"><img src="../status/menu/mqttsuite.svg" alt="MQTTSuite" title="MQTTSuite" align="absmiddle"></a>
+
+<a id="forky"></a>
+<a id="debian-forky"></a>
+
+### Debian forky
+
+<a href="../status/snodec.md#debian-forky"><img src="../status/menu/snode-c.svg" alt="SNode.C" title="SNode.C" align="absmiddle"></a> <a href="../status/mqttsuite.md#debian-forky"><img src="../status/menu/mqttsuite.svg" alt="MQTTSuite" title="MQTTSuite" align="absmiddle"></a>
+
+<a id="sid"></a>
+<a id="debian-sid"></a>
+
+### Debian sid
+
+<a href="../status/snodec.md#debian-sid"><img src="../status/menu/snode-c.svg" alt="SNode.C" title="SNode.C" align="absmiddle"></a> <a href="../status/mqttsuite.md#debian-sid"><img src="../status/menu/mqttsuite.svg" alt="MQTTSuite" title="MQTTSuite" align="absmiddle"></a>
 
 ## Ubuntu
 
@@ -69,30 +69,30 @@ Status now has [one page per project](../status/README.md#page-overview). Existi
 
 ### Ubuntu noble
 
-[![SNode.C](../status/menu/snode-c.svg)](../status/snodec.md#ubuntu-noble) [![MQTTSuite](../status/menu/mqttsuite.svg)](../status/mqttsuite.md#ubuntu-noble)
+<a href="../status/snodec.md#ubuntu-noble"><img src="../status/menu/snode-c.svg" alt="SNode.C" title="SNode.C" align="absmiddle"></a> <a href="../status/mqttsuite.md#ubuntu-noble"><img src="../status/menu/mqttsuite.svg" alt="MQTTSuite" title="MQTTSuite" align="absmiddle"></a>
 
 <a id="resolute"></a>
 <a id="ubuntu-resolute"></a>
 
 ### Ubuntu resolute
 
-[![SNode.C](../status/menu/snode-c.svg)](../status/snodec.md#ubuntu-resolute) [![MQTTSuite](../status/menu/mqttsuite.svg)](../status/mqttsuite.md#ubuntu-resolute)
+<a href="../status/snodec.md#ubuntu-resolute"><img src="../status/menu/snode-c.svg" alt="SNode.C" title="SNode.C" align="absmiddle"></a> <a href="../status/mqttsuite.md#ubuntu-resolute"><img src="../status/menu/mqttsuite.svg" alt="MQTTSuite" title="MQTTSuite" align="absmiddle"></a>
 
 ## Rocky Linux
-
-<a id="10"></a>
-<a id="rocky-linux-10"></a>
-
-### Rocky Linux 10
-
-[![SNode.C](../status/menu/snode-c.svg)](../status/snodec.md#rocky-10) [![MQTTSuite](../status/menu/mqttsuite.svg)](../status/mqttsuite.md#rocky-10)
 
 <a id="9"></a>
 <a id="rocky-linux-9"></a>
 
 ### Rocky Linux 9
 
-[![SNode.C](../status/menu/snode-c.svg)](../status/snodec.md#rocky-9) [![MQTTSuite](../status/menu/mqttsuite.svg)](../status/mqttsuite.md#rocky-9)
+<a href="../status/snodec.md#rocky-9"><img src="../status/menu/snode-c.svg" alt="SNode.C" title="SNode.C" align="absmiddle"></a> <a href="../status/mqttsuite.md#rocky-9"><img src="../status/menu/mqttsuite.svg" alt="MQTTSuite" title="MQTTSuite" align="absmiddle"></a>
+
+<a id="10"></a>
+<a id="rocky-linux-10"></a>
+
+### Rocky Linux 10
+
+<a href="../status/snodec.md#rocky-10"><img src="../status/menu/snode-c.svg" alt="SNode.C" title="SNode.C" align="absmiddle"></a> <a href="../status/mqttsuite.md#rocky-10"><img src="../status/menu/mqttsuite.svg" alt="MQTTSuite" title="MQTTSuite" align="absmiddle"></a>
 
 ## Fedora
 
@@ -101,11 +101,11 @@ Status now has [one page per project](../status/README.md#page-overview). Existi
 
 ### Fedora 43
 
-[![SNode.C](../status/menu/snode-c.svg)](../status/snodec.md#fedora-43) [![MQTTSuite](../status/menu/mqttsuite.svg)](../status/mqttsuite.md#fedora-43)
+<a href="../status/snodec.md#fedora-43"><img src="../status/menu/snode-c.svg" alt="SNode.C" title="SNode.C" align="absmiddle"></a> <a href="../status/mqttsuite.md#fedora-43"><img src="../status/menu/mqttsuite.svg" alt="MQTTSuite" title="MQTTSuite" align="absmiddle"></a>
 
 <a id="44"></a>
 <a id="fedora-44"></a>
 
 ### Fedora 44
 
-[![SNode.C](../status/menu/snode-c.svg)](../status/snodec.md#fedora-44) [![MQTTSuite](../status/menu/mqttsuite.svg)](../status/mqttsuite.md#fedora-44)
+<a href="../status/snodec.md#fedora-44"><img src="../status/menu/snode-c.svg" alt="SNode.C" title="SNode.C" align="absmiddle"></a> <a href="../status/mqttsuite.md#fedora-44"><img src="../status/menu/mqttsuite.svg" alt="MQTTSuite" title="MQTTSuite" align="absmiddle"></a>

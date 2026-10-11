@@ -3,9 +3,9 @@
 
 [![Packages](../docs/media/page-banner.svg)](../README.md#project-overview)
 
-[![Installation](menu/installation.svg)](../README.md#install) [![Troubleshooting](menu/troubleshooting.svg)](../docs/troubleshooting.md#page-overview)
-
 # Package status
+
+[![Install](../docs/media/menu/install.svg)](../README.md#install) [![Troubleshoot](../docs/media/menu/troubleshoot.svg)](../docs/troubleshooting.md#page-overview)
 
 | Project | Latest release | Status |
 | --- | --- | --- |

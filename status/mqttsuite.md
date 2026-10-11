@@ -3,31 +3,33 @@
 
 [![Packages](../docs/media/page-banner.svg)](../README.md#project-overview)
 
-[![All projects](menu/all-projects.svg)](README.md#page-overview) [![Installation](menu/installation.svg)](../README.md#install) [![Package catalog](menu/package-catalog.svg)](../docs/mqttsuite-package-options.md#page-overview) [![Troubleshooting](menu/troubleshooting.svg)](../docs/troubleshooting.md#page-overview)
-
 # MQTTSuite package status · latest release 1.0.2 · r10
 
-**OpenWrt** [![24.10](menu/24-10.svg)](#openwrt-2410) [![25.12](menu/25-12.svg)](#openwrt-2512)
+<a href="README.md#page-overview"><img src="menu/all-projects.svg" alt="All projects" title="All projects" align="absmiddle"></a> <a href="../README.md#install"><img src="../docs/media/menu/install.svg" alt="Install" align="absmiddle"></a> <a href="../docs/mqttsuite-package-options.md#page-overview"><img src="../docs/media/menu/catalog.svg" alt="Catalog" align="absmiddle"></a> <a href="../docs/troubleshooting.md#page-overview"><img src="../docs/media/menu/troubleshoot.svg" alt="Troubleshoot" align="absmiddle"></a>
 
-**Raspberry Pi OS** [![bookworm](menu/bookworm.svg)](#raspberrypios-bookworm) [![trixie](menu/trixie.svg)](#raspberrypios-trixie)
+**OpenWrt** <a href="#openwrt-2410"><img src="menu/24-10.svg" alt="24.10" title="24.10" align="absmiddle"></a> <a href="#openwrt-2512"><img src="menu/25-12.svg" alt="25.12" title="25.12" align="absmiddle"></a>
 
-**Debian** [![trixie](menu/trixie.svg)](#debian-trixie) [![forky](menu/forky.svg)](#debian-forky) [![sid](menu/sid.svg)](#debian-sid)
+**Raspberry Pi OS** <a href="#raspberrypios-bookworm"><img src="menu/bookworm.svg" alt="bookworm" title="bookworm" align="absmiddle"></a> <a href="#raspberrypios-trixie"><img src="menu/trixie.svg" alt="trixie" title="trixie" align="absmiddle"></a>
 
-**Ubuntu** [![noble](menu/noble.svg)](#ubuntu-noble) [![resolute](menu/resolute.svg)](#ubuntu-resolute)
+**Debian** <a href="#debian-trixie"><img src="menu/trixie.svg" alt="trixie" title="trixie" align="absmiddle"></a> <a href="#debian-forky"><img src="menu/forky.svg" alt="forky" title="forky" align="absmiddle"></a> <a href="#debian-sid"><img src="menu/sid.svg" alt="sid" title="sid" align="absmiddle"></a>
 
-**Rocky Linux** [![9](menu/9.svg)](#rocky-9) [![10](menu/10.svg)](#rocky-10)
+**Ubuntu** <a href="#ubuntu-noble"><img src="menu/noble.svg" alt="noble" title="noble" align="absmiddle"></a> <a href="#ubuntu-resolute"><img src="menu/resolute.svg" alt="resolute" title="resolute" align="absmiddle"></a>
 
-**Fedora** [![43](menu/43.svg)](#fedora-43) [![44](menu/44.svg)](#fedora-44)
+**Rocky Linux** <a href="#rocky-9"><img src="menu/9.svg" alt="9" title="9" align="absmiddle"></a> <a href="#rocky-10"><img src="menu/10.svg" alt="10" title="10" align="absmiddle"></a>
+
+**Fedora** <a href="#fedora-43"><img src="menu/43.svg" alt="43" title="43" align="absmiddle"></a> <a href="#fedora-44"><img src="menu/44.svg" alt="44" title="44" align="absmiddle"></a>
+
+[Legend](#legend) · [What the columns mean](../docs/architecture.md#latest-release-available-and-in-build)
 
 ## OpenWrt
 
-[![Install guide](menu/install-guide.svg)](../docs/openwrt.md#page-overview)
+<a href="../docs/openwrt.md#page-overview"><img src="menu/install-guide.svg" alt="Install guide" title="Install guide" align="absmiddle"></a>
 
 <a id="openwrt-2410"></a>
 
 ### OpenWrt 24.10
 
-[![↑ menu](menu/menu.svg)](#page-overview)
+<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -61,7 +63,7 @@
 
 ### OpenWrt 25.12
 
-[![↑ menu](menu/menu.svg)](#page-overview)
+<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -93,13 +95,13 @@
 
 ## Raspberry Pi OS
 
-[![Install guide](menu/install-guide.svg)](../docs/raspberrypi.md#page-overview)
+<a href="../docs/raspberrypi.md#page-overview"><img src="menu/install-guide.svg" alt="Install guide" title="Install guide" align="absmiddle"></a>
 
 <a id="raspberrypios-bookworm"></a>
 
 ### Raspberry Pi OS bookworm
 
-[![↑ menu](menu/menu.svg)](#page-overview)
+<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -109,7 +111,7 @@
 
 ### Raspberry Pi OS trixie
 
-[![↑ menu](menu/menu.svg)](#page-overview)
+<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -117,13 +119,13 @@
 
 ## Debian
 
-[![Install guide](menu/install-guide.svg)](../docs/debian.md#page-overview)
+<a href="../docs/debian.md#page-overview"><img src="menu/install-guide.svg" alt="Install guide" title="Install guide" align="absmiddle"></a>
 
 <a id="debian-trixie"></a>
 
 ### Debian trixie
 
-[![↑ menu](menu/menu.svg)](#page-overview)
+<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -136,7 +138,7 @@
 
 ### Debian forky
 
-[![↑ menu](menu/menu.svg)](#page-overview)
+<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -149,7 +151,7 @@
 
 ### Debian sid
 
-[![↑ menu](menu/menu.svg)](#page-overview)
+<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -160,13 +162,13 @@
 
 ## Ubuntu
 
-[![Install guide](menu/install-guide.svg)](../docs/ubuntu.md#page-overview)
+<a href="../docs/ubuntu.md#page-overview"><img src="menu/install-guide.svg" alt="Install guide" title="Install guide" align="absmiddle"></a>
 
 <a id="ubuntu-noble"></a>
 
 ### Ubuntu noble
 
-[![↑ menu](menu/menu.svg)](#page-overview)
+<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -177,7 +179,7 @@
 
 ### Ubuntu resolute
 
-[![↑ menu](menu/menu.svg)](#page-overview)
+<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -186,13 +188,13 @@
 
 ## Rocky Linux
 
-[![Install guide](menu/install-guide.svg)](../docs/rocky.md#page-overview)
+<a href="../docs/rocky.md#page-overview"><img src="menu/install-guide.svg" alt="Install guide" title="Install guide" align="absmiddle"></a>
 
 <a id="rocky-9"></a>
 
 ### Rocky Linux 9
 
-[![↑ menu](menu/menu.svg)](#page-overview)
+<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -203,7 +205,7 @@
 
 ### Rocky Linux 10
 
-[![↑ menu](menu/menu.svg)](#page-overview)
+<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -212,13 +214,13 @@
 
 ## Fedora
 
-[![Install guide](menu/install-guide.svg)](../docs/fedora.md#page-overview)
+<a href="../docs/fedora.md#page-overview"><img src="menu/install-guide.svg" alt="Install guide" title="Install guide" align="absmiddle"></a>
 
 <a id="fedora-43"></a>
 
 ### Fedora 43
 
-[![↑ menu](menu/menu.svg)](#page-overview)
+<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -229,11 +231,15 @@
 
 ### Fedora 44
 
-[![↑ menu](menu/menu.svg)](#page-overview)
+<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
 | `aarch64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-10.fc44` | 2026-10-11 14:57 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38146231028/job/114490107862) · [Packages](../fedora/44/aarch64/Packages/) |
 | `x86_64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `1.0.2-10.fc44` | 2026-10-11 15:06 | — | [Build log](https://github.com/SNodeC/mqttsuite/actions/runs/38147895006/job/114495031538) · [Packages](../fedora/44/x86_64/Packages/) |
 
-**Legend:** <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> Current · <img src="badges/outdated.svg" alt="outdated" title="Outdated" width="14" height="14" align="absmiddle"> Outdated · <img src="badges/pending.svg" alt="pending" title="Pending" width="14" height="14" align="absmiddle"> Pending · <img src="badges/running.svg" alt="running" title="Running" width="14" height="14" align="absmiddle"> Running · <img src="badges/publishing.svg" alt="publishing" title="Publishing" width="14" height="14" align="absmiddle"> Publishing · <img src="badges/published.svg" alt="published" title="Published" width="14" height="14" align="absmiddle"> Published · <img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed · <img src="badges/cancelled.svg" alt="cancelled" title="Cancelled" width="14" height="14" align="absmiddle"> Cancelled · <img src="badges/skipped.svg" alt="skipped" title="Skipped" width="14" height="14" align="absmiddle"> Skipped · <img src="badges/superseded.svg" alt="superseded" title="Superseded" width="14" height="14" align="absmiddle"> Superseded · <img src="badges/not-built.svg" alt="not-built" title="Not-built" width="14" height="14" align="absmiddle"> Not built. `—`: unrecorded or no replacement. Hover a circle for its exact state; image alternative text also names it.
+<a id="legend"></a>
+
+**Legend:** <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle">&nbsp;Current · <img src="badges/outdated.svg" alt="outdated" title="Outdated" width="14" height="14" align="absmiddle">&nbsp;Outdated · <img src="badges/pending.svg" alt="pending" title="Pending" width="14" height="14" align="absmiddle">&nbsp;Pending · <img src="badges/running.svg" alt="running" title="Running" width="14" height="14" align="absmiddle">&nbsp;Running · <img src="badges/publishing.svg" alt="publishing" title="Publishing" width="14" height="14" align="absmiddle">&nbsp;Publishing · <img src="badges/published.svg" alt="published" title="Published" width="14" height="14" align="absmiddle">&nbsp;Published · <img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle">&nbsp;Failed · <img src="badges/cancelled.svg" alt="cancelled" title="Cancelled" width="14" height="14" align="absmiddle">&nbsp;Cancelled · <img src="badges/skipped.svg" alt="skipped" title="Skipped" width="14" height="14" align="absmiddle">&nbsp;Skipped · <img src="badges/superseded.svg" alt="superseded" title="Superseded" width="14" height="14" align="absmiddle">&nbsp;Superseded · <img src="badges/not-built.svg" alt="not built" title="Not built" width="14" height="14" align="absmiddle">&nbsp;Not&nbsp;built.
+
+Current matches Latest release; Outdated is an older or different available version. Published means publication completed and therefore appears as `—` in In build, not as a replacement still in progress. Pending waits for a build; Superseded was replaced by a newer release or attempt; Not built has no recorded build. These three states share grey, with alternative text and hover titles identifying them. `—` means no available package, no replacement in progress, or an unrecorded fact, according to the column. A waiting dependent's Build log may open its prerequisite release run before a child build job exists.
