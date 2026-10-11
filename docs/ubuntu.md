@@ -1,18 +1,17 @@
+<!-- Published from DistributionPackages/site; edit that source, not this snapshot. -->
+<a id="page-overview"></a>
+
+[![Packages](media/page-banner.svg)](../README.md#project-overview)
+
 # Ubuntu
 
 <p>
-  <a href="../README.md#distributions"><img src="media/menu/back-all-distributions.svg" alt="← All distributions" width="140" height="24"></a>
-</p>
-
-<p>
-  <a href="#requirements" title="Requirements"><img src="media/menu/requirements-102.svg" alt="Requirements" width="102" height="24"></a>
-  <a href="#quick-install" title="Quick install"><img src="media/menu/install-102.svg" alt="Quick install" width="102" height="24"></a>
-  <a href="#choose-packages" title="Choose packages"><img src="media/menu/packages-102.svg" alt="Choose packages" width="102" height="24"></a>
-  <a href="#configure-and-run" title="Configure and run"><img src="media/menu/configure-102.svg" alt="Configure and run" width="102" height="24"></a>
-  <a href="#updates" title="Updates"><img src="media/menu/updates-102.svg" alt="Updates" width="102" height="24"></a>
-  <a href="#manual-repository-setup" title="Manual repository setup"><img src="media/menu/manual-setup-102.svg" alt="Manual repository setup" width="102" height="24"></a>
-  <a href="#reference" title="Reference"><img src="media/menu/reference-102.svg" alt="Reference" width="102" height="24"></a>
-  <a href="#troubleshooting" title="Troubleshooting"><img src="media/menu/help-102.svg" alt="Troubleshooting" width="102" height="24"></a>
+<a href="#requirements"><img src="media/menu/requirements.svg" alt="Requirements"></a>
+<a href="#quick-install"><img src="media/menu/install.svg" alt="Install"></a>
+<a href="#manual-repository-setup"><img src="media/menu/manual.svg" alt="Manual setup"></a>
+<a href="#updates"><img src="media/menu/updates.svg" alt="Updates"></a>
+<a href="../status/README.md#page-overview"><img src="media/menu/status.svg" alt="Status"></a>
+<a href="#troubleshooting"><img src="media/menu/troubleshoot.svg" alt="Troubleshoot"></a>
 </p>
 
 ## Requirements
@@ -46,6 +45,8 @@ The installer detects the distribution, release and package architecture, checks
 
 ## Choose packages
 
+See the [SNode.C catalog](snodec-package-options.md#page-overview) and [MQTTSuite catalog](mqttsuite-package-options.md#page-overview) for package roles and after-install configuration.
+
 Prepare the repository without installing packages:
 
 ```sh
@@ -60,34 +61,11 @@ For only the broker and command-line client:
 sudo apt-get install mqttsuite-broker mqttsuite-cli
 ```
 
-Dependencies are installed automatically. For the full selection after manual preparation, install the complete-project packages listed below.
-
-| Package | Contents |
-| --- | --- |
-| `snodec` | All framework components, headers, examples and configuration tool |
-| `snodec-apps` | Demonstration applications |
-| `snodec-control` | Component containing `snodec-control` |
-| `mqttsuite` | All five applications and both mapping plugins |
-| `mqttsuite-broker` | MQTT broker |
-| `mqttsuite-cli` | Publish/subscribe command-line client |
-
-See the complete [SNode.C](snodec-package-options.md) and [MQTTSuite](mqttsuite-package-options.md) package catalogs.
+Dependencies are installed automatically. For the full selection after manual preparation, install the complete-project packages in the project catalogs.
 
 ```sh
 sudo apt-get install snodec mqttsuite
 ```
-
-## Configure and run
-
-Inspect `mqttbroker --help`, `mqttcli --help` and `snodec-control --help`. Configure listeners, credentials and TLS certificates before starting services. The store requires a configured database. Consult the [application documentation](https://github.com/SNodeC/mqttsuite#project-overview) and [framework documentation](https://github.com/SNodeC/snode.c#project-overview) for options.
-
-Executables are installed in `/usr/bin`. Administrative configuration lives in `/etc/snode.c`; non-root processes use their per-user configuration directories. Installation creates the `snodec` system group but does not start network services. To start a foreground broker:
-
-```sh
-mqttbroker --daemonize=false
-```
-
-For persistent operation, configure a systemd service with the desired user and arguments; these packages do not supply systemd service units.
 
 ## Updates
 
@@ -127,41 +105,14 @@ APT selects packages from the index for your native architecture. Package files 
 
 Then [choose packages](#choose-packages) to install.
 
-## Reference
+## Source records
 
-<details>
-<summary>Supported releases, package architectures and indexes</summary>
-
-### noble
-
-[Package files for this suite](https://github.com/SNodeC/Packages/tree/main/ubuntu/pool/noble). APT selects the native architecture’s index.
-
-| Release | Package architecture | Index | Browse |
-| --- | --- | --- | --- |
-| noble | `amd64` | [Index](https://raw.githubusercontent.com/SNodeC/Packages/main/ubuntu/dists/noble/main/binary-amd64/Packages.gz) | [Browse](https://github.com/SNodeC/Packages/tree/main/ubuntu/dists/noble/main/binary-amd64) |
-| noble | `arm64` | [Index](https://raw.githubusercontent.com/SNodeC/Packages/main/ubuntu/dists/noble/main/binary-arm64/Packages.gz) | [Browse](https://github.com/SNodeC/Packages/tree/main/ubuntu/dists/noble/main/binary-arm64) |
-
-### resolute
-
-[Package files for this suite](https://github.com/SNodeC/Packages/tree/main/ubuntu/pool/resolute). APT selects the native architecture’s index.
-
-| Release | Package architecture | Index | Browse |
-| --- | --- | --- | --- |
-| resolute | `amd64` | [Index](https://raw.githubusercontent.com/SNodeC/Packages/main/ubuntu/dists/resolute/main/binary-amd64/Packages.gz) | [Browse](https://github.com/SNodeC/Packages/tree/main/ubuntu/dists/resolute/main/binary-amd64) |
-| resolute | `arm64` | [Index](https://raw.githubusercontent.com/SNodeC/Packages/main/ubuntu/dists/resolute/main/binary-arm64/Packages.gz) | [Browse](https://github.com/SNodeC/Packages/tree/main/ubuntu/dists/resolute/main/binary-arm64) |
-
-</details>
+See [per-project availability and source records](../status/README.md#page-overview) for every release and architecture.
 
 ## Troubleshooting
 
-See [common problems and fixes](troubleshooting.md) for download, signature, dependency and application errors.
+See [common problems and fixes](troubleshooting.md#page-overview) for download, signature, dependency and application errors.
 
 | Symptom | What to check |
 | --- | --- |
 | Installed suite is not listed | Use a supported Ubuntu suite; do not substitute Debian repositories or another Ubuntu release. |
-
-<p>
-  <a href="#ubuntu" title="Back to top"><img src="media/menu/back-to-top-124.svg" alt="Back to top" width="124" height="24"></a>
-  <a href="../README.md#distributions" title="All distributions"><img src="media/menu/all-distributions-124.svg" alt="All distributions" width="124" height="24"></a>
-  <a href="https://github.com/SNodeC/Packages/blob/main/docs/status.md#ubuntu" title="Package status"><img src="media/menu/package-status-124.svg" alt="Package status" width="124" height="24"></a>
-</p>

@@ -1,24 +1,25 @@
-# SNode.C and MQTTSuite packages
+<!-- Published from DistributionPackages/site; edit that source, not this snapshot. -->
+<a id="project-overview"></a>
 
-Signed binary packages for OpenWrt, Raspberry Pi OS, Debian, Ubuntu, Rocky Linux and Fedora.
+![Packages](docs/media/banner.svg)
+
+# SNodeC Packages
+
+Signed packages for the SNode.C ecosystem. Choose a project and distribution, install using its signed package source, and inspect availability separately from ongoing builds.
 
 <p>
-  <a href="#quick-start" title="Quick start"><img src="docs/media/menu/quick-start-120.svg" alt="Quick start" width="120" height="24"></a>
-  <a href="#distributions" title="Distributions"><img src="docs/media/menu/distributions-120.svg" alt="Distributions" width="120" height="24"></a>
-  <a href="#packages" title="Packages"><img src="docs/media/menu/packages-120.svg" alt="Packages" width="120" height="24"></a>
-  <a href="https://github.com/SNodeC/Packages/blob/main/docs/status.md" title="Package status"><img src="docs/media/menu/package-status-120.svg" alt="Package status" width="120" height="24"></a>
-  <a href="#help" title="Help"><img src="docs/media/menu/help-120.svg" alt="Help" width="120" height="24"></a>
+<a href="#quick-start"><img src="docs/media/menu/start.svg" alt="Start"></a>
+<a href="#install"><img src="docs/media/menu/install.svg" alt="Install"></a>
+<a href="status/README.md#page-overview"><img src="docs/media/menu/status.svg" alt="Status"></a>
+<a href="docs/troubleshooting.md#page-overview"><img src="docs/media/menu/troubleshoot.svg" alt="Troubleshoot"></a>
+<a href="docs/architecture.md#page-overview"><img src="docs/media/menu/architecture.svg" alt="Architecture"></a>
+<a href="#contributing"><img src="docs/media/menu/contribute.svg" alt="Contribute"></a>
 </p>
-
-## What's inside
-
-[SNode.C](https://github.com/SNodeC/snode.c#project-overview) provides a C++ networking framework, runtime libraries and tools. [MQTTSuite](https://github.com/SNodeC/mqttsuite#project-overview) provides an MQTT broker, bridge, integrator, command-line client, store and mapping plugins. Install binaries with your package manager; no compilation is needed.
+<a id="installation"></a>
 
 ## Quick start
 
-### Installation
-
-Check your [distribution guide](#distributions) for prerequisites, especially CRB/EPEL on Rocky Linux. Keep official repositories enabled for dependencies.
+Check your [distribution guide](#install) first for prerequisites, especially CRB/EPEL on Rocky Linux. Keep official repositories enabled for dependencies.
 
 **Linux — Raspberry Pi OS, Debian, Ubuntu, Rocky Linux or Fedora:**
 
@@ -42,35 +43,50 @@ sh /tmp/snodec-install-feed.sh
 # sh /tmp/snodec-install-feed.sh --prepare
 ```
 
-The installer checks the target, configures its signed package source and installs both complete project sets; `--prepare` only configures the source and refreshes indexes. Prefer manual setup? See your distribution guide.
+The installer checks the target, configures its signed package source and installs the configured complete sets; `--prepare` only configures the source and refreshes indexes. Prefer manual setup? See your distribution guide.
 
-## Distributions
 
-| Distribution | Releases | Architectures | Guide | Status |
-| --- | --- | --- | --- | --- |
-| OpenWrt | 24.10, 25.12 | 25 architectures | [Install](docs/openwrt.md) | [Status](https://github.com/SNodeC/Packages/blob/main/docs/status.md#openwrt) |
-| Raspberry Pi OS | bookworm, trixie | arm64 | [Install](docs/raspberrypi.md) | [Status](https://github.com/SNodeC/Packages/blob/main/docs/status.md#raspberry-pi-os) |
-| Debian | trixie, forky, sid | amd64, arm64, armhf, riscv64 | [Install](docs/debian.md) | [Status](https://github.com/SNodeC/Packages/blob/main/docs/status.md#debian) |
-| Ubuntu | noble, resolute | amd64, arm64 | [Install](docs/ubuntu.md) | [Status](https://github.com/SNodeC/Packages/blob/main/docs/status.md#ubuntu) |
-| Rocky Linux | 9, 10 | aarch64, x86_64 | [Install](docs/rocky.md) | [Status](https://github.com/SNodeC/Packages/blob/main/docs/status.md#rocky-linux) |
-| Fedora | 43, 44 | aarch64, x86_64 | [Install](docs/fedora.md) | [Status](https://github.com/SNodeC/Packages/blob/main/docs/status.md#fedora) |
+<a id="packages"></a>
 
-OpenWrt supports 25 package architectures per release. Raspberry Pi OS supports Pi 3, 4 and 5.
+## Projects
 
-## Packages
+Available targets refer to published packages, not the success of a replacement build. Open the [project directory](status/README.md#page-overview) for package catalogs and per-project status.
 
-The default install includes all framework components offered by the distribution, demonstration applications, the configuration tool, all five MQTT applications and both mapping plugins. Configure listeners, credentials and TLS before starting services.
+<!-- packages:begin projects -->
+| Project | Package catalog | Availability and builds | Available targets |
+| --- | --- | --- | --- |
+| [SNode.C](https://github.com/SNodeC/snode.c#project-overview) | [Packages](docs/snodec-package-options.md#page-overview) | [Status](status/snodec.md#page-overview) | 76 / 76 |
+| [MQTTSuite](https://github.com/SNodeC/mqttsuite#project-overview) | [Packages](docs/mqttsuite-package-options.md#page-overview) | [Status](status/mqttsuite.md#page-overview) | 76 / 76 |
+<!-- packages:end projects -->
 
-| Package | Contents |
-| --- | --- |
-| `snodec` | Runtime modules, demo apps and control tool |
-| `snodec-apps` | Demonstration applications |
-| `snodec-control` | Configuration tool |
-| `mqttsuite` | Five applications and two mapping plugins |
+## Platforms
 
-DEB/RPM packages also include development files.
+The supported release and architecture matrix is generated from the publisher's target definitions. Availability is reported per project and target.
 
-Full catalogs: [SNode.C](docs/snodec-package-options.md) and [MQTTSuite](docs/mqttsuite-package-options.md), with shared package names across distributions. Find available versions and per-target results on [Package status](https://github.com/SNodeC/Packages/blob/main/docs/status.md).
+<!-- packages:begin platforms -->
+| Distribution | Releases | Architectures |
+| --- | --- | --- |
+| [OpenWrt](docs/openwrt.md#page-overview) | 24.10, 25.12 | 25 per release (names can differ) |
+| [Raspberry Pi OS](docs/raspberrypi.md#page-overview) | bookworm, trixie | arm64 |
+| [Debian](docs/debian.md#page-overview) | forky, sid, trixie | amd64, arm64, armhf, riscv64 |
+| [Ubuntu](docs/ubuntu.md#page-overview) | noble, resolute | amd64, arm64 |
+| [Rocky Linux](docs/rocky.md#page-overview) | 10, 9 | aarch64, x86_64 |
+| [Fedora](docs/fedora.md#page-overview) | 43, 44 | aarch64, x86_64 |
+<!-- packages:end platforms -->
+
+<a id="distributions"></a>
+
+## Install
+
+<p>
+<a href="docs/openwrt.md#page-overview"><img src="docs/media/menu/openwrt.svg" alt="OpenWrt"></a>
+<a href="docs/raspberrypi.md#page-overview"><img src="docs/media/menu/raspberrypi.svg" alt="Raspberry Pi OS"></a>
+<a href="docs/debian.md#page-overview"><img src="docs/media/menu/debian.svg" alt="Debian"></a>
+<a href="docs/ubuntu.md#page-overview"><img src="docs/media/menu/ubuntu.svg" alt="Ubuntu"></a>
+<a href="docs/rocky.md#page-overview"><img src="docs/media/menu/rocky.svg" alt="Rocky Linux"></a>
+<a href="docs/fedora.md#page-overview"><img src="docs/media/menu/fedora.svg" alt="Fedora"></a>
+</p>
+Select the guide matching your installed distribution, release and package architecture. Each guide covers requirements, quick installation, manual repository setup and updates. To install selected components rather than the complete sets, use the [project catalogs](#projects).
 
 ## Signing keys
 
@@ -94,16 +110,22 @@ f6fd78dca70698e8
 
 [Download public keys](https://github.com/SNodeC/Packages/tree/main/keys). APT and RPM use the same key. Keep signature verification enabled.
 
-## Help
+<a id="help"></a>
 
-### Repository troubleshooting
+## Troubleshooting
 
-See [Troubleshooting](docs/troubleshooting.md) for common errors and packaging terms, or [open an issue](https://github.com/SNodeC/Packages/issues).
+Read [installation troubleshooting](docs/troubleshooting.md#page-overview) for repository, key and dependency problems. For an ongoing build or an older version still available, open [project status](status/README.md#page-overview).
 
----
+## How publication works
 
-<p>
-  <a href="docs/maintainers.md" title="How this repository works"><img src="docs/media/menu/how-this-repository-works-188.svg" alt="How this repository works" width="188" height="24"></a>
-  <a href="https://github.com/SNodeC/snode.c#project-overview" title="SNode.C"><img src="docs/media/menu/snode-c-188.svg" alt="SNode.C" width="188" height="24"></a>
-  <a href="https://github.com/SNodeC/mqttsuite#project-overview" title="MQTTSuite"><img src="docs/media/menu/mqttsuite-188.svg" alt="MQTTSuite" width="188" height="24"></a>
-</p>
+[Publication architecture](docs/architecture.md#page-overview) explains signing, revisions, status semantics and documentation ownership. Maintainer operations live in DistributionPackages.
+
+## Contributing
+
+Report installation issues in [Packages](https://github.com/SNodeC/Packages/issues). Documentation and publisher changes belong to [DistributionPackages](https://github.com/SNodeC/DistributionPackages#project-overview). Do not edit generated feeds, keys or status pages by hand.
+
+## Ecosystem
+
+[SNodeC organization](https://github.com/SNodeC) · [SNode.C](https://github.com/SNodeC/snode.c#project-overview) · [MQTTSuite](https://github.com/SNodeC/mqttsuite#project-overview)
+
+[Contributing](https://github.com/SNodeC/.github/blob/HEAD/CONTRIBUTING.md) · [Security](https://github.com/SNodeC/.github/blob/HEAD/SECURITY.md)

@@ -1,21 +1,22 @@
-# Troubleshooting
+<!-- Published from DistributionPackages/site; edit that source, not this snapshot. -->
+<a id="page-overview"></a>
 
-<p>
-  <a href="../README.md#installation"><img src="media/menu/back-installation-overview.svg" alt="← Installation overview" width="170" height="24"></a>
-</p>
+[![Packages](media/page-banner.svg)](../README.md#project-overview)
+
+# Troubleshooting
 
 ## Common problems
 
 | Symptom | What to check |
 | --- | --- |
-| Feed or repository returns 404 | Match the distribution, release and package architecture to the [distribution guide](../README.md#distributions). Use **Browse** links for directories; raw URLs serve individual files, not directory listings. |
+| Feed or repository returns 404 | Match the distribution, release and package architecture to the [distribution guide](../README.md#install). Use **Files** links on project status pages for directories; raw URLs serve individual files, not directory listings. |
 | Signature verification fails | Check the system clock, repository URL and installed [signing key](../README.md#signing-keys). Keep signature verification enabled. |
 | Dependencies cannot be installed | Keep the official repositories enabled for the installed release. Do not mix distributions, releases or package architectures. Check the guide for additional dependency repositories. |
 | Download fails just after publication | Refresh package indexes and retry after GitHub's raw-content caches update. |
-| A newer package is unavailable | Check the target's version and badge on [Package status](https://github.com/SNodeC/Packages/blob/main/docs/status.md). A successful compilation alone does not mean publication succeeded. |
+| A newer package is unavailable | Check the target's version and badge on [Package status](../status/README.md#page-overview). A successful compilation alone does not mean publication succeeded. |
 | The latest rebuild failed | The previous published packages remain available. Check the status badge for the failing job. |
 | An application does not start | Inspect its `--help` output, configuration and logs. Verify installation completed and configure listeners, credentials, certificates and any required database before starting it. |
-| A package cannot be downloaded from a browser | Open **Browse** to find its filename. Package managers use the raw index URLs listed in the guide. |
+| A package cannot be downloaded from a browser | Open **Files** on the project status page to find its filename. Package managers use signed repository indexes, not GitHub directory views. |
 
 ## Distribution-specific help
 
@@ -37,7 +38,3 @@ If the problem remains, [open an issue](https://github.com/SNodeC/Packages/issue
 - **Metapackage:** a package that selects a group of component packages through dependencies.
 - **Index:** the file the package manager reads to find packages and verify their metadata.
 - **Browse:** a GitHub directory view for people; it is not an index URL.
-
-<p>
-  <a href="../README.md#installation"><img src="media/menu/back-to-installation.svg" alt="Back to installation" width="144" height="24"></a>
-</p>

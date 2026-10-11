@@ -1,21 +1,24 @@
+<!-- Published from DistributionPackages/site; edit that source, not this snapshot. -->
+<a id="page-overview"></a>
+
+[![Packages](media/page-banner.svg)](../README.md#project-overview)
+
 # SNode.C package catalog
 
 Package names are shared by OpenWrt, Raspberry Pi OS, Debian, Ubuntu, Rocky Linux and Fedora. Architectures affect availability and binary contents, not names.
 
-## Installation and build results
+## Installation and availability
 
-- [Install SNode.C, including repository setup](install-snodec.md)
-- [Published versions and build results](https://github.com/SNodeC/Packages/blob/main/docs/status.md)
-- [Return to the repository overview](../README.md)
+[Choose your distribution](../README.md#install) · [SNode.C status](../status/snodec.md#page-overview)
 
-## Packages: 67
+## Package catalog
 
-Library `<version>` follows the published release; `<ABI>` identifies its binary interface. See [Package status](https://github.com/SNodeC/Packages/blob/main/docs/status.md) for current versions.
+Library `<version>` follows the published release; `<ABI>` identifies its binary interface. See [Package status](../status/snodec.md#page-overview) for current versions.
 
 | Package | Payload / role |
 | --- | --- |
 | `snodec-common` | Shared configuration directory and system account/group setup |
-| `snodec` | Metapackage: all 63 runtime modules, demonstration apps and control tool |
+| `snodec` | Metapackage: all runtime modules, demonstration apps and control tool |
 | `snodec-apps` | Demonstration applications and their plugins |
 | `snodec-control` | `snodec-control` configuration tool; terminal UI where enabled |
 | `snodec-logger` | `libsnodec-logger.so.<ABI>` + `.so.<version>` |
@@ -90,3 +93,16 @@ The `net-l2-*` rows are L2CAP; the `net-rc-*` rows are RFCOMM. Selecting their u
 - DEB/RPM library components also contain their headers and CMake development files. OpenWrt binary packages contain the runtime libraries; development files remain in the build SDK.
 - Library directories follow the distribution's layout, including multiarch directories where applicable. The filenames above identify the libraries independently of their installation directory.
 - Existing application configuration is not replaced by sample files. Log and PID directories are created by the framework when needed.
+
+## Query available packages
+
+```sh
+# APT distributions
+apt-cache pkgnames snodec- | sort
+# RPM distributions
+dnf list --available 'snodec-*'
+```
+
+## After installation
+
+Use `snodec-control --help` to inspect framework configuration. Runtime modules, development files and demonstration programs are different components; installing packages does not configure a network service. Continue with the [framework documentation](https://github.com/SNodeC/snode.c#project-overview).
