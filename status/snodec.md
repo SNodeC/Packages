@@ -130,7 +130,7 @@
 | `amd64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `2.0.0-10~trixie` | 2026-10-11 12:22 | — | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746/job/114464292071) · [Packages](../debian/pool/trixie/) |
 | `arm64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `2.0.0-10~trixie` | 2026-10-11 13:48 | — | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746/job/114464292349) · [Packages](../debian/pool/trixie/) |
 | `armhf` | <img src="badges/outdated.svg" alt="outdated" title="Outdated" width="14" height="14" align="absmiddle"> `2.0.0-9~trixie` | — | <img src="badges/cancelled.svg" alt="cancelled" title="Cancelled" width="14" height="14" align="absmiddle"> `2.0.0-10~trixie` | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746/job/114464292465) · [Packages](../debian/pool/trixie/) |
-| `riscv64` | <img src="badges/outdated.svg" alt="outdated" title="Outdated" width="14" height="14" align="absmiddle"> `2.0.0-9~trixie` | — | <img src="badges/pending.svg" alt="pending" title="Pending" width="14" height="14" align="absmiddle"> `2.0.0-10~trixie` | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746) · [Packages](../debian/pool/trixie/) |
+| `riscv64` | <img src="badges/outdated.svg" alt="outdated" title="Outdated" width="14" height="14" align="absmiddle"> `2.0.0-9~trixie` | — | <img src="badges/cancelled.svg" alt="cancelled" title="Cancelled" width="14" height="14" align="absmiddle"> `2.0.0-10~trixie` | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746) · [Packages](../debian/pool/trixie/) |
 
 <a id="debian-forky"></a>
 
@@ -142,8 +142,8 @@
 | --- | --- | --- | --- | --- |
 | `amd64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `2.0.0-10~forky` | 2026-10-11 13:42 | — | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746/job/114464292486) · [Packages](../debian/pool/forky/) |
 | `arm64` | <img src="badges/current.svg" alt="current" title="Current" width="14" height="14" align="absmiddle"> `2.0.0-10~forky` | 2026-10-11 12:13 | — | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746/job/114464291838) · [Packages](../debian/pool/forky/) |
-| `armhf` | <img src="badges/outdated.svg" alt="outdated" title="Outdated" width="14" height="14" align="absmiddle"> `2.0.0-9~forky` | — | <img src="badges/pending.svg" alt="pending" title="Pending" width="14" height="14" align="absmiddle"> `2.0.0-10~forky` | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746) · [Packages](../debian/pool/forky/) |
-| `riscv64` | <img src="badges/outdated.svg" alt="outdated" title="Outdated" width="14" height="14" align="absmiddle"> `2.0.0-9~forky` | — | <img src="badges/pending.svg" alt="pending" title="Pending" width="14" height="14" align="absmiddle"> `2.0.0-10~forky` | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746) · [Packages](../debian/pool/forky/) |
+| `armhf` | <img src="badges/outdated.svg" alt="outdated" title="Outdated" width="14" height="14" align="absmiddle"> `2.0.0-9~forky` | — | <img src="badges/cancelled.svg" alt="cancelled" title="Cancelled" width="14" height="14" align="absmiddle"> `2.0.0-10~forky` | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746) · [Packages](../debian/pool/forky/) |
+| `riscv64` | <img src="badges/outdated.svg" alt="outdated" title="Outdated" width="14" height="14" align="absmiddle"> `2.0.0-9~forky` | — | <img src="badges/cancelled.svg" alt="cancelled" title="Cancelled" width="14" height="14" align="absmiddle"> `2.0.0-10~forky` | [Build log](https://github.com/SNodeC/snode.c/actions/runs/38137481746) · [Packages](../debian/pool/forky/) |
 
 <a id="debian-sid"></a>
 
