@@ -1,16 +1,19 @@
+<!-- Published from DistributionPackages/site; edit that source, not this snapshot. -->
+<a id="page-overview"></a>
+
+[![Packages](media/page-banner.svg)](../README.md#project-overview)
+
 # MQTTSuite package catalog
 
 Package names are shared by OpenWrt, Raspberry Pi OS, Debian, Ubuntu, Rocky Linux and Fedora. Architectures affect availability and binary contents, not names.
 
-## Installation and build results
+## Installation and availability
 
-- [Install MQTTSuite, including repository setup](install-mqttsuite.md)
-- [Published versions and build results](https://github.com/SNodeC/Packages/blob/main/docs/status.md)
-- [Return to the repository overview](../README.md)
+[Choose your distribution](../README.md#install) · [MQTTSuite status](../status/mqttsuite.md#page-overview)
 
-## Packages: 8
+## Package catalog
 
-Library `<version>` follows the published release; `<ABI>` identifies its binary interface. See [Package status](https://github.com/SNodeC/Packages/blob/main/docs/status.md) for current versions.
+Library `<version>` follows the published release; `<ABI>` identifies its binary interface. See [Package status](../status/mqttsuite.md#page-overview) for current versions.
 
 | Package | Payload / role |
 | --- | --- |
@@ -30,3 +33,39 @@ Application libraries also include the real `.so.<version>` file. Each enabled M
 - OpenWrt's broker, bridge and integrator packages include procd service scripts. DEB/RPM packages currently do not ship systemd units.
 - Library directories follow the distribution's layout. WebSocket plugins are included when their transport is enabled in the build.
 - Applications use SNode.C's configuration and account setup through their framework dependencies; no separate `mqttsuite-common` package is needed.
+
+## Query available packages
+
+```sh
+# APT distributions
+apt-cache pkgnames mqttsuite- | sort
+# RPM distributions
+dnf list --available 'mqttsuite-*'
+```
+
+## After installation
+
+Inspect `mqttbroker --help` and `mqttcli --help`. Configure listeners, credentials and TLS certificates before starting services. MQTTStore needs a configured database. Read the [application deployment guidance](https://github.com/SNodeC/mqttsuite#project-overview) before exposing management interfaces.
+
+### Native Linux
+
+Executables are installed in `/usr/bin`. Administrative configuration lives in `/etc/snode.c`; non-root processes use their per-user configuration directories. Installation creates the `snodec` system group but does not start network services. Run a foreground broker with:
+
+```sh
+mqttbroker --daemonize=false
+```
+
+For persistent operation, configure a service with the desired account and arguments. DEB/RPM packages currently do not supply systemd service units.
+
+### OpenWrt services
+
+Configure `/etc/snode.c/mqttbroker.conf` before enabling the broker:
+
+```sh
+/etc/init.d/mqttbroker enable
+/etc/init.d/mqttbroker start
+pidof mqttbroker
+logread -e mqttbroker
+```
+
+After configuration changes, run `/etc/init.d/mqttbroker restart`. The bridge and integrator provide `mqttbridge` and `mqttintegrator` services; configure each before enabling it.
