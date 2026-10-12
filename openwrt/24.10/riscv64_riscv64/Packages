@@ -1,0 +1,977 @@
+Package: mqttsuite-bridge
+Version: 1.0.2-r13
+Depends: libc, snodec-mqtt-client, snodec-http-server-express-legacy-in, snodec-http-server-express-tls-in, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-un-stream-legacy, snodec-mqtt-client-websocket, snodec-mqtt-client-websocket
+License: GPL-3.0-or-later
+Section: net
+URL: https://github.com/SNodeC/mqttsuite
+Architecture: riscv64_riscv64
+Installed-Size: 1863680
+Filename: mqttsuite-bridge_1.0.2-r13_riscv64_riscv64.ipk
+Size: 628891
+SHA256sum: ea432ede1672dae6563a0950f1189124113055d4f5024905fd4992406f7f4478
+Description:  MQTT bridge
+
+Package: mqttsuite-broker
+Version: 1.0.2-r13
+Depends: libc, snodec-mqtt-server, snodec-net-in-stream-legacy, snodec-http-server-express-legacy-in, snodec-net-in-stream-tls, snodec-http-server-express-tls-in, snodec-net-in6-stream-legacy, snodec-http-server-express-legacy-in6, snodec-net-in6-stream-tls, snodec-http-server-express-tls-in6, snodec-net-un-stream-legacy, snodec-http-server-express-legacy-un, snodec-mqtt-server-websocket, snodec-mqtt-server-websocket
+License: GPL-3.0-or-later
+Section: net
+URL: https://github.com/SNodeC/mqttsuite
+Architecture: riscv64_riscv64
+Installed-Size: 2580480
+Filename: mqttsuite-broker_1.0.2-r13_riscv64_riscv64.ipk
+Size: 873772
+SHA256sum: 80ee7312666d2adad7137815740a8eb083614b80328f4dd21341618f429a72b9
+Description:  MQTT broker
+
+Package: mqttsuite-cli
+Version: 1.0.2-r13
+Depends: libc, snodec-mqtt-client, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-un-stream-legacy, snodec-mqtt-client-websocket, snodec-mqtt-client-websocket
+License: GPL-3.0-or-later
+Section: net
+URL: https://github.com/SNodeC/mqttsuite
+Architecture: riscv64_riscv64
+Installed-Size: 1013760
+Filename: mqttsuite-cli_1.0.2-r13_riscv64_riscv64.ipk
+Size: 357449
+SHA256sum: b847db03bf29a35db9dff1850131c3642d2a89bb6b699323b2c65c6b801a4c2b
+Description:  MQTT cli
+
+Package: mqttsuite-integrator
+Version: 1.0.2-r13
+Depends: libc, snodec-mqtt-client, snodec-http-server-express-legacy-in, snodec-http-server-express-tls-in, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-un-stream-legacy, snodec-mqtt-client-websocket, snodec-mqtt-client-websocket
+License: GPL-3.0-or-later
+Section: net
+URL: https://github.com/SNodeC/mqttsuite
+Architecture: riscv64_riscv64
+Installed-Size: 1894400
+Filename: mqttsuite-integrator_1.0.2-r13_riscv64_riscv64.ipk
+Size: 663274
+SHA256sum: ff4a105a9af05993aa1261ae13e263b1b994739741d08551b1d41a137f5e0610
+Description:  MQTT integrator
+
+Package: mqttsuite-mapping-double
+Version: 1.0.2-r13
+Depends: libc, libstdcpp6
+License: GPL-3.0-or-later
+Section: net
+URL: https://github.com/SNodeC/mqttsuite
+Architecture: riscv64_riscv64
+Installed-Size: 30720
+Filename: mqttsuite-mapping-double_1.0.2-r13_riscv64_riscv64.ipk
+Size: 9334
+SHA256sum: e9d69800e10ca62cc288db6f5db961e00093ca2df20982dd7e72530bfcd13eba
+Description:  MQTT mapping plugin: double
+
+Package: mqttsuite-mapping-storage
+Version: 1.0.2-r13
+Depends: libc, libstdcpp6
+License: GPL-3.0-or-later
+Section: net
+URL: https://github.com/SNodeC/mqttsuite
+Architecture: riscv64_riscv64
+Installed-Size: 51200
+Filename: mqttsuite-mapping-storage_1.0.2-r13_riscv64_riscv64.ipk
+Size: 15442
+SHA256sum: 817341987f5272d9584a881d9087772414daa6f1bdf7de51ee9f3fe8a67e7ea9
+Description:  MQTT mapping plugin: storage
+
+Package: mqttsuite-store
+Version: 1.0.2-r13
+Depends: libc, snodec-mqtt-client, snodec-db-mariadb, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-un-stream-legacy, snodec-mqtt-client-websocket, snodec-mqtt-client-websocket
+License: GPL-3.0-or-later
+Section: net
+URL: https://github.com/SNodeC/mqttsuite
+Architecture: riscv64_riscv64
+Installed-Size: 1454080
+Filename: mqttsuite-store_1.0.2-r13_riscv64_riscv64.ipk
+Size: 519501
+SHA256sum: 6f197aad5d378f24db7aa691f0d434d50459e733a0acbe3e92a84ed621b81a7b
+Description:  MQTT store
+
+Package: mqttsuite
+Version: 1.0.2-r13
+Depends: libc, mqttsuite-broker, mqttsuite-integrator, mqttsuite-bridge, mqttsuite-cli, mqttsuite-store, mqttsuite-mapping-double, mqttsuite-mapping-storage
+License: GPL-3.0-or-later
+Section: net
+URL: https://github.com/SNodeC/mqttsuite
+Architecture: riscv64_riscv64
+Installed-Size: 10240
+Filename: mqttsuite_1.0.2-r13_riscv64_riscv64.ipk
+Size: 921
+SHA256sum: c6dfb51cc26dc8ffeb4b39d86de6dbd7a6d31e34a95935c9aa3c4ac85ba859ab
+Description:  All MQTTSuite applications and mapping plugins
+
+Package: snodec-apps
+Version: 2.0.0-r13
+Depends: libc, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-l2-stream-legacy, snodec-net-l2-stream-tls, snodec-net-rc-stream-legacy, snodec-net-rc-stream-tls, snodec-net-un-stream-legacy, snodec-net-un-stream-tls, snodec-http-server-express, snodec-http-client, snodec-websocket-server, snodec-websocket-client, snodec-mqtt-server, snodec-mqtt-client, snodec-db-mariadb
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 13660160
+Filename: snodec-apps_2.0.0-r13_riscv64_riscv64.ipk
+Size: 5574670
+SHA256sum: c1afd9226d2b2c3602c069d08a6cb0d4909ba0dcecb39aaa72db234e99cc7583
+Description:  This package contains all demo applications of SNode.C.
+ 
+
+Package: snodec-common
+Version: 2.0.0-r13
+Depends: libc, libstdcpp6
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 10240
+Filename: snodec-common_2.0.0-r13_riscv64_riscv64.ipk
+Size: 1103
+SHA256sum: 8c47ad06dfa951bbb330fc2bcd429b1ed709ec427aa1c3e30e0c73aa72100e4e
+Description:  SNode.C is a very simple to use lightweight highly extendable event
+ driven layer-based framework for network applications in the spirit
+ of node.js written entirely in C++.
+ 
+
+Package: snodec-control
+Version: 2.0.0-r13
+Depends: libc, snodec-common
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 276480
+Filename: snodec-control_2.0.0-r13_riscv64_riscv64.ipk
+Size: 112632
+SHA256sum: 26edb0f76b5142b838f1ff1b1fc44801b50c16670437f023a3738a1d9798770f
+Description:  SNode.C control socket client
+
+Package: snodec-core-mux-epoll
+Version: 2.0.0-r13
+Depends: libc, snodec-logger
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 40960
+Filename: snodec-core-mux-epoll_2.0.0-r13_riscv64_riscv64.ipk
+Size: 13879
+SHA256sum: b445d12ebda9c1085baed68f215e74e155ca9a603cafeb17a517267960c46d42
+Description:  This package contains the module 'core-mux-epoll' of SNode.C
+ 
+
+Package: snodec-core-mux-poll
+Version: 2.0.0-r13
+Depends: libc, snodec-logger
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 40960
+Filename: snodec-core-mux-poll_2.0.0-r13_riscv64_riscv64.ipk
+Size: 11018
+SHA256sum: 0fce17cccc80ae6b3123e6e6eef613fd6aaae37c9a81bd0fce2981178f1b31cc
+Description:  This package contains the module 'core-mux-poll' of SNode.C
+ 
+
+Package: snodec-core-mux-select
+Version: 2.0.0-r13
+Depends: libc, snodec-logger
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 30720
+Filename: snodec-core-mux-select_2.0.0-r13_riscv64_riscv64.ipk
+Size: 7555
+SHA256sum: 78466efd2cd7ae547fb759a6a9ff240e3ba74e60819f8d600627725430f0d2d6
+Description:  This package contains the module 'core-mux-select' of SNode.C
+ 
+
+Package: snodec-core-socket-stream-legacy
+Version: 2.0.0-r13
+Depends: libc, snodec-core-socket-stream
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 30720
+Filename: snodec-core-socket-stream-legacy_2.0.0-r13_riscv64_riscv64.ipk
+Size: 5363
+SHA256sum: 33f191980c57d879a71a54ba7663be61fa299b6da77738c6246fcf1b2422208f
+Description:  This package contains the module 'core-socket-stream-legacy' of SNode.C
+ 
+
+Package: snodec-core-socket-stream-tls
+Version: 2.0.0-r13
+Depends: libc, snodec-core-socket-stream, libopenssl3
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 102400
+Filename: snodec-core-socket-stream-tls_2.0.0-r13_riscv64_riscv64.ipk
+Size: 33054
+SHA256sum: a7333ec5f8b4ffd95301be83fc91bf31ec527de84e1f02ead03ce5ccf46cc19e
+Description:  This package contains the module 'core-socket-stream-tls' of SNode.C
+ 
+
+Package: snodec-core-socket-stream
+Version: 2.0.0-r13
+Depends: libc, snodec-core-socket
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 276480
+Filename: snodec-core-socket-stream_2.0.0-r13_riscv64_riscv64.ipk
+Size: 102744
+SHA256sum: a7796e304f7301d5acb21c6f0811c63a23cd61a517fb79e96b7331e4a730fb5c
+Description:  This package contains the module 'core-socket-stream' of SNode.C
+ 
+
+Package: snodec-core-socket
+Version: 2.0.0-r13
+Depends: libc, snodec-core
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 20480
+Filename: snodec-core-socket_2.0.0-r13_riscv64_riscv64.ipk
+Size: 7562
+SHA256sum: c9c438046095cec382f119a1eccf411cbe019838c4835817536b32e3e4d612ea
+Description:  This package contains the module 'core-socket' of SNode.C
+ 
+
+Package: snodec-core
+Version: 2.0.0-r13
+Depends: libc, snodec-utils, libatomic1, snodec-core-mux-epoll
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 348160
+Filename: snodec-core_2.0.0-r13_riscv64_riscv64.ipk
+Size: 130759
+SHA256sum: d0a9c323f337835a823d57845ed44c01f0bb256dc5bc4eb6814a5654fc740c3b
+Description:  This package contains the module 'core' of SNode.C
+ 
+
+Package: snodec-db-mariadb
+Version: 2.0.0-r13
+Depends: libc, snodec-core, libmariadb3
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 112640
+Filename: snodec-db-mariadb_2.0.0-r13_riscv64_riscv64.ipk
+Size: 33794
+SHA256sum: e3fb5823b3bd5cb8c655fe0706163efb258ea4b1eda4515412c00e477d41be7d
+Description:  This package contains the module 'db-mariadb' of SNode.C
+ 
+
+Package: snodec-http-client
+Version: 2.0.0-r13
+Depends: libc, snodec-http
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 399360
+Filename: snodec-http-client_2.0.0-r13_riscv64_riscv64.ipk
+Size: 154129
+SHA256sum: ddd14e27239b517a032a5d4746142805ed7918bec8094276ef41fc8ad4f7a0e9
+Description:  This package contains the module 'http-client' of SNode.C
+ 
+
+Package: snodec-http-server-express-legacy-in6
+Version: 2.0.0-r13
+Depends: libc, snodec-http-server-express, snodec-net-in6-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 286720
+Filename: snodec-http-server-express-legacy-in6_2.0.0-r13_riscv64_riscv64.ipk
+Size: 94294
+SHA256sum: 51e188460ba3d1c7381fe1b901e7e6863e6f2a55e86836bbe6857a5be06b699e
+Description:  This package contains the module 'http-server-express-legacy-in6' of SNode.C
+ 
+
+Package: snodec-http-server-express-legacy-in
+Version: 2.0.0-r13
+Depends: libc, snodec-http-server-express, snodec-net-in-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 286720
+Filename: snodec-http-server-express-legacy-in_2.0.0-r13_riscv64_riscv64.ipk
+Size: 94353
+SHA256sum: b361a86375c5fae6bfc54a24eaa0072f89de668712b622a0e8cc6b4898804a03
+Description:  This package contains the module 'http-server-express-legacy-in' of SNode.C
+ 
+
+Package: snodec-http-server-express-legacy-rc
+Version: 2.0.0-r13
+Depends: libc, snodec-http-server-express, snodec-net-rc-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 286720
+Filename: snodec-http-server-express-legacy-rc_2.0.0-r13_riscv64_riscv64.ipk
+Size: 94260
+SHA256sum: b7b8e68f6bd819738c65e9fb105f1a8504254bf941ff715cb2b47fa4cb58bc30
+Description:  This package contains the module 'http-server-express-legacy-rc' of SNode.C
+ 
+
+Package: snodec-http-server-express-legacy-un
+Version: 2.0.0-r13
+Depends: libc, snodec-http-server-express, snodec-net-un-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 286720
+Filename: snodec-http-server-express-legacy-un_2.0.0-r13_riscv64_riscv64.ipk
+Size: 94291
+SHA256sum: b5b6626e27244f49019a9aea6d9e85f7dcf40f7ce5920c1a40c0f1e8bd407c1d
+Description:  This package contains the module 'http-server-express-legacy-un' of SNode.C
+ 
+
+Package: snodec-http-server-express-tls-in6
+Version: 2.0.0-r13
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-in6-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 286720
+Filename: snodec-http-server-express-tls-in6_2.0.0-r13_riscv64_riscv64.ipk
+Size: 94303
+SHA256sum: 07217d87c042b1b5aad31d3913189e69cae4fba8285ce3bc2cc7ea8155fb177b
+Description:  This package contains the module 'http-server-express-tls-in6' of SNode.C
+ 
+
+Package: snodec-http-server-express-tls-in
+Version: 2.0.0-r13
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-in-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 286720
+Filename: snodec-http-server-express-tls-in_2.0.0-r13_riscv64_riscv64.ipk
+Size: 94315
+SHA256sum: e821d22af78e5bcbb04948a318cc30c04fd30eeed1771c450cde36c23a446758
+Description:  This package contains the module 'http-server-express-tls-in' of SNode.C
+ 
+
+Package: snodec-http-server-express-tls-rc
+Version: 2.0.0-r13
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-rc-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 286720
+Filename: snodec-http-server-express-tls-rc_2.0.0-r13_riscv64_riscv64.ipk
+Size: 94238
+SHA256sum: 39a117cd355be33c0b8cee3ce72b8ea2393e8f78a5a8fdaf088224ad71c0e592
+Description:  This package contains the module 'http-server-express-tls-rc' of SNode.C
+ 
+
+Package: snodec-http-server-express-tls-un
+Version: 2.0.0-r13
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-un-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 286720
+Filename: snodec-http-server-express-tls-un_2.0.0-r13_riscv64_riscv64.ipk
+Size: 94313
+SHA256sum: fed9c3e3f4f9cb05d4b05ba065d665001b350b9022fdb0ec0f4df039e3f2cc66
+Description:  This package contains the module 'http-server-express-tls-un' of SNode.C
+ 
+
+Package: snodec-http-server-express
+Version: 2.0.0-r13
+Depends: libc, snodec-http-server
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 655360
+Filename: snodec-http-server-express_2.0.0-r13_riscv64_riscv64.ipk
+Size: 225861
+SHA256sum: 41549f895a18478b6a21f0e338d8fbcccdb5cbe47c77dd4f0739a6e980bc154f
+Description:  This package contains the module 'http-server-express' of SNode.C
+ 
+
+Package: snodec-http-server
+Version: 2.0.0-r13
+Depends: libc, snodec-http
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 378880
+Filename: snodec-http-server_2.0.0-r13_riscv64_riscv64.ipk
+Size: 145435
+SHA256sum: 0ed0b85a2583bd303d0d4728b9cd2e35de179531659283beb89d3cf0f6a84c3e
+Description:  This package contains the module 'http-server' of SNode.C
+ 
+
+Package: snodec-http
+Version: 2.0.0-r13
+Depends: libc, snodec-core-socket-stream, libmagic
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 389120
+Filename: snodec-http_2.0.0-r13_riscv64_riscv64.ipk
+Size: 152082
+SHA256sum: 48365bee23a61a12c5ab6b6543f32e787d27dd490695a0bee3027049f4da839c
+Description:  This package contains the module 'http' of SNode.C
+ 
+
+Package: snodec-logger
+Version: 2.0.0-r13
+Depends: libc, snodec-common
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 440320
+Filename: snodec-logger_2.0.0-r13_riscv64_riscv64.ipk
+Size: 152886
+SHA256sum: 2cb146dd67406fa7a85529416eb08b50016e083485b6ac37e1f067abff303a5b
+Description:  This package contains the module 'logger' of SNode.C
+ 
+
+Package: snodec-mqtt-client-websocket
+Version: 2.0.0-r13
+Depends: libc, snodec-mqtt-client, snodec-websocket-client
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 30720
+Filename: snodec-mqtt-client-websocket_2.0.0-r13_riscv64_riscv64.ipk
+Size: 10245
+SHA256sum: 6840f853529108b519079652f3be36f9b6ebafdc933c846d48713d22397a6da1
+Description:  This package contains the module 'mqtt-client-websocket' of SNode.C
+ 
+
+Package: snodec-mqtt-client
+Version: 2.0.0-r13
+Depends: libc, snodec-mqtt
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 204800
+Filename: snodec-mqtt-client_2.0.0-r13_riscv64_riscv64.ipk
+Size: 68901
+SHA256sum: 61a03f1e242873249efaebae0a9fbb73a584bb560c0a8c6561d29bc7e818d8c7
+Description:  This package contains the module 'mqtt-client' of SNode.C
+ 
+
+Package: snodec-mqtt-server-websocket
+Version: 2.0.0-r13
+Depends: libc, snodec-mqtt-server, snodec-websocket-server
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 30720
+Filename: snodec-mqtt-server-websocket_2.0.0-r13_riscv64_riscv64.ipk
+Size: 10238
+SHA256sum: f982a754f9bbb297bfb23940adda03cf418aa04aaefedd539962508386b13d33
+Description:  This package contains the module 'mqtt-server-websocket' of SNode.C
+ 
+
+Package: snodec-mqtt-server
+Version: 2.0.0-r13
+Depends: libc, snodec-mqtt
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 337920
+Filename: snodec-mqtt-server_2.0.0-r13_riscv64_riscv64.ipk
+Size: 119032
+SHA256sum: 547c4d0b7daaf60ffefd3967b1cdf86d922d86f8d7bd2f5d29a3c72bb56d96ef
+Description:  This package contains the module 'mqtt-server' of SNode.C
+ 
+
+Package: snodec-mqtt
+Version: 2.0.0-r13
+Depends: libc, snodec-core-socket-stream
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 153600
+Filename: snodec-mqtt_2.0.0-r13_riscv64_riscv64.ipk
+Size: 54120
+SHA256sum: 66481589dfa903c707e42c2f8265d13a3ab491feb569617433e0a8e22932df46
+Description:  This package contains the module 'mqtt' of SNode.C
+ 
+
+Package: snodec-net-in-phy-stream
+Version: 2.0.0-r13
+Depends: libc, snodec-net-in-phy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 20480
+Filename: snodec-net-in-phy-stream_2.0.0-r13_riscv64_riscv64.ipk
+Size: 4847
+SHA256sum: eb578a21cc45533875a7c82f68a86f4c4c9f4a65074d779a72e082f83aa2e2c3
+Description:  This package contains the module 'net-in-phy-stream' of SNode.C
+ 
+
+Package: snodec-net-in-phy
+Version: 2.0.0-r13
+Depends: libc, snodec-net-in
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 20480
+Filename: snodec-net-in-phy_2.0.0-r13_riscv64_riscv64.ipk
+Size: 6091
+SHA256sum: 9db2c728973840243feeea1eaa8e2b217ea41fd1b31b659031191fe31e53011a
+Description:  This package contains the module 'net-in-phy' of SNode.C
+ 
+
+Package: snodec-net-in-stream-legacy
+Version: 2.0.0-r13
+Depends: libc, snodec-net-in-stream, snodec-core-socket-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 450560
+Filename: snodec-net-in-stream-legacy_2.0.0-r13_riscv64_riscv64.ipk
+Size: 139756
+SHA256sum: 2767e2e69944f5ba10159a0b4f37b5409bcea4785a71e0626edf7d45b62a9175
+Description:  This package contains the module 'net-in-stream-legacy' of SNode.C
+ 
+
+Package: snodec-net-in-stream-tls
+Version: 2.0.0-r13
+Depends: libc, snodec-net-in-stream, snodec-core-socket-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 604160
+Filename: snodec-net-in-stream-tls_2.0.0-r13_riscv64_riscv64.ipk
+Size: 180431
+SHA256sum: b7fb081a2897589a143656a445d04f1be62644aaf634f9787275aa0ce34d9c73
+Description:  This package contains the module 'net-in-stream-tls' of SNode.C
+ 
+
+Package: snodec-net-in-stream
+Version: 2.0.0-r13
+Depends: libc, snodec-net-in-phy-stream
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 235520
+Filename: snodec-net-in-stream_2.0.0-r13_riscv64_riscv64.ipk
+Size: 91861
+SHA256sum: 83e792888754d90d8288124a16a269cc0be7e08099852df9406fa59bd3a8e1de
+Description:  This package contains the module 'net-in-stream' of SNode.C
+ 
+
+Package: snodec-net-in6-phy-stream
+Version: 2.0.0-r13
+Depends: libc, snodec-net-in6-phy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 20480
+Filename: snodec-net-in6-phy-stream_2.0.0-r13_riscv64_riscv64.ipk
+Size: 4845
+SHA256sum: 79b9a56cf053a917c1601775986804896473ec3c9ef4c540d04e814a2909f6c2
+Description:  This package contains the module 'net-in6-phy-stream' of SNode.C
+ 
+
+Package: snodec-net-in6-phy
+Version: 2.0.0-r13
+Depends: libc, snodec-net-in6
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 20480
+Filename: snodec-net-in6-phy_2.0.0-r13_riscv64_riscv64.ipk
+Size: 6102
+SHA256sum: 4ff214d8ac2a6d273047f11c4ee7aeb888738bbbf0ee26935396b379ebcc2ecc
+Description:  This package contains the module 'net-in6-phy' of SNode.C
+ 
+
+Package: snodec-net-in6-stream-legacy
+Version: 2.0.0-r13
+Depends: libc, snodec-net-in6-stream, snodec-core-socket-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 450560
+Filename: snodec-net-in6-stream-legacy_2.0.0-r13_riscv64_riscv64.ipk
+Size: 139855
+SHA256sum: 372fe237afb513d4c477cf9dfff2c8f5b02b329bce9c932ab42919f8f3f2acd1
+Description:  This package contains the module 'net-in6-stream-legacy' of SNode.C
+ 
+
+Package: snodec-net-in6-stream-tls
+Version: 2.0.0-r13
+Depends: libc, snodec-net-in6-stream, snodec-core-socket-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 604160
+Filename: snodec-net-in6-stream-tls_2.0.0-r13_riscv64_riscv64.ipk
+Size: 180504
+SHA256sum: 61d24179687042240ae5f8b73f64c695923513158bd4852dd7acf7bdc8267d3e
+Description:  This package contains the module 'net-in6-stream-tls' of SNode.C
+ 
+
+Package: snodec-net-in6-stream
+Version: 2.0.0-r13
+Depends: libc, snodec-net-in6-phy-stream
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 235520
+Filename: snodec-net-in6-stream_2.0.0-r13_riscv64_riscv64.ipk
+Size: 92566
+SHA256sum: b5fac26169d5752e4c2be9e288554383442e393faf1c79d24ea140f4ee814748
+Description:  This package contains the module 'net-in6-stream' of SNode.C
+ 
+
+Package: snodec-net-in6
+Version: 2.0.0-r13
+Depends: libc, snodec-net
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 266240
+Filename: snodec-net-in6_2.0.0-r13_riscv64_riscv64.ipk
+Size: 99640
+SHA256sum: f287337cd619535d261099f5d1793f49c495f9df1312fa2dce206cd3f61715d7
+Description:  This package contains the module 'net-in6' of SNode.C
+ 
+
+Package: snodec-net-in
+Version: 2.0.0-r13
+Depends: libc, snodec-net
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 266240
+Filename: snodec-net-in_2.0.0-r13_riscv64_riscv64.ipk
+Size: 99292
+SHA256sum: 76bada60d6fbe5c8c4a610e4dd7e6348d4a5332a4c43c8718a16ec52ade0e652
+Description:  This package contains the module 'net-in' of SNode.C
+ 
+
+Package: snodec-net-l2-phy-stream
+Version: 2.0.0-r13
+Depends: libc, snodec-net-l2-phy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 20480
+Filename: snodec-net-l2-phy-stream_2.0.0-r13_riscv64_riscv64.ipk
+Size: 4936
+SHA256sum: 666d7db96e64c796a0f347b56b41f5f5d32de2046ca3d2602e6100a8d94f9109
+Description:  This package contains the module 'net-l2-phy-stream' of SNode.C
+ 
+
+Package: snodec-net-l2-phy
+Version: 2.0.0-r13
+Depends: libc, snodec-net-l2, bluez-libs
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 20480
+Filename: snodec-net-l2-phy_2.0.0-r13_riscv64_riscv64.ipk
+Size: 5590
+SHA256sum: 74d614d9ac6842046300bb216b71c7ca3600e2e56a3b206c030cda1a36646ce0
+Description:  This package contains the module 'net-l2-phy' of SNode.C
+ 
+
+Package: snodec-net-l2-stream-legacy
+Version: 2.0.0-r13
+Depends: libc, snodec-net-l2-stream, snodec-core-socket-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 450560
+Filename: snodec-net-l2-stream-legacy_2.0.0-r13_riscv64_riscv64.ipk
+Size: 139272
+SHA256sum: e183f1653db715932f398702d103a6926acba99aaaa3edaae5d937f4be90e12a
+Description:  This package contains the module 'net-l2-stream-legacy' of SNode.C
+ 
+
+Package: snodec-net-l2-stream-tls
+Version: 2.0.0-r13
+Depends: libc, snodec-net-l2-stream, snodec-core-socket-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 604160
+Filename: snodec-net-l2-stream-tls_2.0.0-r13_riscv64_riscv64.ipk
+Size: 180162
+SHA256sum: 9ca96381a9a2e68c4c57194d6022e2750f5ba6f9880b0e92afe6ec42b96666a2
+Description:  This package contains the module 'net-l2-stream-tls' of SNode.C
+ 
+
+Package: snodec-net-l2-stream
+Version: 2.0.0-r13
+Depends: libc, snodec-net-l2-phy-stream
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 215040
+Filename: snodec-net-l2-stream_2.0.0-r13_riscv64_riscv64.ipk
+Size: 82509
+SHA256sum: 471ba2b53ab8c52f62add20e8d32747cbc68acbedfa636150d2cb0ec5e9059da
+Description:  This package contains the module 'net-l2-stream' of SNode.C
+ 
+
+Package: snodec-net-l2
+Version: 2.0.0-r13
+Depends: libc, snodec-net, bluez-libs
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 358400
+Filename: snodec-net-l2_2.0.0-r13_riscv64_riscv64.ipk
+Size: 127716
+SHA256sum: 953f9cad475e9266e8d0c2f829e899bc5d1037543bf0db2efcd950d05f938c15
+Description:  This package contains the module 'net-l2' of SNode.C
+ 
+
+Package: snodec-net-rc-phy-stream
+Version: 2.0.0-r13
+Depends: libc, snodec-net-rc-phy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 20480
+Filename: snodec-net-rc-phy-stream_2.0.0-r13_riscv64_riscv64.ipk
+Size: 4847
+SHA256sum: 2de99cb72c1f5596559241068fbbacae8c057c35f06a6bcd2c8b882d9e27fe3b
+Description:  This package contains the module 'net-rc-phy-stream' of SNode.C
+ 
+
+Package: snodec-net-rc-phy
+Version: 2.0.0-r13
+Depends: libc, snodec-net-rc, bluez-libs
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 20480
+Filename: snodec-net-rc-phy_2.0.0-r13_riscv64_riscv64.ipk
+Size: 5587
+SHA256sum: 510565294f416f8887f4e4da5a0db69a55ff2c8581c2c94398c9f7c8f90c10e7
+Description:  This package contains the module 'net-rc-phy' of SNode.C
+ 
+
+Package: snodec-net-rc-stream-legacy
+Version: 2.0.0-r13
+Depends: libc, snodec-net-rc-stream, snodec-core-socket-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 450560
+Filename: snodec-net-rc-stream-legacy_2.0.0-r13_riscv64_riscv64.ipk
+Size: 139330
+SHA256sum: 464890ca0a5d4944afa4a16e18218fe254934366443c36792d5fb90fbbfafd7f
+Description:  This package contains the module 'net-rc-stream-legacy' of SNode.C
+ 
+
+Package: snodec-net-rc-stream-tls
+Version: 2.0.0-r13
+Depends: libc, snodec-net-rc-stream, snodec-core-socket-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 604160
+Filename: snodec-net-rc-stream-tls_2.0.0-r13_riscv64_riscv64.ipk
+Size: 180037
+SHA256sum: b0e092bb770b42febe57f5f4f89ba93e990290cecc4ba6864d9276710af9f5d3
+Description:  This package contains the module 'net-rc-stream-tls' of SNode.C
+ 
+
+Package: snodec-net-rc-stream
+Version: 2.0.0-r13
+Depends: libc, snodec-net-rc-phy-stream
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 215040
+Filename: snodec-net-rc-stream_2.0.0-r13_riscv64_riscv64.ipk
+Size: 82533
+SHA256sum: 52b22fa25d80eab6258b923124453359faec14579cdaaeeeb7ec59214bf5311b
+Description:  This package contains the module 'net-rc-stream' of SNode.C
+ 
+
+Package: snodec-net-rc
+Version: 2.0.0-r13
+Depends: libc, snodec-net, bluez-libs
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 358400
+Filename: snodec-net-rc_2.0.0-r13_riscv64_riscv64.ipk
+Size: 128095
+SHA256sum: b31ed4cb2868a17a667986dc3f4a44a7a4b290ede5f4db8992de4420e10103aa
+Description:  This package contains the module 'net-rc' of SNode.C
+ 
+
+Package: snodec-net-un-dgram
+Version: 2.0.0-r13
+Depends: libc, snodec-net-un-phy, snodec-net-un
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 40960
+Filename: snodec-net-un-dgram_2.0.0-r13_riscv64_riscv64.ipk
+Size: 13316
+SHA256sum: 21dca8be0543ec58d4317e313328fbdb1b1d94702c2d9d0d356d9be17766b360
+Description:  This package contains the module 'net-un-dgram' of SNode.C
+ 
+
+Package: snodec-net-un-phy-stream
+Version: 2.0.0-r13
+Depends: libc, snodec-net-un-phy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 61440
+Filename: snodec-net-un-phy-stream_2.0.0-r13_riscv64_riscv64.ipk
+Size: 16919
+SHA256sum: 95ba4dffe209ff8027cac7a22debf0a1c229fffcf9cd26a16d2a6d8cd82446bb
+Description:  This package contains the module 'net-un-phy-stream' of SNode.C
+ 
+
+Package: snodec-net-un-phy
+Version: 2.0.0-r13
+Depends: libc, snodec-net-un
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 20480
+Filename: snodec-net-un-phy_2.0.0-r13_riscv64_riscv64.ipk
+Size: 5644
+SHA256sum: 4f379f411d063cb63d5158f809d4b719f46d21a1b60be3318fb036b052ea619c
+Description:  This package contains the module 'net-un-phy' of SNode.C
+ 
+
+Package: snodec-net-un-stream-legacy
+Version: 2.0.0-r13
+Depends: libc, snodec-net-un-stream, snodec-core-socket-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 450560
+Filename: snodec-net-un-stream-legacy_2.0.0-r13_riscv64_riscv64.ipk
+Size: 139091
+SHA256sum: 86a2d5ccecacc072dee12fd2b4273f31b34036dbae10b260739ecf5cb330d235
+Description:  This package contains the module 'net-un-stream-legacy' of SNode.C
+ 
+
+Package: snodec-net-un-stream-tls
+Version: 2.0.0-r13
+Depends: libc, snodec-net-un-stream, snodec-core-socket-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 604160
+Filename: snodec-net-un-stream-tls_2.0.0-r13_riscv64_riscv64.ipk
+Size: 180358
+SHA256sum: 0680a1f7557ccda8f74c3e6fafe0856e9f78f8a91dd3eb91ef9293f525421a07
+Description:  This package contains the module 'net-un-stream-tls' of SNode.C
+ 
+
+Package: snodec-net-un-stream
+Version: 2.0.0-r13
+Depends: libc, snodec-net-un-phy-stream
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 215040
+Filename: snodec-net-un-stream_2.0.0-r13_riscv64_riscv64.ipk
+Size: 82480
+SHA256sum: af2835abd2fde72236e565bbf811d57fee3a45048d2d71e6297fe9e2d1653eca
+Description:  This package contains the module 'net-un-stream' of SNode.C
+ 
+
+Package: snodec-net-un
+Version: 2.0.0-r13
+Depends: libc, snodec-net
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 225280
+Filename: snodec-net-un_2.0.0-r13_riscv64_riscv64.ipk
+Size: 84379
+SHA256sum: f15f68356e78f8878c19c689032086787a97ce4ec55ecb3b28c92e4a37366114
+Description:  This package contains the module 'net-un' of SNode.C
+ 
+
+Package: snodec-net
+Version: 2.0.0-r13
+Depends: libc, snodec-core-socket
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 481280
+Filename: snodec-net_2.0.0-r13_riscv64_riscv64.ipk
+Size: 172480
+SHA256sum: 25bf692e3b61dbfe585e8d09293eec3bda5eab779ec50b7d12cb60d6631fd5d2
+Description:  This package contains the module 'net' of SNode.C
+ 
+
+Package: snodec-utils
+Version: 2.0.0-r13
+Depends: libc, snodec-logger
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 583680
+Filename: snodec-utils_2.0.0-r13_riscv64_riscv64.ipk
+Size: 242281
+SHA256sum: 42eded91a041f5993e6e35cfef8b50ad4e5b017d4d4e23477902e53d92914bc4
+Description:  This package contains the module 'utils' of SNode.C
+ 
+
+Package: snodec-websocket-client
+Version: 2.0.0-r13
+Depends: libc, snodec-websocket, snodec-http-client
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 266240
+Filename: snodec-websocket-client_2.0.0-r13_riscv64_riscv64.ipk
+Size: 98124
+SHA256sum: 25ef625cfcfeca197aca24ff04412738f609de80899a25ad407cfceb9469173a
+Description:  This package contains the module 'websocket-client' of SNode.C
+ 
+
+Package: snodec-websocket-server
+Version: 2.0.0-r13
+Depends: libc, snodec-websocket, snodec-http-server
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 276480
+Filename: snodec-websocket-server_2.0.0-r13_riscv64_riscv64.ipk
+Size: 103054
+SHA256sum: 9d8324704752739cfc8f5a2a238b95f636b9aa876180ac870f2950468b5a3cfb
+Description:  This package contains the module 'websocket-server' of SNode.C
+ 
+
+Package: snodec-websocket
+Version: 2.0.0-r13
+Depends: libc, snodec-utils
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 40960
+Filename: snodec-websocket_2.0.0-r13_riscv64_riscv64.ipk
+Size: 12226
+SHA256sum: 6673a39ac8dd97607fb4a6e5bc2f27b2f251b585a883bd49828401e32c78f509
+Description:  This package contains the module 'websocket' of SNode.C
+ 
+
+Package: snodec
+Version: 2.0.0-r13
+Depends: libc, snodec-apps, snodec-control, snodec-core-mux-epoll, snodec-core-mux-poll, snodec-core-mux-select, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-l2-stream-legacy, snodec-net-l2-stream-tls, snodec-net-rc-stream-legacy, snodec-net-rc-stream-tls, snodec-net-un-stream-legacy, snodec-net-un-stream-tls, snodec-net-un-dgram, snodec-http-server-express, snodec-http-server-express-legacy-in, snodec-http-server-express-legacy-in6, snodec-http-server-express-legacy-rc, snodec-http-server-express-legacy-un, snodec-http-server-express-tls-in, snodec-http-server-express-tls-in6, snodec-http-server-express-tls-rc, snodec-http-server-express-tls-un, snodec-http-client, snodec-websocket-server, snodec-websocket-client, snodec-mqtt-server-websocket, snodec-mqtt-client-websocket, snodec-db-mariadb
+License: LGPL-3.0-or-later
+Section: net
+Architecture: riscv64_riscv64
+Installed-Size: 10240
+Filename: snodec_2.0.0-r13_riscv64_riscv64.ipk
+Size: 1068
+SHA256sum: 2f371d68317ceb01db64a2bbda73b36df17cc20e1f0f58c89e443b05800fc5a7
+Description:  This meta-package selects all SNode.C runtime modules, demonstration
+ applications and the control tool.
+ 
+
