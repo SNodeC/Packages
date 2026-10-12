@@ -9,7 +9,7 @@
 # MQTTSuite package status · latest release 1.0.2 · r13
 
 <!-- snodec:begin menu -->
-<a href="../README.md#install"><img src="../docs/media/menu/install.svg" alt="Install" align="absmiddle"></a> <a href="../docs/catalogs/mqttsuite.md#page-overview"><img src="../docs/media/menu/catalog.svg" alt="Catalog" align="absmiddle"></a> <a href="../docs/troubleshooting.md#page-overview"><img src="../docs/media/menu/troubleshoot.svg" alt="Troubleshoot" align="absmiddle"></a>
+<a href="../README.md#install"><img src="../docs/media/menu/install.svg" alt="Install"></a> <a href="../docs/catalogs/mqttsuite.md#page-overview"><img src="../docs/media/menu/catalog.svg" alt="Catalog"></a> <a href="../docs/troubleshooting.md#page-overview"><img src="../docs/media/menu/troubleshoot.svg" alt="Troubleshoot"></a>
 <!-- snodec:end menu -->
 
 <a id="distributions"></a>
