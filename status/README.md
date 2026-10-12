@@ -8,16 +8,11 @@
 
 # Package status
 
+<!-- snodec:begin menu -->
 [![Install](../docs/media/menu/install.svg)](../README.md#install) [![Troubleshoot](../docs/media/menu/troubleshoot.svg)](../docs/troubleshooting.md#page-overview)
+<!-- snodec:end menu -->
 
 | Project | Latest release | Status |
 | --- | --- | --- |
-| [SNode.C](https://github.com/SNodeC/snode.c#project-overview) | 2.0.0 · r13 | [SNode.C status →](snodec.md#page-overview) |
-| [MQTTSuite](https://github.com/SNodeC/mqttsuite#project-overview) | 1.0.2 · r13 | [MQTTSuite status →](mqttsuite.md#page-overview) |
-
-## Sections
-
-<!-- snodec:begin section-pages -->
-- [MQTTSuite package status · latest release 1.0.2 · r13](mqttsuite.md#page-overview)
-- [SNode.C package status · latest release 2.0.0 · r13](snodec.md#page-overview)
-<!-- snodec:end section-pages -->
+| [SNode.C](https://github.com/SNodeC/snode.c#project-overview) | 2.0.0 · r13 | [SNode.C status](snodec.md#page-overview) |
+| [MQTTSuite](https://github.com/SNodeC/mqttsuite#project-overview) | 1.0.2 · r13 | [MQTTSuite status](mqttsuite.md#page-overview) |

@@ -8,31 +8,32 @@
 
 # SNode.C package status · latest release 2.0.0 · r13
 
+<!-- snodec:begin menu -->
 <a href="../README.md#install"><img src="../docs/media/menu/install.svg" alt="Install" align="absmiddle"></a> <a href="../docs/catalogs/snodec.md#page-overview"><img src="../docs/media/menu/catalog.svg" alt="Catalog" align="absmiddle"></a> <a href="../docs/troubleshooting.md#page-overview"><img src="../docs/media/menu/troubleshoot.svg" alt="Troubleshoot" align="absmiddle"></a>
+<!-- snodec:end menu -->
 
-**OpenWrt** <a href="#openwrt-2410"><img src="menu/24-10.svg" alt="24.10" title="24.10" align="absmiddle"></a> <a href="#openwrt-2512"><img src="menu/25-12.svg" alt="25.12" title="25.12" align="absmiddle"></a>
+<a id="distributions"></a>
 
-**Raspberry Pi OS** <a href="#raspberrypios-bookworm"><img src="menu/bookworm.svg" alt="bookworm" title="bookworm" align="absmiddle"></a> <a href="#raspberrypios-trixie"><img src="menu/trixie.svg" alt="trixie" title="trixie" align="absmiddle"></a>
-
-**Debian** <a href="#debian-trixie"><img src="menu/trixie.svg" alt="trixie" title="trixie" align="absmiddle"></a> <a href="#debian-forky"><img src="menu/forky.svg" alt="forky" title="forky" align="absmiddle"></a> <a href="#debian-sid"><img src="menu/sid.svg" alt="sid" title="sid" align="absmiddle"></a>
-
-**Ubuntu** <a href="#ubuntu-noble"><img src="menu/noble.svg" alt="noble" title="noble" align="absmiddle"></a> <a href="#ubuntu-resolute"><img src="menu/resolute.svg" alt="resolute" title="resolute" align="absmiddle"></a>
-
-**Rocky Linux** <a href="#rocky-9"><img src="menu/9.svg" alt="9" title="9" align="absmiddle"></a> <a href="#rocky-10"><img src="menu/10.svg" alt="10" title="10" align="absmiddle"></a>
-
-**Fedora** <a href="#fedora-43"><img src="menu/43.svg" alt="43" title="43" align="absmiddle"></a> <a href="#fedora-44"><img src="menu/44.svg" alt="44" title="44" align="absmiddle"></a>
+| Distribution | Jump to release |
+| --- | --- |
+| OpenWrt | [24.10](#openwrt-2410) · [25.12](#openwrt-2512) |
+| Raspberry Pi OS | [bookworm](#raspberrypios-bookworm) · [trixie](#raspberrypios-trixie) |
+| Debian | [trixie](#debian-trixie) · [forky](#debian-forky) · [sid](#debian-sid) |
+| Ubuntu | [noble](#ubuntu-noble) · [resolute](#ubuntu-resolute) |
+| Rocky Linux | [9](#rocky-9) · [10](#rocky-10) |
+| Fedora | [43](#fedora-43) · [44](#fedora-44) |
 
 [Legend](#legend) · [What the columns mean](../docs/publication.md#latest-release-available-and-in-build)
 
 ## OpenWrt
 
-<a href="../docs/installation/openwrt.md#page-overview"><img src="menu/install-guide.svg" alt="Install guide" title="Install guide" align="absmiddle"></a>
+[OpenWrt install guide](../docs/installation/openwrt.md#page-overview)
 
 <a id="openwrt-2410"></a>
 
 ### OpenWrt 24.10
 
-<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
+[↑ Distributions](#distributions)
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -66,7 +67,7 @@
 
 ### OpenWrt 25.12
 
-<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
+[↑ Distributions](#distributions)
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -98,13 +99,13 @@
 
 ## Raspberry Pi OS
 
-<a href="../docs/installation/raspberry-pi-os.md#page-overview"><img src="menu/install-guide.svg" alt="Install guide" title="Install guide" align="absmiddle"></a>
+[Raspberry Pi OS install guide](../docs/installation/raspberry-pi-os.md#page-overview)
 
 <a id="raspberrypios-bookworm"></a>
 
 ### Raspberry Pi OS bookworm
 
-<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
+[↑ Distributions](#distributions)
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -114,7 +115,7 @@
 
 ### Raspberry Pi OS trixie
 
-<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
+[↑ Distributions](#distributions)
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -122,13 +123,13 @@
 
 ## Debian
 
-<a href="../docs/installation/debian.md#page-overview"><img src="menu/install-guide.svg" alt="Install guide" title="Install guide" align="absmiddle"></a>
+[Debian install guide](../docs/installation/debian.md#page-overview)
 
 <a id="debian-trixie"></a>
 
 ### Debian trixie
 
-<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
+[↑ Distributions](#distributions)
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -141,7 +142,7 @@
 
 ### Debian forky
 
-<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
+[↑ Distributions](#distributions)
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -154,7 +155,7 @@
 
 ### Debian sid
 
-<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
+[↑ Distributions](#distributions)
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -165,13 +166,13 @@
 
 ## Ubuntu
 
-<a href="../docs/installation/ubuntu.md#page-overview"><img src="menu/install-guide.svg" alt="Install guide" title="Install guide" align="absmiddle"></a>
+[Ubuntu install guide](../docs/installation/ubuntu.md#page-overview)
 
 <a id="ubuntu-noble"></a>
 
 ### Ubuntu noble
 
-<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
+[↑ Distributions](#distributions)
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -182,7 +183,7 @@
 
 ### Ubuntu resolute
 
-<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
+[↑ Distributions](#distributions)
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -191,13 +192,13 @@
 
 ## Rocky Linux
 
-<a href="../docs/installation/rocky-linux.md#page-overview"><img src="menu/install-guide.svg" alt="Install guide" title="Install guide" align="absmiddle"></a>
+[Rocky Linux install guide](../docs/installation/rocky-linux.md#page-overview)
 
 <a id="rocky-9"></a>
 
 ### Rocky Linux 9
 
-<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
+[↑ Distributions](#distributions)
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -208,7 +209,7 @@
 
 ### Rocky Linux 10
 
-<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
+[↑ Distributions](#distributions)
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -217,13 +218,13 @@
 
 ## Fedora
 
-<a href="../docs/installation/fedora.md#page-overview"><img src="menu/install-guide.svg" alt="Install guide" title="Install guide" align="absmiddle"></a>
+[Fedora install guide](../docs/installation/fedora.md#page-overview)
 
 <a id="fedora-43"></a>
 
 ### Fedora 43
 
-<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
+[↑ Distributions](#distributions)
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
@@ -234,7 +235,7 @@
 
 ### Fedora 44
 
-<a href="#page-overview"><img src="menu/menu.svg" alt="↑ menu" title="↑ menu" align="absmiddle"></a>
+[↑ Distributions](#distributions)
 
 | Architecture | Available | Published (UTC) | In build | Links |
 | --- | --- | --- | --- | --- |
