@@ -1,0 +1,977 @@
+Package: mqttsuite-bridge
+Version: 1.0.2-r16
+Depends: libc, snodec-mqtt-client, snodec-http-server-express-legacy-in, snodec-http-server-express-tls-in, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-un-stream-legacy, snodec-mqtt-client-websocket, snodec-mqtt-client-websocket
+License: GPL-3.0-or-later
+Section: net
+URL: https://github.com/SNodeC/mqttsuite
+Architecture: arm_cortex-a7
+Installed-Size: 1597440
+Filename: mqttsuite-bridge_1.0.2-r16_arm_cortex-a7.ipk
+Size: 503880
+SHA256sum: ef0622bf2d435397ce918daa00144bf066f92ae690ed2283983e6af1af34b315
+Description:  MQTT bridge
+
+Package: mqttsuite-broker
+Version: 1.0.2-r16
+Depends: libc, snodec-mqtt-server, snodec-net-in-stream-legacy, snodec-http-server-express-legacy-in, snodec-net-in-stream-tls, snodec-http-server-express-tls-in, snodec-net-in6-stream-legacy, snodec-http-server-express-legacy-in6, snodec-net-in6-stream-tls, snodec-http-server-express-tls-in6, snodec-net-un-stream-legacy, snodec-http-server-express-legacy-un, snodec-mqtt-server-websocket, snodec-mqtt-server-websocket
+License: GPL-3.0-or-later
+Section: net
+URL: https://github.com/SNodeC/mqttsuite
+Architecture: arm_cortex-a7
+Installed-Size: 2201600
+Filename: mqttsuite-broker_1.0.2-r16_arm_cortex-a7.ipk
+Size: 696032
+SHA256sum: 91ccc4690ee0c24575417d1f52be04fff709b1dc591d7d10b294a6e0ce0b1481
+Description:  MQTT broker
+
+Package: mqttsuite-cli
+Version: 1.0.2-r16
+Depends: libc, snodec-mqtt-client, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-un-stream-legacy, snodec-mqtt-client-websocket, snodec-mqtt-client-websocket
+License: GPL-3.0-or-later
+Section: net
+URL: https://github.com/SNodeC/mqttsuite
+Architecture: arm_cortex-a7
+Installed-Size: 727040
+Filename: mqttsuite-cli_1.0.2-r16_arm_cortex-a7.ipk
+Size: 213507
+SHA256sum: b31c7f4ed23cccd26e38f24565b3e1cce5f992c8026c0391d5a582e224b8c075
+Description:  MQTT cli
+
+Package: mqttsuite-integrator
+Version: 1.0.2-r16
+Depends: libc, snodec-mqtt-client, snodec-http-server-express-legacy-in, snodec-http-server-express-tls-in, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-un-stream-legacy, snodec-mqtt-client-websocket, snodec-mqtt-client-websocket
+License: GPL-3.0-or-later
+Section: net
+URL: https://github.com/SNodeC/mqttsuite
+Architecture: arm_cortex-a7
+Installed-Size: 2385920
+Filename: mqttsuite-integrator_1.0.2-r16_arm_cortex-a7.ipk
+Size: 715362
+SHA256sum: 2e764630a752508aaee2609e2b4c70ad77999ea23c6538d32462b30a08dcb979
+Description:  MQTT integrator
+
+Package: mqttsuite-mapping-double
+Version: 1.0.2-r16
+Depends: libc, libstdcpp6
+License: GPL-3.0-or-later
+Section: net
+URL: https://github.com/SNodeC/mqttsuite
+Architecture: arm_cortex-a7
+Installed-Size: 30720
+Filename: mqttsuite-mapping-double_1.0.2-r16_arm_cortex-a7.ipk
+Size: 8168
+SHA256sum: 063fa05024d7f3affeaff0fa140717bcbb80bacc250ea6e64ed8ec98d1d7ad6a
+Description:  MQTT mapping plugin: double
+
+Package: mqttsuite-mapping-storage
+Version: 1.0.2-r16
+Depends: libc, libstdcpp6
+License: GPL-3.0-or-later
+Section: net
+URL: https://github.com/SNodeC/mqttsuite
+Architecture: arm_cortex-a7
+Installed-Size: 51200
+Filename: mqttsuite-mapping-storage_1.0.2-r16_arm_cortex-a7.ipk
+Size: 13408
+SHA256sum: eb965589f35b0eab55c1526b3ace1564b63d6ea9475a6e683a77bfcdbb5e2a9c
+Description:  MQTT mapping plugin: storage
+
+Package: mqttsuite-store
+Version: 1.0.2-r16
+Depends: libc, snodec-mqtt-client, snodec-db-mariadb, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-un-stream-legacy, snodec-mqtt-client-websocket, snodec-mqtt-client-websocket
+License: GPL-3.0-or-later
+Section: net
+URL: https://github.com/SNodeC/mqttsuite
+Architecture: arm_cortex-a7
+Installed-Size: 1116160
+Filename: mqttsuite-store_1.0.2-r16_arm_cortex-a7.ipk
+Size: 359091
+SHA256sum: 02a7fe42e6d5ab735602ce4640c780514b109a94947526df43941a89957000cc
+Description:  MQTT store
+
+Package: mqttsuite
+Version: 1.0.2-r16
+Depends: libc, mqttsuite-broker, mqttsuite-integrator, mqttsuite-bridge, mqttsuite-cli, mqttsuite-store, mqttsuite-mapping-double, mqttsuite-mapping-storage
+License: GPL-3.0-or-later
+Section: net
+URL: https://github.com/SNodeC/mqttsuite
+Architecture: arm_cortex-a7
+Installed-Size: 10240
+Filename: mqttsuite_1.0.2-r16_arm_cortex-a7.ipk
+Size: 925
+SHA256sum: a4ff52df4b8dd9d448e680db39290c419a3fd3ccda272825ea0b6fc48941f2a4
+Description:  All MQTTSuite applications and mapping plugins
+
+Package: snodec-apps
+Version: 2.0.0-r15
+Depends: libc, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-l2-stream-legacy, snodec-net-l2-stream-tls, snodec-net-rc-stream-legacy, snodec-net-rc-stream-tls, snodec-net-un-stream-legacy, snodec-net-un-stream-tls, snodec-http-server-express, snodec-http-client, snodec-websocket-server, snodec-websocket-client, snodec-mqtt-server, snodec-mqtt-client, snodec-db-mariadb
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 8314880
+Filename: snodec-apps_2.0.0-r15_arm_cortex-a7.ipk
+Size: 2893060
+SHA256sum: 5ca53c1355cd7604907dcce66aeff6928e38d685b35cfa6bddc379ebdad4f56e
+Description:  This package contains all demo applications of SNode.C.
+ 
+
+Package: snodec-common
+Version: 2.0.0-r15
+Depends: libc, libstdcpp6
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 10240
+Filename: snodec-common_2.0.0-r15_arm_cortex-a7.ipk
+Size: 1098
+SHA256sum: 3e389faccfb2388f2fbe71182a5fb3f89a7280c04cc3d96b7efb6945f6c305da
+Description:  SNode.C is a very simple to use lightweight highly extendable event
+ driven layer-based framework for network applications in the spirit
+ of node.js written entirely in C++.
+ 
+
+Package: snodec-control
+Version: 2.0.0-r15
+Depends: libc, snodec-common
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 204800
+Filename: snodec-control_2.0.0-r15_arm_cortex-a7.ipk
+Size: 88913
+SHA256sum: 7441107121178576f2eb8dd8885c6be95d5178747e333fbf2321ffee227a6f15
+Description:  SNode.C control socket client
+
+Package: snodec-core-mux-epoll
+Version: 2.0.0-r15
+Depends: libc, snodec-logger
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 40960
+Filename: snodec-core-mux-epoll_2.0.0-r15_arm_cortex-a7.ipk
+Size: 12713
+SHA256sum: edcb71856672908a3bf1ddc3be4e74bfb61ba686a81f26bfbea930b0b3198056
+Description:  This package contains the module 'core-mux-epoll' of SNode.C
+ 
+
+Package: snodec-core-mux-poll
+Version: 2.0.0-r15
+Depends: libc, snodec-logger
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 30720
+Filename: snodec-core-mux-poll_2.0.0-r15_arm_cortex-a7.ipk
+Size: 10094
+SHA256sum: 644a32e09638c8329b13064353c6eb454471cd0e710536a82b6fde175e6664ea
+Description:  This package contains the module 'core-mux-poll' of SNode.C
+ 
+
+Package: snodec-core-mux-select
+Version: 2.0.0-r15
+Depends: libc, snodec-logger
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 20480
+Filename: snodec-core-mux-select_2.0.0-r15_arm_cortex-a7.ipk
+Size: 6819
+SHA256sum: 361a2e77a0cf6bf870e11aba29811777e8074b8b6a40a8c04d845afa1d036fd2
+Description:  This package contains the module 'core-mux-select' of SNode.C
+ 
+
+Package: snodec-core-socket-stream-legacy
+Version: 2.0.0-r15
+Depends: libc, snodec-core-socket-stream
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 20480
+Filename: snodec-core-socket-stream-legacy_2.0.0-r15_arm_cortex-a7.ipk
+Size: 4665
+SHA256sum: e8748d862a1f8327ce24c9c782774dab3020946fafd4fbcf8622841fe3edcdfb
+Description:  This package contains the module 'core-socket-stream-legacy' of SNode.C
+ 
+
+Package: snodec-core-socket-stream-tls
+Version: 2.0.0-r15
+Depends: libc, snodec-core-socket-stream, libopenssl3
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 81920
+Filename: snodec-core-socket-stream-tls_2.0.0-r15_arm_cortex-a7.ipk
+Size: 29228
+SHA256sum: 9d6f08d6720db3797d4c51fa2ddb524295c55d40307bbea5ad192c59aeeffc2c
+Description:  This package contains the module 'core-socket-stream-tls' of SNode.C
+ 
+
+Package: snodec-core-socket-stream
+Version: 2.0.0-r15
+Depends: libc, snodec-core-socket
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 153600
+Filename: snodec-core-socket-stream_2.0.0-r15_arm_cortex-a7.ipk
+Size: 49380
+SHA256sum: 9ba353921453fb4c7e5cc4489a2e036d4ff9e29a4ce18250aee83e93fd1d8a09
+Description:  This package contains the module 'core-socket-stream' of SNode.C
+ 
+
+Package: snodec-core-socket
+Version: 2.0.0-r15
+Depends: libc, snodec-core
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 20480
+Filename: snodec-core-socket_2.0.0-r15_arm_cortex-a7.ipk
+Size: 6585
+SHA256sum: de03dd2b52d83265f52e7b4be5bc6f6bf212d2b54e76464910bf0df151b3f139
+Description:  This package contains the module 'core-socket' of SNode.C
+ 
+
+Package: snodec-core
+Version: 2.0.0-r15
+Depends: libc, snodec-utils, libatomic1, snodec-core-mux-epoll
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 204800
+Filename: snodec-core_2.0.0-r15_arm_cortex-a7.ipk
+Size: 72476
+SHA256sum: 3fa84e5faa39b6956de5e9f33c4fe18563c7883cb0d9f8f9168f7cc4dff05cb1
+Description:  This package contains the module 'core' of SNode.C
+ 
+
+Package: snodec-db-mariadb
+Version: 2.0.0-r15
+Depends: libc, snodec-core, libmariadb3
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 92160
+Filename: snodec-db-mariadb_2.0.0-r15_arm_cortex-a7.ipk
+Size: 29101
+SHA256sum: 7eb7167b4f1fc238ea7129a516323c0ceac1ae7391adbb910ef3f56627f2857d
+Description:  This package contains the module 'db-mariadb' of SNode.C
+ 
+
+Package: snodec-http-client
+Version: 2.0.0-r15
+Depends: libc, snodec-http
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 286720
+Filename: snodec-http-client_2.0.0-r15_arm_cortex-a7.ipk
+Size: 102825
+SHA256sum: c8dc15198e5de639e130c850c554ada164807eef78884dc88638ee5a54168f41
+Description:  This package contains the module 'http-client' of SNode.C
+ 
+
+Package: snodec-http-server-express-legacy-in6
+Version: 2.0.0-r15
+Depends: libc, snodec-http-server-express, snodec-net-in6-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 163840
+Filename: snodec-http-server-express-legacy-in6_2.0.0-r15_arm_cortex-a7.ipk
+Size: 40533
+SHA256sum: a8fe56c411c2226f9aec9607e1a5d8e39f9b20ffcc674e8584b00f12b9d31d82
+Description:  This package contains the module 'http-server-express-legacy-in6' of SNode.C
+ 
+
+Package: snodec-http-server-express-legacy-in
+Version: 2.0.0-r15
+Depends: libc, snodec-http-server-express, snodec-net-in-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 163840
+Filename: snodec-http-server-express-legacy-in_2.0.0-r15_arm_cortex-a7.ipk
+Size: 40504
+SHA256sum: 2346f99f2c9f50c64a5f733e7b964f2c39b45166a0669d1d340d6c24fa2aeea8
+Description:  This package contains the module 'http-server-express-legacy-in' of SNode.C
+ 
+
+Package: snodec-http-server-express-legacy-rc
+Version: 2.0.0-r15
+Depends: libc, snodec-http-server-express, snodec-net-rc-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 163840
+Filename: snodec-http-server-express-legacy-rc_2.0.0-r15_arm_cortex-a7.ipk
+Size: 40356
+SHA256sum: 8e9e33bf71a2d71463492f32ebd25344b53ab72df136e30fc85db72cdcfb8cbf
+Description:  This package contains the module 'http-server-express-legacy-rc' of SNode.C
+ 
+
+Package: snodec-http-server-express-legacy-un
+Version: 2.0.0-r15
+Depends: libc, snodec-http-server-express, snodec-net-un-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 163840
+Filename: snodec-http-server-express-legacy-un_2.0.0-r15_arm_cortex-a7.ipk
+Size: 40317
+SHA256sum: 0fde9bdd9289ec1e0b3a37fa6b6020041cc7afc0d5669cdefe643e26e3051941
+Description:  This package contains the module 'http-server-express-legacy-un' of SNode.C
+ 
+
+Package: snodec-http-server-express-tls-in6
+Version: 2.0.0-r15
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-in6-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 163840
+Filename: snodec-http-server-express-tls-in6_2.0.0-r15_arm_cortex-a7.ipk
+Size: 40509
+SHA256sum: f71a8822c1f71a6375ec058c467aeb8bd2e88d1a02a46a4dae95439f7107ef59
+Description:  This package contains the module 'http-server-express-tls-in6' of SNode.C
+ 
+
+Package: snodec-http-server-express-tls-in
+Version: 2.0.0-r15
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-in-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 163840
+Filename: snodec-http-server-express-tls-in_2.0.0-r15_arm_cortex-a7.ipk
+Size: 40486
+SHA256sum: 0092d67f40c3664e8306261c49f1e9dcaa25c264afff22bd5b8d8956a17d95dc
+Description:  This package contains the module 'http-server-express-tls-in' of SNode.C
+ 
+
+Package: snodec-http-server-express-tls-rc
+Version: 2.0.0-r15
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-rc-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 163840
+Filename: snodec-http-server-express-tls-rc_2.0.0-r15_arm_cortex-a7.ipk
+Size: 40226
+SHA256sum: 7262fa755ffe05a83314e57f5ba6b39804e51df1598349aba4cf7a8b5e49da4a
+Description:  This package contains the module 'http-server-express-tls-rc' of SNode.C
+ 
+
+Package: snodec-http-server-express-tls-un
+Version: 2.0.0-r15
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-un-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 163840
+Filename: snodec-http-server-express-tls-un_2.0.0-r15_arm_cortex-a7.ipk
+Size: 40311
+SHA256sum: 555ac65f6aae0598940137ba1355db20529819c88ed8027bdbb153be67b1fb4c
+Description:  This package contains the module 'http-server-express-tls-un' of SNode.C
+ 
+
+Package: snodec-http-server-express
+Version: 2.0.0-r15
+Depends: libc, snodec-http-server
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 450560
+Filename: snodec-http-server-express_2.0.0-r15_arm_cortex-a7.ipk
+Size: 146578
+SHA256sum: 70a65c795532cdc9827150e51806f7a27762f1c2ed300fbc99770d83699956dd
+Description:  This package contains the module 'http-server-express' of SNode.C
+ 
+
+Package: snodec-http-server
+Version: 2.0.0-r15
+Depends: libc, snodec-http
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 256000
+Filename: snodec-http-server_2.0.0-r15_arm_cortex-a7.ipk
+Size: 92651
+SHA256sum: 3605ae92701e0d3043a66c3326af3e49f1ddd1b2571354ea9295c17d8c30112c
+Description:  This package contains the module 'http-server' of SNode.C
+ 
+
+Package: snodec-http
+Version: 2.0.0-r15
+Depends: libc, snodec-core-socket-stream, libmagic
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 276480
+Filename: snodec-http_2.0.0-r15_arm_cortex-a7.ipk
+Size: 101411
+SHA256sum: 040dd9137a21f355d5b10c2a12259350ccea4d2a323a8261976562d55d6f89d0
+Description:  This package contains the module 'http' of SNode.C
+ 
+
+Package: snodec-logger
+Version: 2.0.0-r15
+Depends: libc, snodec-common
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 378880
+Filename: snodec-logger_2.0.0-r15_arm_cortex-a7.ipk
+Size: 133642
+SHA256sum: 160935e98bffcc60501c0de83e5ef2d55f37a7d27d7917fee2753e4f12668d5e
+Description:  This package contains the module 'logger' of SNode.C
+ 
+
+Package: snodec-mqtt-client-websocket
+Version: 2.0.0-r15
+Depends: libc, snodec-mqtt-client, snodec-websocket-client
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 30720
+Filename: snodec-mqtt-client-websocket_2.0.0-r15_arm_cortex-a7.ipk
+Size: 9143
+SHA256sum: fefcc735b4e61d8596008898297702dbae50851383098d2a23b0c9dc98b1d2ac
+Description:  This package contains the module 'mqtt-client-websocket' of SNode.C
+ 
+
+Package: snodec-mqtt-client
+Version: 2.0.0-r15
+Depends: libc, snodec-mqtt
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 184320
+Filename: snodec-mqtt-client_2.0.0-r15_arm_cortex-a7.ipk
+Size: 61904
+SHA256sum: e5129128e2b75527266a93baaf1ac7d3453185ba0bf8c80249885e06e9c4ec03
+Description:  This package contains the module 'mqtt-client' of SNode.C
+ 
+
+Package: snodec-mqtt-server-websocket
+Version: 2.0.0-r15
+Depends: libc, snodec-mqtt-server, snodec-websocket-server
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 30720
+Filename: snodec-mqtt-server-websocket_2.0.0-r15_arm_cortex-a7.ipk
+Size: 9128
+SHA256sum: af1a63330dccdfd920e1de4dac2982d01af935973a6dacd7fcd11d81c12db033
+Description:  This package contains the module 'mqtt-server-websocket' of SNode.C
+ 
+
+Package: snodec-mqtt-server
+Version: 2.0.0-r15
+Depends: libc, snodec-mqtt
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 296960
+Filename: snodec-mqtt-server_2.0.0-r15_arm_cortex-a7.ipk
+Size: 105188
+SHA256sum: 19a05acea5de98353a3efe4af1e35303dee1ba5d3b8cf3bacfd8e698f33ae80d
+Description:  This package contains the module 'mqtt-server' of SNode.C
+ 
+
+Package: snodec-mqtt
+Version: 2.0.0-r15
+Depends: libc, snodec-core-socket-stream
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 133120
+Filename: snodec-mqtt_2.0.0-r15_arm_cortex-a7.ipk
+Size: 46673
+SHA256sum: 0420203dfd8aede66a899a2e5e360c3bcc7d87512ed7a94fe8884b1cd9799444
+Description:  This package contains the module 'mqtt' of SNode.C
+ 
+
+Package: snodec-net-in-phy-stream
+Version: 2.0.0-r15
+Depends: libc, snodec-net-in-phy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 20480
+Filename: snodec-net-in-phy-stream_2.0.0-r15_arm_cortex-a7.ipk
+Size: 4369
+SHA256sum: 73a0db7c3ac8822d544bf454130c65cf6582003a94efa744ea8617511660dda7
+Description:  This package contains the module 'net-in-phy-stream' of SNode.C
+ 
+
+Package: snodec-net-in-phy
+Version: 2.0.0-r15
+Depends: libc, snodec-net-in
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 20480
+Filename: snodec-net-in-phy_2.0.0-r15_arm_cortex-a7.ipk
+Size: 5476
+SHA256sum: 377e0482398097c694d6a145d6598fc4cb43a795e8ea37d23ff6b59d3b3c5c43
+Description:  This package contains the module 'net-in-phy' of SNode.C
+ 
+
+Package: snodec-net-in-stream-legacy
+Version: 2.0.0-r15
+Depends: libc, snodec-net-in-stream, snodec-core-socket-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 266240
+Filename: snodec-net-in-stream-legacy_2.0.0-r15_arm_cortex-a7.ipk
+Size: 72772
+SHA256sum: 11d464182877dec822e119e88c931f7d205b214d39e97ee714ae081a8f68b221
+Description:  This package contains the module 'net-in-stream-legacy' of SNode.C
+ 
+
+Package: snodec-net-in-stream-tls
+Version: 2.0.0-r15
+Depends: libc, snodec-net-in-stream, snodec-core-socket-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 399360
+Filename: snodec-net-in-stream-tls_2.0.0-r15_arm_cortex-a7.ipk
+Size: 108354
+SHA256sum: 14fda6c477dd0e58388c85805edbd8d200d481f1f9c5cf6d4431cd8529c59ea0
+Description:  This package contains the module 'net-in-stream-tls' of SNode.C
+ 
+
+Package: snodec-net-in-stream
+Version: 2.0.0-r15
+Depends: libc, snodec-net-in-phy-stream
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 133120
+Filename: snodec-net-in-stream_2.0.0-r15_arm_cortex-a7.ipk
+Size: 48566
+SHA256sum: 5d2880f18ed844da3ecb7303fa19f147c937ac01356ddc1b262722f6bd18475b
+Description:  This package contains the module 'net-in-stream' of SNode.C
+ 
+
+Package: snodec-net-in6-phy-stream
+Version: 2.0.0-r15
+Depends: libc, snodec-net-in6-phy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 20480
+Filename: snodec-net-in6-phy-stream_2.0.0-r15_arm_cortex-a7.ipk
+Size: 4368
+SHA256sum: acc0d29b3f430e7ae6160d570b37b676b4acc6444e5956635697ba740ec4b3dc
+Description:  This package contains the module 'net-in6-phy-stream' of SNode.C
+ 
+
+Package: snodec-net-in6-phy
+Version: 2.0.0-r15
+Depends: libc, snodec-net-in6
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 20480
+Filename: snodec-net-in6-phy_2.0.0-r15_arm_cortex-a7.ipk
+Size: 5486
+SHA256sum: f8ae7e13806f71ccba6e38784f03bef88070fd7ef7f7a14996089b70e49ba063
+Description:  This package contains the module 'net-in6-phy' of SNode.C
+ 
+
+Package: snodec-net-in6-stream-legacy
+Version: 2.0.0-r15
+Depends: libc, snodec-net-in6-stream, snodec-core-socket-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 266240
+Filename: snodec-net-in6-stream-legacy_2.0.0-r15_arm_cortex-a7.ipk
+Size: 72844
+SHA256sum: 998319e035bd81f44213e87d0c45461b1e0bc060a62759722d9e5b661b81b8d3
+Description:  This package contains the module 'net-in6-stream-legacy' of SNode.C
+ 
+
+Package: snodec-net-in6-stream-tls
+Version: 2.0.0-r15
+Depends: libc, snodec-net-in6-stream, snodec-core-socket-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 399360
+Filename: snodec-net-in6-stream-tls_2.0.0-r15_arm_cortex-a7.ipk
+Size: 108228
+SHA256sum: 9d22b9675ffeacadd48cb055b7773623a0a4b5716235b2f8e3a3fadd2a977a81
+Description:  This package contains the module 'net-in6-stream-tls' of SNode.C
+ 
+
+Package: snodec-net-in6-stream
+Version: 2.0.0-r15
+Depends: libc, snodec-net-in6-phy-stream
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 143360
+Filename: snodec-net-in6-stream_2.0.0-r15_arm_cortex-a7.ipk
+Size: 49628
+SHA256sum: ce74f4aaf73301d0375f95f75111a8cee2db98cf55c254dcbaf882374c74bea4
+Description:  This package contains the module 'net-in6-stream' of SNode.C
+ 
+
+Package: snodec-net-in6
+Version: 2.0.0-r15
+Depends: libc, snodec-net
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 174080
+Filename: snodec-net-in6_2.0.0-r15_arm_cortex-a7.ipk
+Size: 59756
+SHA256sum: 2094647b3c863769a4b66b50d1be8fb90b5edcd3126531c2fd980afa730416e5
+Description:  This package contains the module 'net-in6' of SNode.C
+ 
+
+Package: snodec-net-in
+Version: 2.0.0-r15
+Depends: libc, snodec-net
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 174080
+Filename: snodec-net-in_2.0.0-r15_arm_cortex-a7.ipk
+Size: 59394
+SHA256sum: af4cef7adcd8adf35e25e4ab317e07c27035a4353a67977a2ae99e6cda98a82e
+Description:  This package contains the module 'net-in' of SNode.C
+ 
+
+Package: snodec-net-l2-phy-stream
+Version: 2.0.0-r15
+Depends: libc, snodec-net-l2-phy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 20480
+Filename: snodec-net-l2-phy-stream_2.0.0-r15_arm_cortex-a7.ipk
+Size: 4453
+SHA256sum: dcb096dbae34bc276ddd514d65b49d6ba1c01c4cbb001db91d08616ad0312a64
+Description:  This package contains the module 'net-l2-phy-stream' of SNode.C
+ 
+
+Package: snodec-net-l2-phy
+Version: 2.0.0-r15
+Depends: libc, snodec-net-l2, bluez-libs
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 20480
+Filename: snodec-net-l2-phy_2.0.0-r15_arm_cortex-a7.ipk
+Size: 5092
+SHA256sum: 39211055ab7638fc4efe1359d1a82cab7f7b270cbb450ea28991da5c169c00e2
+Description:  This package contains the module 'net-l2-phy' of SNode.C
+ 
+
+Package: snodec-net-l2-stream-legacy
+Version: 2.0.0-r15
+Depends: libc, snodec-net-l2-stream, snodec-core-socket-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 266240
+Filename: snodec-net-l2-stream-legacy_2.0.0-r15_arm_cortex-a7.ipk
+Size: 72347
+SHA256sum: f7503339617751e30b231fdbb35fccc18794257a0ed63810943cd882ac698f66
+Description:  This package contains the module 'net-l2-stream-legacy' of SNode.C
+ 
+
+Package: snodec-net-l2-stream-tls
+Version: 2.0.0-r15
+Depends: libc, snodec-net-l2-stream, snodec-core-socket-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 399360
+Filename: snodec-net-l2-stream-tls_2.0.0-r15_arm_cortex-a7.ipk
+Size: 108017
+SHA256sum: 1917bc0b42cb0b1fe1157ed597314ca6b69a2fb2c6c96024e6630370f8719af3
+Description:  This package contains the module 'net-l2-stream-tls' of SNode.C
+ 
+
+Package: snodec-net-l2-stream
+Version: 2.0.0-r15
+Depends: libc, snodec-net-l2-phy-stream
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 81920
+Filename: snodec-net-l2-stream_2.0.0-r15_arm_cortex-a7.ipk
+Size: 23557
+SHA256sum: e92ea3125b3f9a951b19da2ce5913df98fcd3872470bfb721b05f124311f043d
+Description:  This package contains the module 'net-l2-stream' of SNode.C
+ 
+
+Package: snodec-net-l2
+Version: 2.0.0-r15
+Depends: libc, snodec-net, bluez-libs
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 256000
+Filename: snodec-net-l2_2.0.0-r15_arm_cortex-a7.ipk
+Size: 83547
+SHA256sum: 445b8cddf50e5ac7052cd7485dabeff25d3268b780e420e448e83b2a48a6edca
+Description:  This package contains the module 'net-l2' of SNode.C
+ 
+
+Package: snodec-net-rc-phy-stream
+Version: 2.0.0-r15
+Depends: libc, snodec-net-rc-phy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 20480
+Filename: snodec-net-rc-phy-stream_2.0.0-r15_arm_cortex-a7.ipk
+Size: 4381
+SHA256sum: 7807b5699694011053202df9cd76a5cbfc1aaacd50f930b84335f0ca22947204
+Description:  This package contains the module 'net-rc-phy-stream' of SNode.C
+ 
+
+Package: snodec-net-rc-phy
+Version: 2.0.0-r15
+Depends: libc, snodec-net-rc, bluez-libs
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 20480
+Filename: snodec-net-rc-phy_2.0.0-r15_arm_cortex-a7.ipk
+Size: 5090
+SHA256sum: 2494115438b9045aa007b6143bed854e98c37c738dc969c6bef967b36879db4e
+Description:  This package contains the module 'net-rc-phy' of SNode.C
+ 
+
+Package: snodec-net-rc-stream-legacy
+Version: 2.0.0-r15
+Depends: libc, snodec-net-rc-stream, snodec-core-socket-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 266240
+Filename: snodec-net-rc-stream-legacy_2.0.0-r15_arm_cortex-a7.ipk
+Size: 72458
+SHA256sum: e36bb89cc24a5223d6b2f31841a3c3293ff31fe0080d43f45eaf493b29fee872
+Description:  This package contains the module 'net-rc-stream-legacy' of SNode.C
+ 
+
+Package: snodec-net-rc-stream-tls
+Version: 2.0.0-r15
+Depends: libc, snodec-net-rc-stream, snodec-core-socket-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 399360
+Filename: snodec-net-rc-stream-tls_2.0.0-r15_arm_cortex-a7.ipk
+Size: 107771
+SHA256sum: 2273e62aee1c1b72d880a396573e48b23c5615b4a14ef1217b929c2cd09af3fb
+Description:  This package contains the module 'net-rc-stream-tls' of SNode.C
+ 
+
+Package: snodec-net-rc-stream
+Version: 2.0.0-r15
+Depends: libc, snodec-net-rc-phy-stream
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 81920
+Filename: snodec-net-rc-stream_2.0.0-r15_arm_cortex-a7.ipk
+Size: 23567
+SHA256sum: a41aefa10327d2f4eacb61462c463334876f5d60fcd5ee5181da1a50575d304e
+Description:  This package contains the module 'net-rc-stream' of SNode.C
+ 
+
+Package: snodec-net-rc
+Version: 2.0.0-r15
+Depends: libc, snodec-net, bluez-libs
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 256000
+Filename: snodec-net-rc_2.0.0-r15_arm_cortex-a7.ipk
+Size: 83796
+SHA256sum: 833f575b8d10abc638463f7274fcb4bd2d7e3f8c0755f967037bde52994e02e2
+Description:  This package contains the module 'net-rc' of SNode.C
+ 
+
+Package: snodec-net-un-dgram
+Version: 2.0.0-r15
+Depends: libc, snodec-net-un-phy, snodec-net-un
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 40960
+Filename: snodec-net-un-dgram_2.0.0-r15_arm_cortex-a7.ipk
+Size: 12467
+SHA256sum: b1ad9ee4526b6e5225895020e4ebfd0cdba4efb8f41ba5830ca040ddd71aded9
+Description:  This package contains the module 'net-un-dgram' of SNode.C
+ 
+
+Package: snodec-net-un-phy-stream
+Version: 2.0.0-r15
+Depends: libc, snodec-net-un-phy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 51200
+Filename: snodec-net-un-phy-stream_2.0.0-r15_arm_cortex-a7.ipk
+Size: 15423
+SHA256sum: f62c1d4330153bd17dce3566bfc1017cbb7209954ab0e1726734073584092bb8
+Description:  This package contains the module 'net-un-phy-stream' of SNode.C
+ 
+
+Package: snodec-net-un-phy
+Version: 2.0.0-r15
+Depends: libc, snodec-net-un
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 20480
+Filename: snodec-net-un-phy_2.0.0-r15_arm_cortex-a7.ipk
+Size: 5122
+SHA256sum: b52dfcf6298a08da3bdf50d62dc9ef220a2857c2a3f018d659385aed3731360b
+Description:  This package contains the module 'net-un-phy' of SNode.C
+ 
+
+Package: snodec-net-un-stream-legacy
+Version: 2.0.0-r15
+Depends: libc, snodec-net-un-stream, snodec-core-socket-stream-legacy
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 266240
+Filename: snodec-net-un-stream-legacy_2.0.0-r15_arm_cortex-a7.ipk
+Size: 72401
+SHA256sum: fc2ab0ada1291a2baa802ea0ffc519d17cb1e4f73465b6e23dcdb2601f14b81f
+Description:  This package contains the module 'net-un-stream-legacy' of SNode.C
+ 
+
+Package: snodec-net-un-stream-tls
+Version: 2.0.0-r15
+Depends: libc, snodec-net-un-stream, snodec-core-socket-stream-tls
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 399360
+Filename: snodec-net-un-stream-tls_2.0.0-r15_arm_cortex-a7.ipk
+Size: 107959
+SHA256sum: c452f6adc2534e78228869bd0deff930b8ad6063fcaa81338526e4581cb1c753
+Description:  This package contains the module 'net-un-stream-tls' of SNode.C
+ 
+
+Package: snodec-net-un-stream
+Version: 2.0.0-r15
+Depends: libc, snodec-net-un-phy-stream
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 81920
+Filename: snodec-net-un-stream_2.0.0-r15_arm_cortex-a7.ipk
+Size: 23535
+SHA256sum: cf3b1d83efc987a4ab4166e0c0420a4324aaa4001db2fba058a455589e17054d
+Description:  This package contains the module 'net-un-stream' of SNode.C
+ 
+
+Package: snodec-net-un
+Version: 2.0.0-r15
+Depends: libc, snodec-net
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 122880
+Filename: snodec-net-un_2.0.0-r15_arm_cortex-a7.ipk
+Size: 43284
+SHA256sum: 823a599f89550c758c9ef1792a4bf9ff20f36778ff3068039038cdcb152f3fd0
+Description:  This package contains the module 'net-un' of SNode.C
+ 
+
+Package: snodec-net
+Version: 2.0.0-r15
+Depends: libc, snodec-core-socket
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 337920
+Filename: snodec-net_2.0.0-r15_arm_cortex-a7.ipk
+Size: 118257
+SHA256sum: ef2ee156811667829a8a47d2d8430ed556c3c959393bf064690c487ed2fedf39
+Description:  This package contains the module 'net' of SNode.C
+ 
+
+Package: snodec-utils
+Version: 2.0.0-r15
+Depends: libc, snodec-logger
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 542720
+Filename: snodec-utils_2.0.0-r15_arm_cortex-a7.ipk
+Size: 219046
+SHA256sum: 558bf980b7629b0f7b7097b338be783c500c1aa138e047933fafa4e333700180
+Description:  This package contains the module 'utils' of SNode.C
+ 
+
+Package: snodec-websocket-client
+Version: 2.0.0-r15
+Depends: libc, snodec-websocket, snodec-http-client
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 122880
+Filename: snodec-websocket-client_2.0.0-r15_arm_cortex-a7.ipk
+Size: 38851
+SHA256sum: 8fd3962f63760eecaec49a645789fc00fad0c8bb9112e0f657c30a1d82d7730c
+Description:  This package contains the module 'websocket-client' of SNode.C
+ 
+
+Package: snodec-websocket-server
+Version: 2.0.0-r15
+Depends: libc, snodec-websocket, snodec-http-server
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 133120
+Filename: snodec-websocket-server_2.0.0-r15_arm_cortex-a7.ipk
+Size: 43095
+SHA256sum: 2445c38a399bd9abfd3170a1909550217aff7e3a7e6d806e6170faec071c1f7c
+Description:  This package contains the module 'websocket-server' of SNode.C
+ 
+
+Package: snodec-websocket
+Version: 2.0.0-r15
+Depends: libc, snodec-utils
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 30720
+Filename: snodec-websocket_2.0.0-r15_arm_cortex-a7.ipk
+Size: 10980
+SHA256sum: 6d23e4b5f07cc83f9cd37798d74e4175cf5153388916601ebbcb57d7451d3e1e
+Description:  This package contains the module 'websocket' of SNode.C
+ 
+
+Package: snodec
+Version: 2.0.0-r15
+Depends: libc, snodec-apps, snodec-control, snodec-core-mux-epoll, snodec-core-mux-poll, snodec-core-mux-select, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-l2-stream-legacy, snodec-net-l2-stream-tls, snodec-net-rc-stream-legacy, snodec-net-rc-stream-tls, snodec-net-un-stream-legacy, snodec-net-un-stream-tls, snodec-net-un-dgram, snodec-http-server-express, snodec-http-server-express-legacy-in, snodec-http-server-express-legacy-in6, snodec-http-server-express-legacy-rc, snodec-http-server-express-legacy-un, snodec-http-server-express-tls-in, snodec-http-server-express-tls-in6, snodec-http-server-express-tls-rc, snodec-http-server-express-tls-un, snodec-http-client, snodec-websocket-server, snodec-websocket-client, snodec-mqtt-server-websocket, snodec-mqtt-client-websocket, snodec-db-mariadb
+License: LGPL-3.0-or-later
+Section: net
+Architecture: arm_cortex-a7
+Installed-Size: 10240
+Filename: snodec_2.0.0-r15_arm_cortex-a7.ipk
+Size: 1072
+SHA256sum: 34dd93655400ab99e51f7020ab485b8c73f9851189c4a56284b7294674617ca9
+Description:  This meta-package selects all SNode.C runtime modules, demonstration
+ applications and the control tool.
+ 
+
