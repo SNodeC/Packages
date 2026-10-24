@@ -1,0 +1,1143 @@
+Package: snodec-apps
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-l2-stream-legacy, snodec-net-l2-stream-tls, snodec-net-rc-stream-legacy, snodec-net-rc-stream-tls, snodec-net-un-stream-legacy, snodec-net-un-stream-tls, snodec-http-server-express, snodec-http-client, snodec-websocket-server, snodec-websocket-client, snodec-mqtt-server, snodec-mqtt-client, snodec-db-mariadb
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 14940160
+Filename: snodec-apps_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 5668023
+SHA256sum: 2f3cb5fd0930254f1dd2b89874ecfb082e182a4d63296349c1289433a55698b4
+Description:  This package contains all demo applications of SNode.C.
+
+Package: snodec-common
+Version: 2.1.0-r1
+Depends: libc, libstdcpp6
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+Require-User: snodec:snodec
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 10240
+Filename: snodec-common_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 1101
+SHA256sum: 7f5ee82aa56ea8a62245b7ee723a211698d26a265fd92f89ec01d125a4d28eb6
+Description:  SNode.C is a very simple to use lightweight highly extendable event
+ driven layer-based framework for network applications in the spirit
+ of node.js written entirely in C++.
+
+Package: snodec-control
+Version: 2.1.0-r1
+Depends: libc, snodec-common
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 235520
+Filename: snodec-control_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 99070
+SHA256sum: d8def0ca53b36b1895b7e624bd1aecbe8f996b00a0eb7a8c023c93734f36968e
+Description:  SNode.C control socket client
+
+Package: snodec-core-mux-epoll
+Version: 2.1.0-r1
+Depends: libc, snodec-logger
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 40960
+Filename: snodec-core-mux-epoll_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 13307
+SHA256sum: c33dca14782aac3d86cfc220b57453e18a9b030fa23c1eff222e8d03500b858a
+Description:  This package contains the module 'core-mux-epoll' of SNode.C
+
+Package: snodec-core-mux-poll
+Version: 2.1.0-r1
+Depends: libc, snodec-logger
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 30720
+Filename: snodec-core-mux-poll_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 10886
+SHA256sum: c4348c3226a63cc15ca3388b521972ba1c0686edec2f95ad131d78acb9b0234c
+Description:  This package contains the module 'core-mux-poll' of SNode.C
+
+Package: snodec-core-mux-select
+Version: 2.1.0-r1
+Depends: libc, snodec-logger
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 20480
+Filename: snodec-core-mux-select_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 7368
+SHA256sum: b84601ca52c0bc72bfb40f5d7019cf7747ddda92c726eb022d9366cb61f544db
+Description:  This package contains the module 'core-mux-select' of SNode.C
+
+Package: snodec-core-socket-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 30720
+Filename: snodec-core-socket-stream-legacy_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 5367
+SHA256sum: 1116565953dc0d3604bfee8494f322a2b772191df55750fb1286976eecbfd7a4
+Description:  This package contains the module 'core-socket-stream-legacy' of SNode.C
+
+Package: snodec-core-socket-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket-stream, libopenssl3
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 92160
+Filename: snodec-core-socket-stream-tls_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 31510
+SHA256sum: 2e281edfeac49a552af0bdb68ebe88b153cd2abe9fd39f8edcaa50b0b372dcd7
+Description:  This package contains the module 'core-socket-stream-tls' of SNode.C
+
+Package: snodec-core-socket-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 286720
+Filename: snodec-core-socket-stream_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 100784
+SHA256sum: cfc12b5ee706c5f655119851d851043db03d7c2123fd4e0acd0312081bcbe7c3
+Description:  This package contains the module 'core-socket-stream' of SNode.C
+
+Package: snodec-core-socket
+Version: 2.1.0-r1
+Depends: libc, snodec-core
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 20480
+Filename: snodec-core-socket_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 7342
+SHA256sum: 95458f413c81464603bfaddeb558b442cf5eb5aa7d22a3423ed1ff21afaf1810
+Description:  This package contains the module 'core-socket' of SNode.C
+
+Package: snodec-core
+Version: 2.1.0-r1
+Depends: libc, snodec-utils, libatomic1, snodec-core-mux-epoll
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 348160
+Filename: snodec-core_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 125358
+SHA256sum: dcacb9a94f4c7e741ec32b52c9c22bc32eae85b32de913971e96ba333774f58a
+Description:  This package contains the module 'core' of SNode.C
+
+Package: snodec-db-mariadb
+Version: 2.1.0-r1
+Depends: libc, snodec-core, libmariadb3
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 112640
+Filename: snodec-db-mariadb_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 33672
+SHA256sum: 58a27c31d25bbbd1c0160a5aaaab9eb845963b8f768aed8fbfda94e457fe39e2
+Description:  This package contains the module 'db-mariadb' of SNode.C
+
+Package: snodec-http-client
+Version: 2.1.0-r1
+Depends: libc, snodec-http
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 399360
+Filename: snodec-http-client_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 148978
+SHA256sum: b808ca2ce38275d645663e2d479591a0941c06fd11872a291a4ad4779bdc6854
+Description:  This package contains the module 'http-client' of SNode.C
+
+Package: snodec-http-server-express-legacy-in6
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server-express, snodec-net-in6-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 286720
+Filename: snodec-http-server-express-legacy-in6_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 92678
+SHA256sum: 6cc40a36bf1381e1646d5af6df99c9c47d69a0d46dd603324747f5b9336c5873
+Description:  This package contains the module 'http-server-express-legacy-in6' of SNode.C
+
+Package: snodec-http-server-express-legacy-in
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server-express, snodec-net-in-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 286720
+Filename: snodec-http-server-express-legacy-in_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 92660
+SHA256sum: 35a6ba64d6d33f92e26d3b9898c98e16c77f7935e9a01a75ef87142ce246972f
+Description:  This package contains the module 'http-server-express-legacy-in' of SNode.C
+
+Package: snodec-http-server-express-legacy-rc
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server-express, snodec-net-rc-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 286720
+Filename: snodec-http-server-express-legacy-rc_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 92586
+SHA256sum: ea558e11db3e83d6765bd514a621be74b0c6b5692e9a082a2086e64b1efb12f2
+Description:  This package contains the module 'http-server-express-legacy-rc' of SNode.C
+
+Package: snodec-http-server-express-legacy-un
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server-express, snodec-net-un-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 286720
+Filename: snodec-http-server-express-legacy-un_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 92586
+SHA256sum: db801485206227d768784eb4720303ebda10ab090929080c713744b9cd2678d2
+Description:  This package contains the module 'http-server-express-legacy-un' of SNode.C
+
+Package: snodec-http-server-express-tls-in6
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-in6-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 286720
+Filename: snodec-http-server-express-tls-in6_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 92609
+SHA256sum: da7451256509478f5ba991892e26c9d6e81f9dfde05ab5b18714da6a6787c15c
+Description:  This package contains the module 'http-server-express-tls-in6' of SNode.C
+
+Package: snodec-http-server-express-tls-in
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-in-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 286720
+Filename: snodec-http-server-express-tls-in_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 92602
+SHA256sum: ccbd687dd167d0228b46abdd815bec3865781f3acc7c659f628e88936df14f57
+Description:  This package contains the module 'http-server-express-tls-in' of SNode.C
+
+Package: snodec-http-server-express-tls-rc
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-rc-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 286720
+Filename: snodec-http-server-express-tls-rc_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 92563
+SHA256sum: 21a7249f436b95c2615c008fa39a5c343fcf97b160632d60d66dab012d7e910a
+Description:  This package contains the module 'http-server-express-tls-rc' of SNode.C
+
+Package: snodec-http-server-express-tls-un
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-un-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 286720
+Filename: snodec-http-server-express-tls-un_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 92567
+SHA256sum: 9a61a097b82025d569840962f85752be48b4daa6fc55ccfc5ca1fbc0232b32dd
+Description:  This package contains the module 'http-server-express-tls-un' of SNode.C
+
+Package: snodec-http-server-express
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 645120
+Filename: snodec-http-server-express_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 219387
+SHA256sum: bebeb5724ecee99b44b6a5b456e2c1a860d1470398bbc617936af780a7a92b5f
+Description:  This package contains the module 'http-server-express' of SNode.C
+
+Package: snodec-http-server
+Version: 2.1.0-r1
+Depends: libc, snodec-http
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 378880
+Filename: snodec-http-server_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 139665
+SHA256sum: 33827ea6c0c7f09eb8642a05b8eddb7cdb83fa6242ab36ba793a48a4c97dee02
+Description:  This package contains the module 'http-server' of SNode.C
+
+Package: snodec-http
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket-stream, libmagic
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 378880
+Filename: snodec-http_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 145328
+SHA256sum: 64eae7d458de3fbf5c14fcffe39df78cc9cf2b26096e705a853ff48636fc47f3
+Description:  This package contains the module 'http' of SNode.C
+
+Package: snodec-logger
+Version: 2.1.0-r1
+Depends: libc, snodec-common
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 419840
+Filename: snodec-logger_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 151079
+SHA256sum: a23aedbb0797a231f19c8dbedf8b2a83536b45f8752b8ddef92cd35603a2f3ef
+Description:  This package contains the module 'logger' of SNode.C
+
+Package: snodec-mqtt-client-websocket
+Version: 2.1.0-r1
+Depends: libc, snodec-mqtt-client, snodec-websocket-client
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 30720
+Filename: snodec-mqtt-client-websocket_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 9792
+SHA256sum: 8ce5a62e1e040b2a372f70619a50dd505ee9a7df42c5683c2a09d5dee9db8145
+Description:  This package contains the module 'mqtt-client-websocket' of SNode.C
+
+Package: snodec-mqtt-client
+Version: 2.1.0-r1
+Depends: libc, snodec-mqtt
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 204800
+Filename: snodec-mqtt-client_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 69068
+SHA256sum: ed136c220db93f482ca2dc2a7a68870beef3e28930b492f7401e7527942d0437
+Description:  This package contains the module 'mqtt-client' of SNode.C
+
+Package: snodec-mqtt-server-websocket
+Version: 2.1.0-r1
+Depends: libc, snodec-mqtt-server, snodec-websocket-server
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 30720
+Filename: snodec-mqtt-server-websocket_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 9794
+SHA256sum: 0a2887386c4f01518a13badea842e2f7f1e0df7e15e792756e0749e1b47e550c
+Description:  This package contains the module 'mqtt-server-websocket' of SNode.C
+
+Package: snodec-mqtt-server
+Version: 2.1.0-r1
+Depends: libc, snodec-mqtt
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 337920
+Filename: snodec-mqtt-server_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 119403
+SHA256sum: 6ffa76081ff239ec9a8d09343237a9051991a9bba332046c2a7c32d866286fd0
+Description:  This package contains the module 'mqtt-server' of SNode.C
+
+Package: snodec-mqtt
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 153600
+Filename: snodec-mqtt_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 53409
+SHA256sum: 798197b70b47d66857965c1e855b3e0eff2bfa526a4f9091341e603511264209
+Description:  This package contains the module 'mqtt' of SNode.C
+
+Package: snodec-net-in-phy-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in-phy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 30720
+Filename: snodec-net-in-phy-stream_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 4766
+SHA256sum: 8b6fd4bad8705c4af023853ee812d5c3f3ba7b48e931bf018c25e3a48e8eed74
+Description:  This package contains the module 'net-in-phy-stream' of SNode.C
+
+Package: snodec-net-in-phy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 20480
+Filename: snodec-net-in-phy_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 5816
+SHA256sum: af6851cb6001a9133f2f80892c719c905030ab41b9135ea5f2a9edcfdaf730d0
+Description:  This package contains the module 'net-in-phy' of SNode.C
+
+Package: snodec-net-in-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in-stream, snodec-core-socket-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 430080
+Filename: snodec-net-in-stream-legacy_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 135032
+SHA256sum: 6044dda57105f163fba0341ace7029b39ee4e9f67d20256f602fa67627f96b02
+Description:  This package contains the module 'net-in-stream-legacy' of SNode.C
+
+Package: snodec-net-in-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in-stream, snodec-core-socket-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 583680
+Filename: snodec-net-in-stream-tls_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 175169
+SHA256sum: afcd540f5451573b68a2cc27f7c593ceff61961e984ab2ccbd1da20b7ff10bdb
+Description:  This package contains the module 'net-in-stream-tls' of SNode.C
+
+Package: snodec-net-in-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in-phy-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 235520
+Filename: snodec-net-in-stream_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 86540
+SHA256sum: bc8741f033153c2210ef4fc0c7be216742c6676ed924f796fb7872ba2c34c217
+Description:  This package contains the module 'net-in-stream' of SNode.C
+
+Package: snodec-net-in6-phy-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in6-phy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 30720
+Filename: snodec-net-in6-phy-stream_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 4773
+SHA256sum: 3be1952676d39a50096c83de575c1f52ab7cc032217740758a8c5e202112fcea
+Description:  This package contains the module 'net-in6-phy-stream' of SNode.C
+
+Package: snodec-net-in6-phy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in6
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 20480
+Filename: snodec-net-in6-phy_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 5832
+SHA256sum: a5b8d164efbb7e74a87b06ac31643a1dd3ca015464321cede1d6b5e8c2831449
+Description:  This package contains the module 'net-in6-phy' of SNode.C
+
+Package: snodec-net-in6-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in6-stream, snodec-core-socket-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 430080
+Filename: snodec-net-in6-stream-legacy_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 134968
+SHA256sum: 5fd51ff50e69edbd473fe7dca77ab05cf49c2aa5b51beefcecccf153aaa4c880
+Description:  This package contains the module 'net-in6-stream-legacy' of SNode.C
+
+Package: snodec-net-in6-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in6-stream, snodec-core-socket-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 583680
+Filename: snodec-net-in6-stream-tls_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 175143
+SHA256sum: 19500ed7003e8f6b81bbeb2f66201c5b47409b04cd0b20c9ce046195efd97511
+Description:  This package contains the module 'net-in6-stream-tls' of SNode.C
+
+Package: snodec-net-in6-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in6-phy-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 235520
+Filename: snodec-net-in6-stream_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 86979
+SHA256sum: cd6f528106d38a5aadea9dda762cc630c1b2079e64087cab4af8dd0bd0b196d8
+Description:  This package contains the module 'net-in6-stream' of SNode.C
+
+Package: snodec-net-in6
+Version: 2.1.0-r1
+Depends: libc, snodec-net
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 266240
+Filename: snodec-net-in6_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 97517
+SHA256sum: 99a3096ea1b590566f784349550b2de8e8972ecdfb27c947216d9446b799e364
+Description:  This package contains the module 'net-in6' of SNode.C
+
+Package: snodec-net-in
+Version: 2.1.0-r1
+Depends: libc, snodec-net
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 266240
+Filename: snodec-net-in_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 96935
+SHA256sum: 0a8a728b3a86fdb52f16f9de80ae30828f5398bbd18560c3e9c8b2d8359881e3
+Description:  This package contains the module 'net-in' of SNode.C
+
+Package: snodec-net-l2-phy-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-l2-phy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 30720
+Filename: snodec-net-l2-phy-stream_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 4897
+SHA256sum: 55d57af90def0ce2bab072768ab995974f76222be0e76d9e7d7447fd69238302
+Description:  This package contains the module 'net-l2-phy-stream' of SNode.C
+
+Package: snodec-net-l2-phy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-l2, bluez-libs
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 20480
+Filename: snodec-net-l2-phy_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 5377
+SHA256sum: 4d2d32e039fe0c27d40142be4e978454f16c153a1a96638f4abad3e151022766
+Description:  This package contains the module 'net-l2-phy' of SNode.C
+
+Package: snodec-net-l2-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-l2-stream, snodec-core-socket-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 430080
+Filename: snodec-net-l2-stream-legacy_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 134152
+SHA256sum: e299fb2b1fe311c73cd5b65bfa331cbfc4971aa98deb6afa0b30f58762b4bac9
+Description:  This package contains the module 'net-l2-stream-legacy' of SNode.C
+
+Package: snodec-net-l2-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-net-l2-stream, snodec-core-socket-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 583680
+Filename: snodec-net-l2-stream-tls_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 174510
+SHA256sum: 748a762fea83329a956b37311f9656b6c944276a6bf4cffb0d63adb7c1a1b8b0
+Description:  This package contains the module 'net-l2-stream-tls' of SNode.C
+
+Package: snodec-net-l2-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-l2-phy-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 215040
+Filename: snodec-net-l2-stream_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 78138
+SHA256sum: 8a8c2c30caa82f39bf65accaab99cb1cae499f67fb601b5e22a983e393c586de
+Description:  This package contains the module 'net-l2-stream' of SNode.C
+
+Package: snodec-net-l2
+Version: 2.1.0-r1
+Depends: libc, snodec-net, bluez-libs
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 348160
+Filename: snodec-net-l2_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 124507
+SHA256sum: 5ab162874b1de2ee49454f58302d66a6a935fe955b34a940f5f05baca0803e47
+Description:  This package contains the module 'net-l2' of SNode.C
+
+Package: snodec-net-rc-phy-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-rc-phy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 30720
+Filename: snodec-net-rc-phy-stream_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 4787
+SHA256sum: 0b4b177627fa3ac1fb7f9c79974955643dfa54b67448bdecf55679e64cfd7d0c
+Description:  This package contains the module 'net-rc-phy-stream' of SNode.C
+
+Package: snodec-net-rc-phy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-rc, bluez-libs
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 20480
+Filename: snodec-net-rc-phy_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 5336
+SHA256sum: 8e1ffaa99150b19af877df8c7ac1cb8339e76b58bb3bee2bbbbf0c62fda16fa8
+Description:  This package contains the module 'net-rc-phy' of SNode.C
+
+Package: snodec-net-rc-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-rc-stream, snodec-core-socket-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 430080
+Filename: snodec-net-rc-stream-legacy_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 134102
+SHA256sum: 8b9667243ff2dfa45b020e4ae2b5c3d3c637845c154fb8741227a6db8c32279b
+Description:  This package contains the module 'net-rc-stream-legacy' of SNode.C
+
+Package: snodec-net-rc-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-net-rc-stream, snodec-core-socket-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 583680
+Filename: snodec-net-rc-stream-tls_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 174436
+SHA256sum: c15af9c6d162913b48c5452f7c0b092b6abe280aec0143d7a6fab694e8b1de7c
+Description:  This package contains the module 'net-rc-stream-tls' of SNode.C
+
+Package: snodec-net-rc-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-rc-phy-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 215040
+Filename: snodec-net-rc-stream_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 78158
+SHA256sum: c782a40f60dc5cf408e0f459093e8f25733ddc0ecd87888115aed68d78635b5b
+Description:  This package contains the module 'net-rc-stream' of SNode.C
+
+Package: snodec-net-rc
+Version: 2.1.0-r1
+Depends: libc, snodec-net, bluez-libs
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 348160
+Filename: snodec-net-rc_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 125179
+SHA256sum: 382e335a74c86040bf8e0e578e78bb1fd374fb16d73e13ccde162ff2a2d2a683
+Description:  This package contains the module 'net-rc' of SNode.C
+
+Package: snodec-net-un-dgram
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un-phy, snodec-net-un
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 40960
+Filename: snodec-net-un-dgram_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 13188
+SHA256sum: 69ec153bc189f5c2a89eb1d89a37114f3793bd78788439defbd996a0aba62756
+Description:  This package contains the module 'net-un-dgram' of SNode.C
+
+Package: snodec-net-un-phy-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un-phy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 61440
+Filename: snodec-net-un-phy-stream_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 16285
+SHA256sum: 5e5fe46cdaa01ff1378ce4e49b28bc182d674a9f62cb209fb50517790ecb783b
+Description:  This package contains the module 'net-un-phy-stream' of SNode.C
+
+Package: snodec-net-un-phy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 20480
+Filename: snodec-net-un-phy_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 5462
+SHA256sum: a9a976b552d73c5d3c2d62cf8a2ee52842b173d7320c38a219cb4b9ac9580bdc
+Description:  This package contains the module 'net-un-phy' of SNode.C
+
+Package: snodec-net-un-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un-stream, snodec-core-socket-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 430080
+Filename: snodec-net-un-stream-legacy_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 133948
+SHA256sum: b5520bd3cb2e0e3d5ccd464121ff820064b81811ded14e48b166c3848269462e
+Description:  This package contains the module 'net-un-stream-legacy' of SNode.C
+
+Package: snodec-net-un-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un-stream, snodec-core-socket-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 583680
+Filename: snodec-net-un-stream-tls_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 174230
+SHA256sum: 7c7ae7009307145b4fa1a5139e67b36dafbe508c859a875c83d0c3fecb6001fd
+Description:  This package contains the module 'net-un-stream-tls' of SNode.C
+
+Package: snodec-net-un-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un-phy-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 215040
+Filename: snodec-net-un-stream_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 78109
+SHA256sum: de802602dfb4c7362d0f5b584a878c1d726b900961306a1881557f75f2008e6b
+Description:  This package contains the module 'net-un-stream' of SNode.C
+
+Package: snodec-net-un
+Version: 2.1.0-r1
+Depends: libc, snodec-net
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 225280
+Filename: snodec-net-un_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 83293
+SHA256sum: cdfcbfc266c6287596428104970b5b9de16f0f798eb7fe402dc4893169a12fa8
+Description:  This package contains the module 'net-un' of SNode.C
+
+Package: snodec-net
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 491520
+Filename: snodec-net_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 163742
+SHA256sum: 2dddd53cbfb2cb03445b199b59c52227f3404f6dcea9a6c621ac4deb096800ca
+Description:  This package contains the module 'net' of SNode.C
+
+Package: snodec-utils
+Version: 2.1.0-r1
+Depends: libc, snodec-logger
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 593920
+Filename: snodec-utils_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 236066
+SHA256sum: 19ea5b4b84cb2b4f2ffd76ce9f022ac5785b2ae0802ea1c044c6f0fb6612d7ee
+Description:  This package contains the module 'utils' of SNode.C
+
+Package: snodec-websocket-client
+Version: 2.1.0-r1
+Depends: libc, snodec-websocket, snodec-http-client
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 256000
+Filename: snodec-websocket-client_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 93422
+SHA256sum: 3ac6f17f60ec510f10c0e702f6f4d7ad2a9d93762bf1d9bb05e0aebc7f018f10
+Description:  This package contains the module 'websocket-client' of SNode.C
+
+Package: snodec-websocket-server
+Version: 2.1.0-r1
+Depends: libc, snodec-websocket, snodec-http-server
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 266240
+Filename: snodec-websocket-server_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 98468
+SHA256sum: 65c02df8faa5a28d20bff568674abdaeb41dcee5204d801caf1b4c64be1b56ba
+Description:  This package contains the module 'websocket-server' of SNode.C
+
+Package: snodec-websocket
+Version: 2.1.0-r1
+Depends: libc, snodec-utils
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 40960
+Filename: snodec-websocket_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 11887
+SHA256sum: 85dccc756675d9b229b3ce6e213061bf58827fa89d96b53f89abb3dcb6130043
+Description:  This package contains the module 'websocket' of SNode.C
+
+Package: snodec
+Version: 2.1.0-r1
+Depends: libc, snodec-apps, snodec-control, snodec-core-mux-epoll, snodec-core-mux-poll, snodec-core-mux-select, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-l2-stream-legacy, snodec-net-l2-stream-tls, snodec-net-rc-stream-legacy, snodec-net-rc-stream-tls, snodec-net-un-stream-legacy, snodec-net-un-stream-tls, snodec-net-un-dgram, snodec-http-server-express, snodec-http-server-express-legacy-in, snodec-http-server-express-legacy-in6, snodec-http-server-express-legacy-rc, snodec-http-server-express-legacy-un, snodec-http-server-express-tls-in, snodec-http-server-express-tls-in6, snodec-http-server-express-tls-rc, snodec-http-server-express-tls-un, snodec-http-client, snodec-websocket-server, snodec-websocket-client, snodec-mqtt-server-websocket, snodec-mqtt-client-websocket, snodec-db-mariadb
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: i386_pentium-mmx
+Installed-Size: 10240
+Filename: snodec_2.1.0-r1_i386_pentium-mmx.ipk
+Size: 1072
+SHA256sum: a099b0d353499b13e77a12a99f44aea871a72dc196ff5e476d795d19ea755819
+Description:  This meta-package selects all SNode.C runtime modules, demonstration
+ applications and the control tool.
+
