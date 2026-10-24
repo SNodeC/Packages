@@ -1,0 +1,1143 @@
+Package: snodec-apps
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-l2-stream-legacy, snodec-net-l2-stream-tls, snodec-net-rc-stream-legacy, snodec-net-rc-stream-tls, snodec-net-un-stream-legacy, snodec-net-un-stream-tls, snodec-http-server-express, snodec-http-client, snodec-websocket-server, snodec-websocket-client, snodec-mqtt-server, snodec-mqtt-client, snodec-db-mariadb
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 8345600
+Filename: snodec-apps_2.1.0-r1_arm_cortex-a9.ipk
+Size: 2898707
+SHA256sum: df83437fba5ddf511ef178b0944da331eac6017556580178f0a6fdca73d9d1ec
+Description:  This package contains all demo applications of SNode.C.
+
+Package: snodec-common
+Version: 2.1.0-r1
+Depends: libc, libstdcpp6
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+Require-User: snodec:snodec
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 10240
+Filename: snodec-common_2.1.0-r1_arm_cortex-a9.ipk
+Size: 1101
+SHA256sum: a801ef7a5cb104f31b4d7e3a9480797fcada425dd65875ee32cb04a0e578db86
+Description:  SNode.C is a very simple to use lightweight highly extendable event
+ driven layer-based framework for network applications in the spirit
+ of node.js written entirely in C++.
+
+Package: snodec-control
+Version: 2.1.0-r1
+Depends: libc, snodec-common
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 204800
+Filename: snodec-control_2.1.0-r1_arm_cortex-a9.ipk
+Size: 89165
+SHA256sum: 8159c8e978fefeac638c0c9e06adc7f6c9141dc12acd71b614a6ca53d6be756b
+Description:  SNode.C control socket client
+
+Package: snodec-core-mux-epoll
+Version: 2.1.0-r1
+Depends: libc, snodec-logger
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 40960
+Filename: snodec-core-mux-epoll_2.1.0-r1_arm_cortex-a9.ipk
+Size: 12731
+SHA256sum: f94d519ee20c7d1dd73d3f19726e6dc5c6e8de7634a35d5775cf148361890a89
+Description:  This package contains the module 'core-mux-epoll' of SNode.C
+
+Package: snodec-core-mux-poll
+Version: 2.1.0-r1
+Depends: libc, snodec-logger
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 30720
+Filename: snodec-core-mux-poll_2.1.0-r1_arm_cortex-a9.ipk
+Size: 10059
+SHA256sum: 1f844ca275d3a322dda3d3181667b391ef273db2b7c829e00e7c6ff763cc4d79
+Description:  This package contains the module 'core-mux-poll' of SNode.C
+
+Package: snodec-core-mux-select
+Version: 2.1.0-r1
+Depends: libc, snodec-logger
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 20480
+Filename: snodec-core-mux-select_2.1.0-r1_arm_cortex-a9.ipk
+Size: 6800
+SHA256sum: 2531aba920a1df46a99383deeb48f005a109e5dc4828d866058e40df252f92b0
+Description:  This package contains the module 'core-mux-select' of SNode.C
+
+Package: snodec-core-socket-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 20480
+Filename: snodec-core-socket-stream-legacy_2.1.0-r1_arm_cortex-a9.ipk
+Size: 4645
+SHA256sum: ce37594afa25b09ac9942df5ada4294cc0d2fa5a8bd22b513b1f8e1bd58a0653
+Description:  This package contains the module 'core-socket-stream-legacy' of SNode.C
+
+Package: snodec-core-socket-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket-stream, libopenssl3
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 81920
+Filename: snodec-core-socket-stream-tls_2.1.0-r1_arm_cortex-a9.ipk
+Size: 29258
+SHA256sum: 64a47f30b4bcf396d61947f89fcc604a6410b6ed2c0316e325b590394247ea73
+Description:  This package contains the module 'core-socket-stream-tls' of SNode.C
+
+Package: snodec-core-socket-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 153600
+Filename: snodec-core-socket-stream_2.1.0-r1_arm_cortex-a9.ipk
+Size: 49393
+SHA256sum: dd79450b1ce3a17abf45fafa132a6f33da1d68c5ec049180de462071ffd9f2c5
+Description:  This package contains the module 'core-socket-stream' of SNode.C
+
+Package: snodec-core-socket
+Version: 2.1.0-r1
+Depends: libc, snodec-core
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 20480
+Filename: snodec-core-socket_2.1.0-r1_arm_cortex-a9.ipk
+Size: 6596
+SHA256sum: 8e0b061479e5d5f2166f416ef3b49f72754f3f4f58a91be3d6a52b4dcbaa505d
+Description:  This package contains the module 'core-socket' of SNode.C
+
+Package: snodec-core
+Version: 2.1.0-r1
+Depends: libc, snodec-utils, libatomic1, snodec-core-mux-epoll
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 215040
+Filename: snodec-core_2.1.0-r1_arm_cortex-a9.ipk
+Size: 74166
+SHA256sum: e6a788333f973f20d02fd3ad2e0de4af94b8dc0d89aad8e5cdbb7fb126a9c13a
+Description:  This package contains the module 'core' of SNode.C
+
+Package: snodec-db-mariadb
+Version: 2.1.0-r1
+Depends: libc, snodec-core, libmariadb3
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 92160
+Filename: snodec-db-mariadb_2.1.0-r1_arm_cortex-a9.ipk
+Size: 29140
+SHA256sum: 97c82752016db80849317a4cbb935e85c0906d4da0837e6a9a8c46dd5458aa4f
+Description:  This package contains the module 'db-mariadb' of SNode.C
+
+Package: snodec-http-client
+Version: 2.1.0-r1
+Depends: libc, snodec-http
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 286720
+Filename: snodec-http-client_2.1.0-r1_arm_cortex-a9.ipk
+Size: 103048
+SHA256sum: 623dab9ad79f349b8f2e0b8a2b08e13af1de4ef71e1489bd7c708da19c5f32f5
+Description:  This package contains the module 'http-client' of SNode.C
+
+Package: snodec-http-server-express-legacy-in6
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server-express, snodec-net-in6-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 163840
+Filename: snodec-http-server-express-legacy-in6_2.1.0-r1_arm_cortex-a9.ipk
+Size: 40592
+SHA256sum: bc092a9e162b3ab586278f222afa31c58daaf747a0c5e17d37d0e192f7ccf007
+Description:  This package contains the module 'http-server-express-legacy-in6' of SNode.C
+
+Package: snodec-http-server-express-legacy-in
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server-express, snodec-net-in-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 163840
+Filename: snodec-http-server-express-legacy-in_2.1.0-r1_arm_cortex-a9.ipk
+Size: 40508
+SHA256sum: 7fc0ffb96a6b798e44b7ac05d5942041056f89bfc93687fad45b15b5167d3777
+Description:  This package contains the module 'http-server-express-legacy-in' of SNode.C
+
+Package: snodec-http-server-express-legacy-rc
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server-express, snodec-net-rc-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 163840
+Filename: snodec-http-server-express-legacy-rc_2.1.0-r1_arm_cortex-a9.ipk
+Size: 40455
+SHA256sum: e50b6ff11ba9a5a0dc25841be4d0736c372066ca4e252bd5858426832f04730c
+Description:  This package contains the module 'http-server-express-legacy-rc' of SNode.C
+
+Package: snodec-http-server-express-legacy-un
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server-express, snodec-net-un-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 163840
+Filename: snodec-http-server-express-legacy-un_2.1.0-r1_arm_cortex-a9.ipk
+Size: 40338
+SHA256sum: cd9e0b388ee91f6442626d1e5901f06c3a74d5d3615df291fd0d9e6470b2cb93
+Description:  This package contains the module 'http-server-express-legacy-un' of SNode.C
+
+Package: snodec-http-server-express-tls-in6
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-in6-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 163840
+Filename: snodec-http-server-express-tls-in6_2.1.0-r1_arm_cortex-a9.ipk
+Size: 40553
+SHA256sum: dfd007919a9c71b778cc025d583146be5791be42460f6382ce962c64cf206604
+Description:  This package contains the module 'http-server-express-tls-in6' of SNode.C
+
+Package: snodec-http-server-express-tls-in
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-in-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 163840
+Filename: snodec-http-server-express-tls-in_2.1.0-r1_arm_cortex-a9.ipk
+Size: 40509
+SHA256sum: cbd63ae35004352acf90454e94d0bbc7d20b26edd78ac0a685eff44e842e2767
+Description:  This package contains the module 'http-server-express-tls-in' of SNode.C
+
+Package: snodec-http-server-express-tls-rc
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-rc-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 163840
+Filename: snodec-http-server-express-tls-rc_2.1.0-r1_arm_cortex-a9.ipk
+Size: 40252
+SHA256sum: 2d49fee3dce0c66cce0699a3067a1703da12870a53051688ed5195d0bf985e98
+Description:  This package contains the module 'http-server-express-tls-rc' of SNode.C
+
+Package: snodec-http-server-express-tls-un
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-un-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 163840
+Filename: snodec-http-server-express-tls-un_2.1.0-r1_arm_cortex-a9.ipk
+Size: 40278
+SHA256sum: abf03948e839b7434e680f6c7615c3b8673f0f4d75dde78783d74930250dafdc
+Description:  This package contains the module 'http-server-express-tls-un' of SNode.C
+
+Package: snodec-http-server-express
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 450560
+Filename: snodec-http-server-express_2.1.0-r1_arm_cortex-a9.ipk
+Size: 146608
+SHA256sum: ecc8019c18e2831c13a9355f73793d469ea7218d23260c0bb48d4246a15e0ef2
+Description:  This package contains the module 'http-server-express' of SNode.C
+
+Package: snodec-http-server
+Version: 2.1.0-r1
+Depends: libc, snodec-http
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 256000
+Filename: snodec-http-server_2.1.0-r1_arm_cortex-a9.ipk
+Size: 92785
+SHA256sum: 3ab0efc08513d325bda278f982a8977ac03b72b36406622b42d1c427d5e35979
+Description:  This package contains the module 'http-server' of SNode.C
+
+Package: snodec-http
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket-stream, libmagic
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 276480
+Filename: snodec-http_2.1.0-r1_arm_cortex-a9.ipk
+Size: 101492
+SHA256sum: bf7c8f2d159803398ae15b845e2aef72cfc894c8e2cff66ded7b31778aa85f0e
+Description:  This package contains the module 'http' of SNode.C
+
+Package: snodec-logger
+Version: 2.1.0-r1
+Depends: libc, snodec-common
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 378880
+Filename: snodec-logger_2.1.0-r1_arm_cortex-a9.ipk
+Size: 133801
+SHA256sum: e18d172f0787c595b6215ad00a25cff8487a9bff05103266090d66af84fa67b1
+Description:  This package contains the module 'logger' of SNode.C
+
+Package: snodec-mqtt-client-websocket
+Version: 2.1.0-r1
+Depends: libc, snodec-mqtt-client, snodec-websocket-client
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 30720
+Filename: snodec-mqtt-client-websocket_2.1.0-r1_arm_cortex-a9.ipk
+Size: 9142
+SHA256sum: eea1fbca39257506554b2c9e277f72a244c86b57c2984b46023c777364a27eba
+Description:  This package contains the module 'mqtt-client-websocket' of SNode.C
+
+Package: snodec-mqtt-client
+Version: 2.1.0-r1
+Depends: libc, snodec-mqtt
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 184320
+Filename: snodec-mqtt-client_2.1.0-r1_arm_cortex-a9.ipk
+Size: 62222
+SHA256sum: 452cb0ca090928720c330344f099a6bd6b59b1018cf9f6b63105b286f4325138
+Description:  This package contains the module 'mqtt-client' of SNode.C
+
+Package: snodec-mqtt-server-websocket
+Version: 2.1.0-r1
+Depends: libc, snodec-mqtt-server, snodec-websocket-server
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 30720
+Filename: snodec-mqtt-server-websocket_2.1.0-r1_arm_cortex-a9.ipk
+Size: 9128
+SHA256sum: 1a24298c3e68c21eb3dcacc516006168d4aa71d92314505c8cfbcce666befb0b
+Description:  This package contains the module 'mqtt-server-websocket' of SNode.C
+
+Package: snodec-mqtt-server
+Version: 2.1.0-r1
+Depends: libc, snodec-mqtt
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 296960
+Filename: snodec-mqtt-server_2.1.0-r1_arm_cortex-a9.ipk
+Size: 105549
+SHA256sum: bf4872e5b1f3dc610a0526f4ff749692c696eeeaa313ac690be046a9c4273828
+Description:  This package contains the module 'mqtt-server' of SNode.C
+
+Package: snodec-mqtt
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 133120
+Filename: snodec-mqtt_2.1.0-r1_arm_cortex-a9.ipk
+Size: 46774
+SHA256sum: 0324589adc33579c8ba6f2ad5e9f316788e6ea7d89a2157fc2693034486d2495
+Description:  This package contains the module 'mqtt' of SNode.C
+
+Package: snodec-net-in-phy-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in-phy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 20480
+Filename: snodec-net-in-phy-stream_2.1.0-r1_arm_cortex-a9.ipk
+Size: 4358
+SHA256sum: 3933abe4e4ebe1cd44409847d9f901a2401dd4433e04127f70b9f81123b82d74
+Description:  This package contains the module 'net-in-phy-stream' of SNode.C
+
+Package: snodec-net-in-phy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 20480
+Filename: snodec-net-in-phy_2.1.0-r1_arm_cortex-a9.ipk
+Size: 5467
+SHA256sum: 0099aa56eabb5d94ceda6a5c82e975031eb41ff6d1f45e500ade5703a844f993
+Description:  This package contains the module 'net-in-phy' of SNode.C
+
+Package: snodec-net-in-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in-stream, snodec-core-socket-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 266240
+Filename: snodec-net-in-stream-legacy_2.1.0-r1_arm_cortex-a9.ipk
+Size: 72923
+SHA256sum: b5fb5bc354dfc6115e83ee83f2c3beb9209ec788558c71a89ac2a0fd3961cbc5
+Description:  This package contains the module 'net-in-stream-legacy' of SNode.C
+
+Package: snodec-net-in-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in-stream, snodec-core-socket-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 399360
+Filename: snodec-net-in-stream-tls_2.1.0-r1_arm_cortex-a9.ipk
+Size: 108386
+SHA256sum: c571bd721201aa9401cb3b4d7933bd794536b802cfd1957e3a0fe621f5cb6f42
+Description:  This package contains the module 'net-in-stream-tls' of SNode.C
+
+Package: snodec-net-in-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in-phy-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 133120
+Filename: snodec-net-in-stream_2.1.0-r1_arm_cortex-a9.ipk
+Size: 48618
+SHA256sum: 22c6529b33396be6cab15fb54d0013618edcca498bccc32ee29391c929ece72d
+Description:  This package contains the module 'net-in-stream' of SNode.C
+
+Package: snodec-net-in6-phy-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in6-phy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 20480
+Filename: snodec-net-in6-phy-stream_2.1.0-r1_arm_cortex-a9.ipk
+Size: 4360
+SHA256sum: c8e61fe3da0282aa7f7c528ec97256242ae3eb3119a51c47a2fade9199838db5
+Description:  This package contains the module 'net-in6-phy-stream' of SNode.C
+
+Package: snodec-net-in6-phy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in6
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 20480
+Filename: snodec-net-in6-phy_2.1.0-r1_arm_cortex-a9.ipk
+Size: 5482
+SHA256sum: f820a948f3b48ee0649494a3f70d2231f9e418e2c8dabe0986eca2d9c430940a
+Description:  This package contains the module 'net-in6-phy' of SNode.C
+
+Package: snodec-net-in6-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in6-stream, snodec-core-socket-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 266240
+Filename: snodec-net-in6-stream-legacy_2.1.0-r1_arm_cortex-a9.ipk
+Size: 72819
+SHA256sum: e840287372c1e668649c511033c46bdfd6150e2373a6d9474eddbe8d6069f88b
+Description:  This package contains the module 'net-in6-stream-legacy' of SNode.C
+
+Package: snodec-net-in6-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in6-stream, snodec-core-socket-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 399360
+Filename: snodec-net-in6-stream-tls_2.1.0-r1_arm_cortex-a9.ipk
+Size: 108225
+SHA256sum: 6597b011e9ff2c139a3043990acf51c493c914b15760c63769142dd9859b9b88
+Description:  This package contains the module 'net-in6-stream-tls' of SNode.C
+
+Package: snodec-net-in6-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in6-phy-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 143360
+Filename: snodec-net-in6-stream_2.1.0-r1_arm_cortex-a9.ipk
+Size: 49757
+SHA256sum: efeeb5742155bb9a47b5c37c113d70d4dd1f8d205164cefe68a5aa6eb5b23738
+Description:  This package contains the module 'net-in6-stream' of SNode.C
+
+Package: snodec-net-in6
+Version: 2.1.0-r1
+Depends: libc, snodec-net
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 174080
+Filename: snodec-net-in6_2.1.0-r1_arm_cortex-a9.ipk
+Size: 60200
+SHA256sum: 155986cd91be70fa040dabbcee271a147f4065e7a5fbea4fc6a3537a1e15183f
+Description:  This package contains the module 'net-in6' of SNode.C
+
+Package: snodec-net-in
+Version: 2.1.0-r1
+Depends: libc, snodec-net
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 174080
+Filename: snodec-net-in_2.1.0-r1_arm_cortex-a9.ipk
+Size: 59435
+SHA256sum: 4ec532684e0d8a86b37a508902d2cf03c7872031732e87a3b5d6491e16d11f56
+Description:  This package contains the module 'net-in' of SNode.C
+
+Package: snodec-net-l2-phy-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-l2-phy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 20480
+Filename: snodec-net-l2-phy-stream_2.1.0-r1_arm_cortex-a9.ipk
+Size: 4446
+SHA256sum: 3c13240af645a6504731de3143a1434a772e3fc28aac41c015d1981f4e5f3f08
+Description:  This package contains the module 'net-l2-phy-stream' of SNode.C
+
+Package: snodec-net-l2-phy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-l2, bluez-libs
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 20480
+Filename: snodec-net-l2-phy_2.1.0-r1_arm_cortex-a9.ipk
+Size: 5087
+SHA256sum: 3efa7d7fd614e9d5299b27554932888425b9bcbea8cc90385ae376cf9f5336f7
+Description:  This package contains the module 'net-l2-phy' of SNode.C
+
+Package: snodec-net-l2-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-l2-stream, snodec-core-socket-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 266240
+Filename: snodec-net-l2-stream-legacy_2.1.0-r1_arm_cortex-a9.ipk
+Size: 72476
+SHA256sum: 55570edbfa5749780b74d622e4651015224e4fe801a20031318f3206c7195b7f
+Description:  This package contains the module 'net-l2-stream-legacy' of SNode.C
+
+Package: snodec-net-l2-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-net-l2-stream, snodec-core-socket-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 399360
+Filename: snodec-net-l2-stream-tls_2.1.0-r1_arm_cortex-a9.ipk
+Size: 108010
+SHA256sum: e8624aeea4b351f99515870bad85eb1fe8a4270024596af118f58a169fa1710f
+Description:  This package contains the module 'net-l2-stream-tls' of SNode.C
+
+Package: snodec-net-l2-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-l2-phy-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 81920
+Filename: snodec-net-l2-stream_2.1.0-r1_arm_cortex-a9.ipk
+Size: 23581
+SHA256sum: c696fc14590c3aaec81e51d7bb377e3d34bc4d02db757addcdcf5b965985d9cd
+Description:  This package contains the module 'net-l2-stream' of SNode.C
+
+Package: snodec-net-l2
+Version: 2.1.0-r1
+Depends: libc, snodec-net, bluez-libs
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 256000
+Filename: snodec-net-l2_2.1.0-r1_arm_cortex-a9.ipk
+Size: 83700
+SHA256sum: 193593c5a0ebf90fc0f961a6352e7d9ec6002c06c8bdb0607391111c09eddbde
+Description:  This package contains the module 'net-l2' of SNode.C
+
+Package: snodec-net-rc-phy-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-rc-phy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 20480
+Filename: snodec-net-rc-phy-stream_2.1.0-r1_arm_cortex-a9.ipk
+Size: 4366
+SHA256sum: 0e22b65f4ef6a8c08fe7e72ef5c93f7f2d6de8c95d5be95107e7e52db1bbb3d1
+Description:  This package contains the module 'net-rc-phy-stream' of SNode.C
+
+Package: snodec-net-rc-phy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-rc, bluez-libs
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 20480
+Filename: snodec-net-rc-phy_2.1.0-r1_arm_cortex-a9.ipk
+Size: 5075
+SHA256sum: 51153f421be07134eca6639fa44e806b8a0ed663e9f81110aa63373ac412ca0a
+Description:  This package contains the module 'net-rc-phy' of SNode.C
+
+Package: snodec-net-rc-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-rc-stream, snodec-core-socket-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 266240
+Filename: snodec-net-rc-stream-legacy_2.1.0-r1_arm_cortex-a9.ipk
+Size: 72523
+SHA256sum: 9e7829427961354dfff15ef626e90efb41ce33c77df8da2282ce45c7013a9bb7
+Description:  This package contains the module 'net-rc-stream-legacy' of SNode.C
+
+Package: snodec-net-rc-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-net-rc-stream, snodec-core-socket-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 399360
+Filename: snodec-net-rc-stream-tls_2.1.0-r1_arm_cortex-a9.ipk
+Size: 107892
+SHA256sum: 5119a0a2bdcd3a69df937298dea2edd12483ca96088a84149ca41a15b3a1b25f
+Description:  This package contains the module 'net-rc-stream-tls' of SNode.C
+
+Package: snodec-net-rc-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-rc-phy-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 81920
+Filename: snodec-net-rc-stream_2.1.0-r1_arm_cortex-a9.ipk
+Size: 23562
+SHA256sum: bbb3f888254303931708ed6a24b050bb560ed669589c4e6ccec93cdb9053c2d9
+Description:  This package contains the module 'net-rc-stream' of SNode.C
+
+Package: snodec-net-rc
+Version: 2.1.0-r1
+Depends: libc, snodec-net, bluez-libs
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 256000
+Filename: snodec-net-rc_2.1.0-r1_arm_cortex-a9.ipk
+Size: 84056
+SHA256sum: d98c25938396d0c01c6a1cc7082fc919077a4d6d7149d96f113a56b56d616793
+Description:  This package contains the module 'net-rc' of SNode.C
+
+Package: snodec-net-un-dgram
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un-phy, snodec-net-un
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 40960
+Filename: snodec-net-un-dgram_2.1.0-r1_arm_cortex-a9.ipk
+Size: 12542
+SHA256sum: c706603ceac5cf3a23cf0b4ad9d921c1269f63478d1f063c62a56012002a3588
+Description:  This package contains the module 'net-un-dgram' of SNode.C
+
+Package: snodec-net-un-phy-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un-phy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 51200
+Filename: snodec-net-un-phy-stream_2.1.0-r1_arm_cortex-a9.ipk
+Size: 15399
+SHA256sum: 4ba265818c81aaa95003ebc4039e6202c2e46c5703b510812947c0f44a519f34
+Description:  This package contains the module 'net-un-phy-stream' of SNode.C
+
+Package: snodec-net-un-phy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 20480
+Filename: snodec-net-un-phy_2.1.0-r1_arm_cortex-a9.ipk
+Size: 5105
+SHA256sum: fdfc3645e8c706441d83d4338f48702533ba37ee5cbcb4469f2be3afe426b159
+Description:  This package contains the module 'net-un-phy' of SNode.C
+
+Package: snodec-net-un-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un-stream, snodec-core-socket-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 266240
+Filename: snodec-net-un-stream-legacy_2.1.0-r1_arm_cortex-a9.ipk
+Size: 72386
+SHA256sum: 275cb8507fff8100a0c11b889d7e454c76937b34c8c62d6595239ac9d39ec32f
+Description:  This package contains the module 'net-un-stream-legacy' of SNode.C
+
+Package: snodec-net-un-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un-stream, snodec-core-socket-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 399360
+Filename: snodec-net-un-stream-tls_2.1.0-r1_arm_cortex-a9.ipk
+Size: 108033
+SHA256sum: 36a72c791012d568f4c1129cf014efa091dc7b5a431f232607d6c5695f4a6611
+Description:  This package contains the module 'net-un-stream-tls' of SNode.C
+
+Package: snodec-net-un-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un-phy-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 81920
+Filename: snodec-net-un-stream_2.1.0-r1_arm_cortex-a9.ipk
+Size: 23459
+SHA256sum: 6f51ecad5d505ef9b697b3f9af6462cdea2c6e4b26d0615a0ce1835cec92d663
+Description:  This package contains the module 'net-un-stream' of SNode.C
+
+Package: snodec-net-un
+Version: 2.1.0-r1
+Depends: libc, snodec-net
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 122880
+Filename: snodec-net-un_2.1.0-r1_arm_cortex-a9.ipk
+Size: 43335
+SHA256sum: 15eaf82a760d392e2bf6b1aa0161b185b854c70720a6b83f57478114cce3a273
+Description:  This package contains the module 'net-un' of SNode.C
+
+Package: snodec-net
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 337920
+Filename: snodec-net_2.1.0-r1_arm_cortex-a9.ipk
+Size: 118396
+SHA256sum: bd6fafe18d7bce47946c2295e0671ee5edc70fc54c23e71737a82a50f69735b0
+Description:  This package contains the module 'net' of SNode.C
+
+Package: snodec-utils
+Version: 2.1.0-r1
+Depends: libc, snodec-logger
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 542720
+Filename: snodec-utils_2.1.0-r1_arm_cortex-a9.ipk
+Size: 219374
+SHA256sum: 633bb4e39f55249eb46fd04b6e8b56cff24c2886f53f2a63fc1404024ee03702
+Description:  This package contains the module 'utils' of SNode.C
+
+Package: snodec-websocket-client
+Version: 2.1.0-r1
+Depends: libc, snodec-websocket, snodec-http-client
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 122880
+Filename: snodec-websocket-client_2.1.0-r1_arm_cortex-a9.ipk
+Size: 38865
+SHA256sum: 645313430362d8b3747bf9e3cfedb9125a1b80e2cc3e477603f2a426f536cdcc
+Description:  This package contains the module 'websocket-client' of SNode.C
+
+Package: snodec-websocket-server
+Version: 2.1.0-r1
+Depends: libc, snodec-websocket, snodec-http-server
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 133120
+Filename: snodec-websocket-server_2.1.0-r1_arm_cortex-a9.ipk
+Size: 43122
+SHA256sum: ade3cbcf863f10f26e1217687e688e81c327338125c2e06303764d2bfe0cd985
+Description:  This package contains the module 'websocket-server' of SNode.C
+
+Package: snodec-websocket
+Version: 2.1.0-r1
+Depends: libc, snodec-utils
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 30720
+Filename: snodec-websocket_2.1.0-r1_arm_cortex-a9.ipk
+Size: 11002
+SHA256sum: 1369f9ec350c1fa1a7b7769739503c858b0dcc5583f9797a742fec06328ed850
+Description:  This package contains the module 'websocket' of SNode.C
+
+Package: snodec
+Version: 2.1.0-r1
+Depends: libc, snodec-apps, snodec-control, snodec-core-mux-epoll, snodec-core-mux-poll, snodec-core-mux-select, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-l2-stream-legacy, snodec-net-l2-stream-tls, snodec-net-rc-stream-legacy, snodec-net-rc-stream-tls, snodec-net-un-stream-legacy, snodec-net-un-stream-tls, snodec-net-un-dgram, snodec-http-server-express, snodec-http-server-express-legacy-in, snodec-http-server-express-legacy-in6, snodec-http-server-express-legacy-rc, snodec-http-server-express-legacy-un, snodec-http-server-express-tls-in, snodec-http-server-express-tls-in6, snodec-http-server-express-tls-rc, snodec-http-server-express-tls-un, snodec-http-client, snodec-websocket-server, snodec-websocket-client, snodec-mqtt-server-websocket, snodec-mqtt-client-websocket, snodec-db-mariadb
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: arm_cortex-a9
+Installed-Size: 10240
+Filename: snodec_2.1.0-r1_arm_cortex-a9.ipk
+Size: 1064
+SHA256sum: be8fa245a06d73876d054ec94853314e95e44a25c271f21e182d894b85a2529d
+Description:  This meta-package selects all SNode.C runtime modules, demonstration
+ applications and the control tool.
+

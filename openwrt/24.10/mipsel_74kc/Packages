@@ -1,0 +1,1143 @@
+Package: snodec-apps
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-l2-stream-legacy, snodec-net-l2-stream-tls, snodec-net-rc-stream-legacy, snodec-net-rc-stream-tls, snodec-net-un-stream-legacy, snodec-net-un-stream-tls, snodec-http-server-express, snodec-http-client, snodec-websocket-server, snodec-websocket-client, snodec-mqtt-server, snodec-mqtt-client, snodec-db-mariadb
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 18196480
+Filename: snodec-apps_2.1.0-r1_mipsel_74kc.ipk
+Size: 5504545
+SHA256sum: 19a3fccf68fa3e1a732b6781f0bf99aa0bc0f764644c048a355358d33a2efdc3
+Description:  This package contains all demo applications of SNode.C.
+
+Package: snodec-common
+Version: 2.1.0-r1
+Depends: libc, libstdcpp6
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+Require-User: snodec:snodec
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 10240
+Filename: snodec-common_2.1.0-r1_mipsel_74kc.ipk
+Size: 1091
+SHA256sum: 5c62230053b29a9ae1824ea1e09368238ad11fb8e85f4512ccdd01b012de8b2f
+Description:  SNode.C is a very simple to use lightweight highly extendable event
+ driven layer-based framework for network applications in the spirit
+ of node.js written entirely in C++.
+
+Package: snodec-control
+Version: 2.1.0-r1
+Depends: libc, snodec-common
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 337920
+Filename: snodec-control_2.1.0-r1_mipsel_74kc.ipk
+Size: 102553
+SHA256sum: 9468c06fe0bac1a93592b2ec4d934d17b8c5bdfbcf8018cf46f78b3d6be8a375
+Description:  SNode.C control socket client
+
+Package: snodec-core-mux-epoll
+Version: 2.1.0-r1
+Depends: libc, snodec-logger
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-core-mux-epoll_2.1.0-r1_mipsel_74kc.ipk
+Size: 12882
+SHA256sum: b28b0cdbb36fe5922218fa2f56deaef4404e0c11783368fd07187d469bc181b0
+Description:  This package contains the module 'core-mux-epoll' of SNode.C
+
+Package: snodec-core-mux-poll
+Version: 2.1.0-r1
+Depends: libc, snodec-logger
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-core-mux-poll_2.1.0-r1_mipsel_74kc.ipk
+Size: 10726
+SHA256sum: 1bba5871617996b01b80677aabe725c673ae5e1c60bd8a4f53fc4c8a1164a897
+Description:  This package contains the module 'core-mux-poll' of SNode.C
+
+Package: snodec-core-mux-select
+Version: 2.1.0-r1
+Depends: libc, snodec-logger
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-core-mux-select_2.1.0-r1_mipsel_74kc.ipk
+Size: 7144
+SHA256sum: 15bf77be07decdfc6b92b653da98d4712141095a0fef6d39f755a52b911fd4fa
+Description:  This package contains the module 'core-mux-select' of SNode.C
+
+Package: snodec-core-socket-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-core-socket-stream-legacy_2.1.0-r1_mipsel_74kc.ipk
+Size: 5158
+SHA256sum: 70753a5906178363204d5526916f12662150bf0d544d8be89fa6e0ee3d31d56e
+Description:  This package contains the module 'core-socket-stream-legacy' of SNode.C
+
+Package: snodec-core-socket-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket-stream, libopenssl3
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 143360
+Filename: snodec-core-socket-stream-tls_2.1.0-r1_mipsel_74kc.ipk
+Size: 30391
+SHA256sum: 42f4b05670af25fc66148ab7a128f67b2ff04fe0b4febf700d6cacdded4ec430
+Description:  This package contains the module 'core-socket-stream-tls' of SNode.C
+
+Package: snodec-core-socket-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 276480
+Filename: snodec-core-socket-stream_2.1.0-r1_mipsel_74kc.ipk
+Size: 92641
+SHA256sum: 739d2b88f19e4cff6fd270026643bc42f27a3ebd9f35519b0710cb0376f47554
+Description:  This package contains the module 'core-socket-stream' of SNode.C
+
+Package: snodec-core-socket
+Version: 2.1.0-r1
+Depends: libc, snodec-core
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-core-socket_2.1.0-r1_mipsel_74kc.ipk
+Size: 7095
+SHA256sum: 0addb5501c79eaa0f6deb80b646003e1f5ee6df68656d86e75453dca0c772c07
+Description:  This package contains the module 'core-socket' of SNode.C
+
+Package: snodec-core
+Version: 2.1.0-r1
+Depends: libc, snodec-utils, libatomic1, snodec-core-mux-epoll
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 337920
+Filename: snodec-core_2.1.0-r1_mipsel_74kc.ipk
+Size: 119721
+SHA256sum: b3d7903c3ce09fa0222f4c63c9d644633aa3c599a26160f3141ab4b83ca71597
+Description:  This package contains the module 'core' of SNode.C
+
+Package: snodec-db-mariadb
+Version: 2.1.0-r1
+Depends: libc, snodec-core, libmariadb3
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 143360
+Filename: snodec-db-mariadb_2.1.0-r1_mipsel_74kc.ipk
+Size: 31129
+SHA256sum: 99065c1b017e03117d3a9ad67a632fc05ae1d76c0aaf2b92fc3021e349f48713
+Description:  This package contains the module 'db-mariadb' of SNode.C
+
+Package: snodec-http-client
+Version: 2.1.0-r1
+Depends: libc, snodec-http
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 409600
+Filename: snodec-http-client_2.1.0-r1_mipsel_74kc.ipk
+Size: 135725
+SHA256sum: 1f31efcd5b8e5ab34ca613669c8c098e7c88f787eae5021d51c24a69b20844d0
+Description:  This package contains the module 'http-client' of SNode.C
+
+Package: snodec-http-server-express-legacy-in6
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server-express, snodec-net-in6-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 276480
+Filename: snodec-http-server-express-legacy-in6_2.1.0-r1_mipsel_74kc.ipk
+Size: 85641
+SHA256sum: 35ce2332d273916aafc1a51d870fa535f22c47596a86cdb49180242fb5a5b44b
+Description:  This package contains the module 'http-server-express-legacy-in6' of SNode.C
+
+Package: snodec-http-server-express-legacy-in
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server-express, snodec-net-in-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 276480
+Filename: snodec-http-server-express-legacy-in_2.1.0-r1_mipsel_74kc.ipk
+Size: 85669
+SHA256sum: df70e35df1010a2ebb57854b0a2530849bd2a408914c9baaac58afff57d4a01a
+Description:  This package contains the module 'http-server-express-legacy-in' of SNode.C
+
+Package: snodec-http-server-express-legacy-rc
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server-express, snodec-net-rc-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 276480
+Filename: snodec-http-server-express-legacy-rc_2.1.0-r1_mipsel_74kc.ipk
+Size: 85635
+SHA256sum: 9f95901c4107e3d546dea23cee12323b851d57cd1026a4c089ebd2f2f3e97bc2
+Description:  This package contains the module 'http-server-express-legacy-rc' of SNode.C
+
+Package: snodec-http-server-express-legacy-un
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server-express, snodec-net-un-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 276480
+Filename: snodec-http-server-express-legacy-un_2.1.0-r1_mipsel_74kc.ipk
+Size: 85605
+SHA256sum: f40c3d1852be9e99f1cf8a7e637ece7080c31274d1aaba400a7a454502c02fe2
+Description:  This package contains the module 'http-server-express-legacy-un' of SNode.C
+
+Package: snodec-http-server-express-tls-in6
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-in6-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 276480
+Filename: snodec-http-server-express-tls-in6_2.1.0-r1_mipsel_74kc.ipk
+Size: 85679
+SHA256sum: 884852a50451428ba23fd3bedfe5a45a72378f972ec34bf380d0ea0f9fea5237
+Description:  This package contains the module 'http-server-express-tls-in6' of SNode.C
+
+Package: snodec-http-server-express-tls-in
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-in-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 276480
+Filename: snodec-http-server-express-tls-in_2.1.0-r1_mipsel_74kc.ipk
+Size: 85679
+SHA256sum: ad5fd78c5ac2510c107d959d0516059c858bdc3a968db59bd79d4905e4cdba27
+Description:  This package contains the module 'http-server-express-tls-in' of SNode.C
+
+Package: snodec-http-server-express-tls-rc
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-rc-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 276480
+Filename: snodec-http-server-express-tls-rc_2.1.0-r1_mipsel_74kc.ipk
+Size: 85581
+SHA256sum: 49e29c34422f19cd1d32f769e5b05a85ef2f32ebc5a33015159a31e95be6df53
+Description:  This package contains the module 'http-server-express-tls-rc' of SNode.C
+
+Package: snodec-http-server-express-tls-un
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server, snodec-http-server-express, snodec-net-un-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 276480
+Filename: snodec-http-server-express-tls-un_2.1.0-r1_mipsel_74kc.ipk
+Size: 85556
+SHA256sum: af305006c3ae203ea719c53e5e190fc3daa2d5c65941d7a1f47714d1b55dde18
+Description:  This package contains the module 'http-server-express-tls-un' of SNode.C
+
+Package: snodec-http-server-express
+Version: 2.1.0-r1
+Depends: libc, snodec-http-server
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 675840
+Filename: snodec-http-server-express_2.1.0-r1_mipsel_74kc.ipk
+Size: 195357
+SHA256sum: 27d7c9d359ffe58473c494fc1ccb4a6c4c7772aa244be0b4f00dd115a7f98bed
+Description:  This package contains the module 'http-server-express' of SNode.C
+
+Package: snodec-http-server
+Version: 2.1.0-r1
+Depends: libc, snodec-http
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 409600
+Filename: snodec-http-server_2.1.0-r1_mipsel_74kc.ipk
+Size: 127040
+SHA256sum: 77331773eec0f736d2afc3d706792dcde3131c80a18130ac23389e9eaa8f66f8
+Description:  This package contains the module 'http-server' of SNode.C
+
+Package: snodec-http
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket-stream, libmagic
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 409600
+Filename: snodec-http_2.1.0-r1_mipsel_74kc.ipk
+Size: 133500
+SHA256sum: 5c1f4a8d029bf96500f0094809bd6079be19997aa0034337e4d5763ce89b9d4c
+Description:  This package contains the module 'http' of SNode.C
+
+Package: snodec-logger
+Version: 2.1.0-r1
+Depends: libc, snodec-common
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 409600
+Filename: snodec-logger_2.1.0-r1_mipsel_74kc.ipk
+Size: 137056
+SHA256sum: f685e208daba994c06769ecc3101e0f924a2edc9fd99129fd8932f1eb700fc79
+Description:  This package contains the module 'logger' of SNode.C
+
+Package: snodec-mqtt-client-websocket
+Version: 2.1.0-r1
+Depends: libc, snodec-mqtt-client, snodec-websocket-client
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-mqtt-client-websocket_2.1.0-r1_mipsel_74kc.ipk
+Size: 9589
+SHA256sum: cb91121b564257ad318ab31cfd37c762133f2aa2ee4c24dfd696cb39dc3e05f1
+Description:  This package contains the module 'mqtt-client-websocket' of SNode.C
+
+Package: snodec-mqtt-client
+Version: 2.1.0-r1
+Depends: libc, snodec-mqtt
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 204800
+Filename: snodec-mqtt-client_2.1.0-r1_mipsel_74kc.ipk
+Size: 64479
+SHA256sum: a03d4b4dcc06967e51fef4833b49b549ae590cbbf16b461fd7a3ba2b79535517
+Description:  This package contains the module 'mqtt-client' of SNode.C
+
+Package: snodec-mqtt-server-websocket
+Version: 2.1.0-r1
+Depends: libc, snodec-mqtt-server, snodec-websocket-server
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-mqtt-server-websocket_2.1.0-r1_mipsel_74kc.ipk
+Size: 9588
+SHA256sum: c25c1fd61dc91ef1830ff4f97970bbc3b377ff334659eb2ae4c2fa37d97485e6
+Description:  This package contains the module 'mqtt-server-websocket' of SNode.C
+
+Package: snodec-mqtt-server
+Version: 2.1.0-r1
+Depends: libc, snodec-mqtt
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 337920
+Filename: snodec-mqtt-server_2.1.0-r1_mipsel_74kc.ipk
+Size: 108766
+SHA256sum: 2f11ec44108c9eae3718c7f609421dd1a2f224962440b37a339603f019f17b91
+Description:  This package contains the module 'mqtt-server' of SNode.C
+
+Package: snodec-mqtt
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 204800
+Filename: snodec-mqtt_2.1.0-r1_mipsel_74kc.ipk
+Size: 48251
+SHA256sum: 4d3283f0064d2be3434e712a9913d474ed0a0d24a474833e011d42c70896f2f2
+Description:  This package contains the module 'mqtt' of SNode.C
+
+Package: snodec-net-in-phy-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in-phy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-net-in-phy-stream_2.1.0-r1_mipsel_74kc.ipk
+Size: 4321
+SHA256sum: 835517d925f4583fd63b73ebdde055374ac6575e3cfa8855f769a06cfdc9d9c5
+Description:  This package contains the module 'net-in-phy-stream' of SNode.C
+
+Package: snodec-net-in-phy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-net-in-phy_2.1.0-r1_mipsel_74kc.ipk
+Size: 5891
+SHA256sum: cf8ef4d5b23a367f27df6bf44f07d8282eee6a563e0898f9e02f250f774c2d2c
+Description:  This package contains the module 'net-in-phy' of SNode.C
+
+Package: snodec-net-in-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in-stream, snodec-core-socket-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 471040
+Filename: snodec-net-in-stream-legacy_2.1.0-r1_mipsel_74kc.ipk
+Size: 123408
+SHA256sum: d133e3586282f3cef0f7aef1715ea9b39cdf2cc83f50ff2dd6eeef0ca80b3b0a
+Description:  This package contains the module 'net-in-stream-legacy' of SNode.C
+
+Package: snodec-net-in-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in-stream, snodec-core-socket-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 604160
+Filename: snodec-net-in-stream-tls_2.1.0-r1_mipsel_74kc.ipk
+Size: 160718
+SHA256sum: e839d869aafadc4f3d024c18670538ffe346420a637b1cd7cc77c74e4b99238b
+Description:  This package contains the module 'net-in-stream-tls' of SNode.C
+
+Package: snodec-net-in-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in-phy-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 276480
+Filename: snodec-net-in-stream_2.1.0-r1_mipsel_74kc.ipk
+Size: 79736
+SHA256sum: 77f16ccc0789b31f83a2b9ce9f05b187d05da71d0c39b4c3d2407289ae79f3dc
+Description:  This package contains the module 'net-in-stream' of SNode.C
+
+Package: snodec-net-in6-phy-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in6-phy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-net-in6-phy-stream_2.1.0-r1_mipsel_74kc.ipk
+Size: 4329
+SHA256sum: eb436e1ea566a2c217e3b6953007d32bdde5769bc49f9d22cc222cd97db2f378
+Description:  This package contains the module 'net-in6-phy-stream' of SNode.C
+
+Package: snodec-net-in6-phy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in6
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-net-in6-phy_2.1.0-r1_mipsel_74kc.ipk
+Size: 5907
+SHA256sum: c3cdb649416528d6c73383e33435f7191b838745515385d02e85060c2c0607ed
+Description:  This package contains the module 'net-in6-phy' of SNode.C
+
+Package: snodec-net-in6-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in6-stream, snodec-core-socket-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 471040
+Filename: snodec-net-in6-stream-legacy_2.1.0-r1_mipsel_74kc.ipk
+Size: 123430
+SHA256sum: b22db9cbbca3804f6888a377612c4c85d91b26943ff67fd98cf70a86ae0485f4
+Description:  This package contains the module 'net-in6-stream-legacy' of SNode.C
+
+Package: snodec-net-in6-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in6-stream, snodec-core-socket-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 604160
+Filename: snodec-net-in6-stream-tls_2.1.0-r1_mipsel_74kc.ipk
+Size: 160751
+SHA256sum: 8a00e639d8f44256cb773830f254f77b270a2041b1411baba6d135ba2dc7139f
+Description:  This package contains the module 'net-in6-stream-tls' of SNode.C
+
+Package: snodec-net-in6-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-in6-phy-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 276480
+Filename: snodec-net-in6-stream_2.1.0-r1_mipsel_74kc.ipk
+Size: 80007
+SHA256sum: 85fd0b17a7ccaf8c77389f7536318c009299549154ef13040b8ea58aa662bf0a
+Description:  This package contains the module 'net-in6-stream' of SNode.C
+
+Package: snodec-net-in6
+Version: 2.1.0-r1
+Depends: libc, snodec-net
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 276480
+Filename: snodec-net-in6_2.1.0-r1_mipsel_74kc.ipk
+Size: 87759
+SHA256sum: 2f789c65468b453488b2b0375ca85326d6d49b2caf72d60537860a72f9e209c3
+Description:  This package contains the module 'net-in6' of SNode.C
+
+Package: snodec-net-in
+Version: 2.1.0-r1
+Depends: libc, snodec-net
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 276480
+Filename: snodec-net-in_2.1.0-r1_mipsel_74kc.ipk
+Size: 87536
+SHA256sum: efaf6d207d6452c2297493b6364e7d653052c77983dd5965c9eefdbd891d0399
+Description:  This package contains the module 'net-in' of SNode.C
+
+Package: snodec-net-l2-phy-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-l2-phy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-net-l2-phy-stream_2.1.0-r1_mipsel_74kc.ipk
+Size: 4411
+SHA256sum: 1604ff8b7129a49b1d5078a4e1dcb3def8444ab39f35b31863332bd9796484ac
+Description:  This package contains the module 'net-l2-phy-stream' of SNode.C
+
+Package: snodec-net-l2-phy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-l2, bluez-libs
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-net-l2-phy_2.1.0-r1_mipsel_74kc.ipk
+Size: 5380
+SHA256sum: b5eed6a126ff25bd0821fac83a4d37d09afc0f36b32d3919b9c16b3d82a6c2fb
+Description:  This package contains the module 'net-l2-phy' of SNode.C
+
+Package: snodec-net-l2-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-l2-stream, snodec-core-socket-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 471040
+Filename: snodec-net-l2-stream-legacy_2.1.0-r1_mipsel_74kc.ipk
+Size: 122673
+SHA256sum: 79bc163ff77ff1991bd9845a39542ab5b0998cf2bbde4522c6ed7b3fb3412931
+Description:  This package contains the module 'net-l2-stream-legacy' of SNode.C
+
+Package: snodec-net-l2-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-net-l2-stream, snodec-core-socket-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 604160
+Filename: snodec-net-l2-stream-tls_2.1.0-r1_mipsel_74kc.ipk
+Size: 160167
+SHA256sum: f1667f9536038fafff698ba2499719ff1070d55af3ddbb369bf1ff845f7481b4
+Description:  This package contains the module 'net-l2-stream-tls' of SNode.C
+
+Package: snodec-net-l2-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-l2-phy-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 204800
+Filename: snodec-net-l2-stream_2.1.0-r1_mipsel_74kc.ipk
+Size: 71875
+SHA256sum: 9d34ba8de244df9dcfdbad7c4608f4990fd7baebe0ff3fe05e7181301adf4285
+Description:  This package contains the module 'net-l2-stream' of SNode.C
+
+Package: snodec-net-l2
+Version: 2.1.0-r1
+Depends: libc, snodec-net, bluez-libs
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 337920
+Filename: snodec-net-l2_2.1.0-r1_mipsel_74kc.ipk
+Size: 111651
+SHA256sum: 642c1379fa4995f285f26270f5f9472ab1182ec32efae810ae3b3d6f897e609f
+Description:  This package contains the module 'net-l2' of SNode.C
+
+Package: snodec-net-rc-phy-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-rc-phy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-net-rc-phy-stream_2.1.0-r1_mipsel_74kc.ipk
+Size: 4315
+SHA256sum: e5248929cc2f87f940309035242a6168d33705fe244bcfc22138d841e47601cd
+Description:  This package contains the module 'net-rc-phy-stream' of SNode.C
+
+Package: snodec-net-rc-phy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-rc, bluez-libs
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-net-rc-phy_2.1.0-r1_mipsel_74kc.ipk
+Size: 5379
+SHA256sum: 301101a14232a47fe5deb834eb4de56983021fef5d928c13ccda79099865cd04
+Description:  This package contains the module 'net-rc-phy' of SNode.C
+
+Package: snodec-net-rc-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-rc-stream, snodec-core-socket-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 471040
+Filename: snodec-net-rc-stream-legacy_2.1.0-r1_mipsel_74kc.ipk
+Size: 122679
+SHA256sum: 72b1b6b9a72b86fe6f78e4a9bbe304539a0b6e3fcc8891bf2f5a4a011054a673
+Description:  This package contains the module 'net-rc-stream-legacy' of SNode.C
+
+Package: snodec-net-rc-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-net-rc-stream, snodec-core-socket-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 604160
+Filename: snodec-net-rc-stream-tls_2.1.0-r1_mipsel_74kc.ipk
+Size: 160230
+SHA256sum: e79e49ba11723a79b7505b2fe84db761c81841e65c668ad0d2c4ba9d112d6e11
+Description:  This package contains the module 'net-rc-stream-tls' of SNode.C
+
+Package: snodec-net-rc-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-rc-phy-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 204800
+Filename: snodec-net-rc-stream_2.1.0-r1_mipsel_74kc.ipk
+Size: 71851
+SHA256sum: e12feb009c517d46c96105e41f9ea86863ded60eeb388cb650e2ea12997b05fd
+Description:  This package contains the module 'net-rc-stream' of SNode.C
+
+Package: snodec-net-rc
+Version: 2.1.0-r1
+Depends: libc, snodec-net, bluez-libs
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 337920
+Filename: snodec-net-rc_2.1.0-r1_mipsel_74kc.ipk
+Size: 112277
+SHA256sum: bb996ad62d25ae5afa601a332a53d50b30c53327acfec92ffd79a17aba1ac87b
+Description:  This package contains the module 'net-rc' of SNode.C
+
+Package: snodec-net-un-dgram
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un-phy, snodec-net-un
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-net-un-dgram_2.1.0-r1_mipsel_74kc.ipk
+Size: 12725
+SHA256sum: 4795afe612a5d874d463df7fff352aa13c97653c6724f4a136766bf906389fee
+Description:  This package contains the module 'net-un-dgram' of SNode.C
+
+Package: snodec-net-un-phy-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un-phy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-net-un-phy-stream_2.1.0-r1_mipsel_74kc.ipk
+Size: 14632
+SHA256sum: 60f77d47d0a621068dd37f545a437c8b77668ffe7d7f8135861a6d81db30d817
+Description:  This package contains the module 'net-un-phy-stream' of SNode.C
+
+Package: snodec-net-un-phy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-net-un-phy_2.1.0-r1_mipsel_74kc.ipk
+Size: 5455
+SHA256sum: 55caf8fb595b7ec617750ca89fcec9f3f5003a55a15cd9c1a40c11a776d9ddd4
+Description:  This package contains the module 'net-un-phy' of SNode.C
+
+Package: snodec-net-un-stream-legacy
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un-stream, snodec-core-socket-stream-legacy
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 471040
+Filename: snodec-net-un-stream-legacy_2.1.0-r1_mipsel_74kc.ipk
+Size: 122230
+SHA256sum: edd120e31839c8c9afc5941ff1632b83b31363af459872270ba8f3db057576db
+Description:  This package contains the module 'net-un-stream-legacy' of SNode.C
+
+Package: snodec-net-un-stream-tls
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un-stream, snodec-core-socket-stream-tls
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 604160
+Filename: snodec-net-un-stream-tls_2.1.0-r1_mipsel_74kc.ipk
+Size: 159903
+SHA256sum: a5e19bd276a907028e870928bc033b891cd9eceb5bae5f3c68dfaeec608915ce
+Description:  This package contains the module 'net-un-stream-tls' of SNode.C
+
+Package: snodec-net-un-stream
+Version: 2.1.0-r1
+Depends: libc, snodec-net-un-phy-stream
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 204800
+Filename: snodec-net-un-stream_2.1.0-r1_mipsel_74kc.ipk
+Size: 71787
+SHA256sum: 59a691dae47eac12880a270674a7189500b80abf48273c3788d669c10d198767
+Description:  This package contains the module 'net-un-stream' of SNode.C
+
+Package: snodec-net-un
+Version: 2.1.0-r1
+Depends: libc, snodec-net
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 276480
+Filename: snodec-net-un_2.1.0-r1_mipsel_74kc.ipk
+Size: 75593
+SHA256sum: 1fe96b6cfc82596524e349830e36bb454e0eb55d48deb70a4bcc719cb4d22012
+Description:  This package contains the module 'net-un' of SNode.C
+
+Package: snodec-net
+Version: 2.1.0-r1
+Depends: libc, snodec-core-socket
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 532480
+Filename: snodec-net_2.1.0-r1_mipsel_74kc.ipk
+Size: 146427
+SHA256sum: c14d491252cc442adcf22f2e5ff0789a7d01a0981a91be867948489462515387
+Description:  This package contains the module 'net' of SNode.C
+
+Package: snodec-utils
+Version: 2.1.0-r1
+Depends: libc, snodec-logger
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 604160
+Filename: snodec-utils_2.1.0-r1_mipsel_74kc.ipk
+Size: 213344
+SHA256sum: 1dbeca28d6d178b9794c0aeb6c1399b473bad84dd0c6fed1c02c1c561c102610
+Description:  This package contains the module 'utils' of SNode.C
+
+Package: snodec-websocket-client
+Version: 2.1.0-r1
+Depends: libc, snodec-websocket, snodec-http-client
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 276480
+Filename: snodec-websocket-client_2.1.0-r1_mipsel_74kc.ipk
+Size: 86398
+SHA256sum: 4f58f1fe582159a77b464a2cd33e12ed2469d20358dc1a51e30c9b409ef215e9
+Description:  This package contains the module 'websocket-client' of SNode.C
+
+Package: snodec-websocket-server
+Version: 2.1.0-r1
+Depends: libc, snodec-websocket, snodec-http-server
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 276480
+Filename: snodec-websocket-server_2.1.0-r1_mipsel_74kc.ipk
+Size: 90513
+SHA256sum: 361f01d2b34668fb9d20c1916f37dcf8d0dc9068786b579cc0fb1466b6f40dbb
+Description:  This package contains the module 'websocket-server' of SNode.C
+
+Package: snodec-websocket
+Version: 2.1.0-r1
+Depends: libc, snodec-utils
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 71680
+Filename: snodec-websocket_2.1.0-r1_mipsel_74kc.ipk
+Size: 11222
+SHA256sum: 5fc1d8df0d8874d82e9578b839db0e4fb0effa81f8d553030d5f2e37cae37d47
+Description:  This package contains the module 'websocket' of SNode.C
+
+Package: snodec
+Version: 2.1.0-r1
+Depends: libc, snodec-apps, snodec-control, snodec-core-mux-epoll, snodec-core-mux-poll, snodec-core-mux-select, snodec-net-in-stream-legacy, snodec-net-in-stream-tls, snodec-net-in6-stream-legacy, snodec-net-in6-stream-tls, snodec-net-l2-stream-legacy, snodec-net-l2-stream-tls, snodec-net-rc-stream-legacy, snodec-net-rc-stream-tls, snodec-net-un-stream-legacy, snodec-net-un-stream-tls, snodec-net-un-dgram, snodec-http-server-express, snodec-http-server-express-legacy-in, snodec-http-server-express-legacy-in6, snodec-http-server-express-legacy-rc, snodec-http-server-express-legacy-un, snodec-http-server-express-tls-in, snodec-http-server-express-tls-in6, snodec-http-server-express-tls-rc, snodec-http-server-express-tls-un, snodec-http-client, snodec-websocket-server, snodec-websocket-client, snodec-mqtt-server-websocket, snodec-mqtt-client-websocket, snodec-db-mariadb
+Source: recipes/snode.c
+SourceName: snode.c
+License: LGPL-3.0-or-later
+LicenseFiles: LICENSE
+Section: net
+SourceDateEpoch: 1784877710
+Maintainer: Volker Christian <me@vchrist.at>
+Architecture: mipsel_74kc
+Installed-Size: 10240
+Filename: snodec_2.1.0-r1_mipsel_74kc.ipk
+Size: 1067
+SHA256sum: 3415b0e248a53ce3aed3baa58c9178d856b537d1b570b2e0f1a876d41ed59e8f
+Description:  This meta-package selects all SNode.C runtime modules, demonstration
+ applications and the control tool.
+
