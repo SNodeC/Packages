@@ -2,7 +2,7 @@
 
 <a id="banner"></a>
 
-# SNode.C IDP package status · latest release 2.0.2
+# SNode.C IDP package status · latest release —
 
 <!-- packages:begin menu -->
 <a href="../README.md#install"><img src="../docs/media/menu/install.svg" alt="Install"></a> <a href="../docs/catalogs/snodec-idp.md#banner"><img src="../docs/media/menu/catalog.svg" alt="Catalog"></a> <a href="../docs/troubleshooting.md#banner"><img src="../docs/media/menu/troubleshoot.svg" alt="Troubleshoot"></a>
@@ -33,7 +33,7 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>arm64</code></td><td align="left"><code>2.0.2-2~bookworm</code></td><td align="left">2026-10-24 21:54</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40134943740/job/120994370143">Build log</a> · <a href="../raspberrypios/pool/bookworm/">Packages</a></td></tr>
+<tr><td align="left"><code>arm64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -46,7 +46,7 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>arm64</code></td><td align="left"><code>2.0.2-2~trixie</code></td><td align="left">2026-10-24 22:21</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40134958128/job/120994410736">Build log</a> · <a href="../raspberrypios/pool/trixie/">Packages</a></td></tr>
+<tr><td align="left"><code>arm64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -63,10 +63,10 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>amd64</code></td><td align="left"><code>2.0.2-2~trixie</code></td><td align="left">2026-10-24 16:31</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40111404727/job/120923725247">Build log</a> · <a href="../debian/pool/trixie/">Packages</a></td></tr>
-<tr><td align="left"><code>arm64</code></td><td align="left"><code>2.0.2-2~trixie</code></td><td align="left">2026-10-24 16:33</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40111418752/job/120923769174">Build log</a> · <a href="../debian/pool/trixie/">Packages</a></td></tr>
-<tr><td align="left"><code>armhf</code></td><td align="left"><code>2.0.2-2~trixie</code></td><td align="left">2026-10-24 18:43</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40118844579/job/120945789380">Build log</a> · <a href="../debian/pool/trixie/">Packages</a></td></tr>
-<tr><td align="left"><code>riscv64</code></td><td align="left"><code>2.0.2-2~trixie</code></td><td align="left">2026-10-24 18:48</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40118872289/job/120945869015">Build log</a> · <a href="../debian/pool/trixie/">Packages</a></td></tr>
+<tr><td align="left"><code>amd64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>armhf</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>riscv64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -79,10 +79,10 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>amd64</code></td><td align="left"><code>2.0.2-2~forky</code></td><td align="left">2026-10-24 16:36</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40111609739/job/120924335882">Build log</a> · <a href="../debian/pool/forky/">Packages</a></td></tr>
-<tr><td align="left"><code>arm64</code></td><td align="left"><code>2.0.2-2~forky</code></td><td align="left">2026-10-24 17:13</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40111622782/job/120924372708">Build log</a> · <a href="../debian/pool/forky/">Packages</a></td></tr>
-<tr><td align="left"><code>armhf</code></td><td align="left"><code>2.0.2-2~forky</code></td><td align="left">2026-10-24 19:57</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40124661707/job/120963416590">Build log</a> · <a href="../debian/pool/forky/">Packages</a></td></tr>
-<tr><td align="left"><code>riscv64</code></td><td align="left"><code>2.0.2-2~forky</code></td><td align="left">2026-10-24 22:03</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40134687822/job/120993592056">Build log</a> · <a href="../debian/pool/forky/">Packages</a></td></tr>
+<tr><td align="left"><code>amd64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>armhf</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>riscv64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -95,10 +95,10 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>amd64</code></td><td align="left"><code>2.0.2-2~sid</code></td><td align="left">2026-10-24 18:12</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40119158365/job/120946718998">Build log</a> · <a href="../debian/pool/sid/">Packages</a></td></tr>
-<tr><td align="left"><code>arm64</code></td><td align="left"><code>2.0.2-2~sid</code></td><td align="left">2026-10-24 18:53</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40119174056/job/120946765089">Build log</a> · <a href="../debian/pool/sid/">Packages</a></td></tr>
-<tr><td align="left"><code>armhf</code></td><td align="left"><code>2.0.2-2~sid</code></td><td align="left">2026-10-24 20:00</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40124670716/job/120963444898">Build log</a> · <a href="../debian/pool/sid/">Packages</a></td></tr>
-<tr><td align="left"><code>riscv64</code></td><td align="left"><code>2.0.2-2~sid</code></td><td align="left">2026-10-24 22:09</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40134909064/job/120994266755">Build log</a> · <a href="../debian/pool/sid/">Packages</a></td></tr>
+<tr><td align="left"><code>amd64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>armhf</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>riscv64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -115,8 +115,8 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>amd64</code></td><td align="left"><code>2.0.2-2~noble</code></td><td align="left">2026-10-24 19:02</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40119188725/job/120946809528">Build log</a> · <a href="../ubuntu/pool/noble/">Packages</a></td></tr>
-<tr><td align="left"><code>arm64</code></td><td align="left"><code>2.0.2-2~noble</code></td><td align="left">2026-10-24 19:06</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40119381550/job/120947390819">Build log</a> · <a href="../ubuntu/pool/noble/">Packages</a></td></tr>
+<tr><td align="left"><code>amd64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -129,8 +129,8 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>amd64</code></td><td align="left"><code>2.0.2-2~resolute</code></td><td align="left">2026-10-24 19:27</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40124690546/job/120963504773">Build log</a> · <a href="../ubuntu/pool/resolute/">Packages</a></td></tr>
-<tr><td align="left"><code>arm64</code></td><td align="left"><code>2.0.2-2~resolute</code></td><td align="left">2026-10-24 20:03</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40124709363/job/120963562638">Build log</a> · <a href="../ubuntu/pool/resolute/">Packages</a></td></tr>
+<tr><td align="left"><code>amd64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -147,8 +147,8 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>aarch64</code></td><td align="left"><code>2.0.2-2.el9</code></td><td align="left">2026-10-24 20:16</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40124995605/job/120964416971">Build log</a> · <a href="../rocky/9/aarch64/Packages/">Packages</a></td></tr>
-<tr><td align="left"><code>x86_64</code></td><td align="left"><code>2.0.2-2.el9</code></td><td align="left">2026-10-24 20:08</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40124981135/job/120964365372">Build log</a> · <a href="../rocky/9/x86_64/Packages/">Packages</a></td></tr>
+<tr><td align="left"><code>aarch64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>x86_64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -161,8 +161,8 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>aarch64</code></td><td align="left"><code>2.0.2-2.el10</code></td><td align="left">2026-10-24 20:42</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40130308968/job/120980425234">Build log</a> · <a href="../rocky/10/aarch64/Packages/">Packages</a></td></tr>
-<tr><td align="left"><code>x86_64</code></td><td align="left"><code>2.0.2-2.el10</code></td><td align="left">2026-10-24 20:26</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40125010059/job/120964459516">Build log</a> · <a href="../rocky/10/x86_64/Packages/">Packages</a></td></tr>
+<tr><td align="left"><code>aarch64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>x86_64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -179,8 +179,8 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>aarch64</code></td><td align="left"><code>2.0.2-2.fc43</code></td><td align="left">2026-10-24 21:07</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40130325496/job/120980479684">Build log</a> · <a href="../fedora/43/aarch64/Packages/">Packages</a></td></tr>
-<tr><td align="left"><code>x86_64</code></td><td align="left"><code>2.0.2-2.fc43</code></td><td align="left">2026-10-24 20:44</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40130314102/job/120980441412">Build log</a> · <a href="../fedora/43/x86_64/Packages/">Packages</a></td></tr>
+<tr><td align="left"><code>aarch64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>x86_64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -193,8 +193,8 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>aarch64</code></td><td align="left"><code>2.0.2-2.fc44</code></td><td align="left">2026-10-24 21:42</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40134922228/job/120994305957">Build log</a> · <a href="../fedora/44/aarch64/Packages/">Packages</a></td></tr>
-<tr><td align="left"><code>x86_64</code></td><td align="left"><code>2.0.2-2.fc44</code></td><td align="left">2026-10-24 21:25</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/snode.c-idp/actions/runs/40130535910/job/120981112732">Build log</a> · <a href="../fedora/44/x86_64/Packages/">Packages</a></td></tr>
+<tr><td align="left"><code>aarch64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>x86_64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 

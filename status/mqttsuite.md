@@ -2,7 +2,7 @@
 
 <a id="banner"></a>
 
-# MQTTSuite package status · latest release 1.0.2
+# MQTTSuite package status · latest release —
 
 <!-- packages:begin menu -->
 <a href="../README.md#install"><img src="../docs/media/menu/install.svg" alt="Install"></a> <a href="../docs/catalogs/mqttsuite.md#banner"><img src="../docs/media/menu/catalog.svg" alt="Catalog"></a> <a href="../docs/troubleshooting.md#banner"><img src="../docs/media/menu/troubleshoot.svg" alt="Troubleshoot"></a>
@@ -34,31 +34,31 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>aarch64_cortex-a53</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r1</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40130145135/job/120979928541">Build log</a> · <a href="../openwrt/24.10/aarch64_cortex-a53/">Packages</a></td></tr>
-<tr><td align="left"><code>aarch64_cortex-a72</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r1</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40130337099/job/120980513441">Build log</a> · <a href="../openwrt/24.10/aarch64_cortex-a72/">Packages</a></td></tr>
-<tr><td align="left"><code>aarch64_cortex-a76</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r1</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40130342856/job/120980532111">Build log</a> · <a href="../openwrt/24.10/aarch64_cortex-a76/">Packages</a></td></tr>
-<tr><td align="left"><code>aarch64_generic</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r1</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40130348924/job/120980549768">Build log</a> · <a href="../openwrt/24.10/aarch64_generic/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a15_neon-vfpv4</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40098009389/job/120884228136">Build log</a> · <a href="../openwrt/24.10/arm_cortex-a15_neon-vfpv4/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a5_vfpv4</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r1</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40130549194/job/120981150735">Build log</a> · <a href="../openwrt/24.10/arm_cortex-a5_vfpv4/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a7</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r1</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40130555902/job/120981170623">Build log</a> · <a href="../openwrt/24.10/arm_cortex-a7/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a7_neon-vfpv4</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40097792850/job/120883582782">Build log</a> · <a href="../openwrt/24.10/arm_cortex-a7_neon-vfpv4/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a7_vfpv4</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40097799368/job/120883602954">Build log</a> · <a href="../openwrt/24.10/arm_cortex-a7_vfpv4/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a8_vfpv3</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40097810444/job/120883635397">Build log</a> · <a href="../openwrt/24.10/arm_cortex-a8_vfpv3/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a9</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40097816901/job/120883654071">Build log</a> · <a href="../openwrt/24.10/arm_cortex-a9/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a9_neon</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40097996567/job/120884179175">Build log</a> · <a href="../openwrt/24.10/arm_cortex-a9_neon/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a9_vfpv3-d16</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40098003324/job/120884198654">Build log</a> · <a href="../openwrt/24.10/arm_cortex-a9_vfpv3-d16/">Packages</a></td></tr>
-<tr><td align="left"><code>i386_pentium-mmx</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r1</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40130124842/job/120979866340">Build log</a> · <a href="../openwrt/24.10/i386_pentium-mmx/">Packages</a></td></tr>
-<tr><td align="left"><code>i386_pentium4</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r1</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40130138570/job/120979909327">Build log</a> · <a href="../openwrt/24.10/i386_pentium4/">Packages</a></td></tr>
-<tr><td align="left"><code>loongarch64_generic</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40098015647/job/120884234759">Build log</a> · <a href="../openwrt/24.10/loongarch64_generic/">Packages</a></td></tr>
-<tr><td align="left"><code>mips64_octeonplus</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40098022166/job/120884253236">Build log</a> · <a href="../openwrt/24.10/mips64_octeonplus/">Packages</a></td></tr>
-<tr><td align="left"><code>mips_24kc</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40104371127/job/120902889656">Build log</a> · <a href="../openwrt/24.10/mips_24kc/">Packages</a></td></tr>
-<tr><td align="left"><code>mipsel_24kc</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40104376470/job/120902906385">Build log</a> · <a href="../openwrt/24.10/mipsel_24kc/">Packages</a></td></tr>
-<tr><td align="left"><code>mipsel_24kc_24kf</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40102760521/job/120898123741">Build log</a> · <a href="../openwrt/24.10/mipsel_24kc_24kf/">Packages</a></td></tr>
-<tr><td align="left"><code>mipsel_74kc</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40104381954/job/120902924407">Build log</a> · <a href="../openwrt/24.10/mipsel_74kc/">Packages</a></td></tr>
-<tr><td align="left"><code>powerpc_464fp</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40104392998/job/120902958561">Build log</a> · <a href="../openwrt/24.10/powerpc_464fp/">Packages</a></td></tr>
-<tr><td align="left"><code>powerpc_8548</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40104399480/job/120902976302">Build log</a> · <a href="../openwrt/24.10/powerpc_8548/">Packages</a></td></tr>
-<tr><td align="left"><code>riscv64_riscv64</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40104406379/job/120902995013">Build log</a> · <a href="../openwrt/24.10/riscv64_riscv64/">Packages</a></td></tr>
-<tr><td align="left"><code>x86_64</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r1</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40130111248/job/120979824634">Build log</a> · <a href="../openwrt/24.10/x86_64/">Packages</a></td></tr>
+<tr><td align="left"><code>aarch64_cortex-a53</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>aarch64_cortex-a72</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>aarch64_cortex-a76</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>aarch64_generic</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a15_neon-vfpv4</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a5_vfpv4</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a7</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a7_neon-vfpv4</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a7_vfpv4</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a8_vfpv3</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a9</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a9_neon</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a9_vfpv3-d16</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>i386_pentium-mmx</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>i386_pentium4</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>loongarch64_generic</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>mips64_octeonplus</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>mips_24kc</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>mipsel_24kc</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>mipsel_24kc_24kf</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>mipsel_74kc</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>powerpc_464fp</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>powerpc_8548</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>riscv64_generic</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>x86_64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -71,31 +71,31 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>aarch64_cortex-a53</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40104440037/job/120903091320">Build log</a> · <a href="../openwrt/25.12/aarch64_cortex-a53/">Packages</a></td></tr>
-<tr><td align="left"><code>aarch64_cortex-a72</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40104445608/job/120903107832">Build log</a> · <a href="../openwrt/25.12/aarch64_cortex-a72/">Packages</a></td></tr>
-<tr><td align="left"><code>aarch64_cortex-a76</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40104451243/job/120903123692">Build log</a> · <a href="../openwrt/25.12/aarch64_cortex-a76/">Packages</a></td></tr>
-<tr><td align="left"><code>aarch64_generic</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40104457204/job/120903141734">Build log</a> · <a href="../openwrt/25.12/aarch64_generic/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a15_neon-vfpv4</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111105951/job/120922827986">Build log</a> · <a href="../openwrt/25.12/arm_cortex-a15_neon-vfpv4/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a5_vfpv4</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40104462656/job/120903159847">Build log</a> · <a href="../openwrt/25.12/arm_cortex-a5_vfpv4/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a7</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40104467929/job/120903174532">Build log</a> · <a href="../openwrt/25.12/arm_cortex-a7/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a7_neon-vfpv4</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40104474470/job/120903195447">Build log</a> · <a href="../openwrt/25.12/arm_cortex-a7_neon-vfpv4/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a7_vfpv4</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40104682951/job/120903811426">Build log</a> · <a href="../openwrt/25.12/arm_cortex-a7_vfpv4/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a8_vfpv3</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111074665/job/120922736696">Build log</a> · <a href="../openwrt/25.12/arm_cortex-a8_vfpv3/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a9</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111090945/job/120922783537">Build log</a> · <a href="../openwrt/25.12/arm_cortex-a9/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a9_neon</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111082187/job/120922760090">Build log</a> · <a href="../openwrt/25.12/arm_cortex-a9_neon/">Packages</a></td></tr>
-<tr><td align="left"><code>arm_cortex-a9_vfpv3-d16</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111098545/job/120922805390">Build log</a> · <a href="../openwrt/25.12/arm_cortex-a9_vfpv3-d16/">Packages</a></td></tr>
-<tr><td align="left"><code>i386_pentium-mmx</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40104426830/job/120903049927">Build log</a> · <a href="../openwrt/25.12/i386_pentium-mmx/">Packages</a></td></tr>
-<tr><td align="left"><code>i386_pentium4</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40104433721/job/120903070946">Build log</a> · <a href="../openwrt/25.12/i386_pentium4/">Packages</a></td></tr>
-<tr><td align="left"><code>loongarch64_generic</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111112729/job/120922847858">Build log</a> · <a href="../openwrt/25.12/loongarch64_generic/">Packages</a></td></tr>
-<tr><td align="left"><code>mips64_octeonplus</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111119351/job/120922867082">Build log</a> · <a href="../openwrt/25.12/mips64_octeonplus/">Packages</a></td></tr>
-<tr><td align="left"><code>mips_24kc</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111125957/job/120922887996">Build log</a> · <a href="../openwrt/25.12/mips_24kc/">Packages</a></td></tr>
-<tr><td align="left"><code>mipsel_24kc</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111132679/job/120922906831">Build log</a> · <a href="../openwrt/25.12/mipsel_24kc/">Packages</a></td></tr>
-<tr><td align="left"><code>mipsel_24kc_24kf</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111139227/job/120922927260">Build log</a> · <a href="../openwrt/25.12/mipsel_24kc_24kf/">Packages</a></td></tr>
-<tr><td align="left"><code>mipsel_74kc</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111145615/job/120922946290">Build log</a> · <a href="../openwrt/25.12/mipsel_74kc/">Packages</a></td></tr>
-<tr><td align="left"><code>powerpc_464fp</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111152629/job/120922968044">Build log</a> · <a href="../openwrt/25.12/powerpc_464fp/">Packages</a></td></tr>
-<tr><td align="left"><code>powerpc_8548</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111411849/job/120923746695">Build log</a> · <a href="../openwrt/25.12/powerpc_8548/">Packages</a></td></tr>
-<tr><td align="left"><code>riscv64_generic</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111425875/job/120923791882">Build log</a> · <a href="../openwrt/25.12/riscv64_generic/">Packages</a></td></tr>
-<tr><td align="left"><code>x86_64</code></td><td align="center">—</td><td align="center">—</td><td align="left"><img src="badges/failed.svg" alt="failed" title="Failed" width="14" height="14" align="absmiddle"> Failed <code>1.0.2-r2</code></td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40104413814/job/120903014278">Build log</a> · <a href="../openwrt/25.12/x86_64/">Packages</a></td></tr>
+<tr><td align="left"><code>aarch64_cortex-a53</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>aarch64_cortex-a72</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>aarch64_cortex-a76</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>aarch64_generic</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a15_neon-vfpv4</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a5_vfpv4</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a7</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a7_neon-vfpv4</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a7_vfpv4</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a8_vfpv3</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a9</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a9_neon</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm_cortex-a9_vfpv3-d16</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>i386_pentium-mmx</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>i386_pentium4</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>loongarch64_generic</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>mips64_octeonplus</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>mips_24kc</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>mipsel_24kc</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>mipsel_24kc_24kf</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>mipsel_74kc</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>powerpc_464fp</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>powerpc_8548</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>riscv64_generic</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>x86_64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -112,7 +112,7 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>arm64</code></td><td align="left"><code>1.0.2-2~bookworm</code></td><td align="left">2026-10-24 21:49</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40134936505/job/120994348811">Build log</a> · <a href="../raspberrypios/pool/bookworm/">Packages</a></td></tr>
+<tr><td align="left"><code>arm64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -125,7 +125,7 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>arm64</code></td><td align="left"><code>1.0.2-2~trixie</code></td><td align="left">2026-10-24 22:14</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40134950726/job/120994390130">Build log</a> · <a href="../raspberrypios/pool/trixie/">Packages</a></td></tr>
+<tr><td align="left"><code>arm64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -142,10 +142,10 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>amd64</code></td><td align="left"><code>1.0.2-2~trixie</code></td><td align="left">2026-10-24 16:41</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111616282/job/120924355020">Build log</a> · <a href="../debian/pool/trixie/">Packages</a></td></tr>
-<tr><td align="left"><code>arm64</code></td><td align="left"><code>1.0.2-2~trixie</code></td><td align="left">2026-10-24 17:49</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111628776/job/120924392699">Build log</a> · <a href="../debian/pool/trixie/">Packages</a></td></tr>
-<tr><td align="left"><code>armhf</code></td><td align="left"><code>1.0.2-2~trixie</code></td><td align="left">2026-10-24 18:39</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40118830838/job/120945748107">Build log</a> · <a href="../debian/pool/trixie/">Packages</a></td></tr>
-<tr><td align="left"><code>riscv64</code></td><td align="left"><code>1.0.2-2~trixie</code></td><td align="left">2026-10-24 18:46</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40118858453/job/120945829125">Build log</a> · <a href="../debian/pool/trixie/">Packages</a></td></tr>
+<tr><td align="left"><code>amd64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>armhf</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>riscv64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -158,10 +158,10 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>amd64</code></td><td align="left"><code>1.0.2-2~forky</code></td><td align="left">2026-10-24 17:52</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111634095/job/120924408739">Build log</a> · <a href="../debian/pool/forky/">Packages</a></td></tr>
-<tr><td align="left"><code>arm64</code></td><td align="left"><code>1.0.2-2~forky</code></td><td align="left">2026-10-24 17:56</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40111639581/job/120924426223">Build log</a> · <a href="../debian/pool/forky/">Packages</a></td></tr>
-<tr><td align="left"><code>armhf</code></td><td align="left"><code>1.0.2-2~forky</code></td><td align="left">2026-10-24 19:50</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40124642508/job/120963355461">Build log</a> · <a href="../debian/pool/forky/">Packages</a></td></tr>
-<tr><td align="left"><code>riscv64</code></td><td align="left"><code>1.0.2-2~forky</code></td><td align="left">2026-10-24 22:06</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40134695117/job/120993613907">Build log</a> · <a href="../debian/pool/forky/">Packages</a></td></tr>
+<tr><td align="left"><code>amd64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>armhf</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>riscv64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -174,10 +174,10 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>amd64</code></td><td align="left"><code>1.0.2-2~sid</code></td><td align="left">2026-10-24 18:09</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40118885807/job/120945908669">Build log</a> · <a href="../debian/pool/sid/">Packages</a></td></tr>
-<tr><td align="left"><code>arm64</code></td><td align="left"><code>1.0.2-2~sid</code></td><td align="left">2026-10-24 18:15</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40119165587/job/120946739660">Build log</a> · <a href="../debian/pool/sid/">Packages</a></td></tr>
-<tr><td align="left"><code>armhf</code></td><td align="left"><code>1.0.2-2~sid</code></td><td align="left">2026-10-24 19:54</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40124651620/job/120963384160">Build log</a> · <a href="../debian/pool/sid/">Packages</a></td></tr>
-<tr><td align="left"><code>riscv64</code></td><td align="left"><code>1.0.2-2~sid</code></td><td align="left">2026-10-24 22:18</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40134915272/job/120994285789">Build log</a> · <a href="../debian/pool/sid/">Packages</a></td></tr>
+<tr><td align="left"><code>amd64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>armhf</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>riscv64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -194,8 +194,8 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>amd64</code></td><td align="left"><code>1.0.2-2~noble</code></td><td align="left">2026-10-24 18:58</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40119181357/job/120946787840">Build log</a> · <a href="../ubuntu/pool/noble/">Packages</a></td></tr>
-<tr><td align="left"><code>arm64</code></td><td align="left"><code>1.0.2-2~noble</code></td><td align="left">2026-10-24 19:11</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40119387297/job/120947409102">Build log</a> · <a href="../ubuntu/pool/noble/">Packages</a></td></tr>
+<tr><td align="left"><code>amd64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -208,8 +208,8 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>amd64</code></td><td align="left"><code>1.0.2-2~resolute</code></td><td align="left">2026-10-24 19:25</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40124679653/job/120963472028">Build log</a> · <a href="../ubuntu/pool/resolute/">Packages</a></td></tr>
-<tr><td align="left"><code>arm64</code></td><td align="left"><code>1.0.2-2~resolute</code></td><td align="left">2026-10-24 19:30</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40124699997/job/120963532847">Build log</a> · <a href="../ubuntu/pool/resolute/">Packages</a></td></tr>
+<tr><td align="left"><code>amd64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>arm64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -226,8 +226,8 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>aarch64</code></td><td align="left"><code>1.0.2-2.el9</code></td><td align="left">2026-10-24 20:21</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40125002865/job/120964432876">Build log</a> · <a href="../rocky/9/aarch64/Packages/">Packages</a></td></tr>
-<tr><td align="left"><code>x86_64</code></td><td align="left"><code>1.0.2-2.el9</code></td><td align="left">2026-10-24 20:13</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40124988486/job/120964389264">Build log</a> · <a href="../rocky/9/x86_64/Packages/">Packages</a></td></tr>
+<tr><td align="left"><code>aarch64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>x86_64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -240,8 +240,8 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>aarch64</code></td><td align="left"><code>1.0.2-2.el10</code></td><td align="left">2026-10-24 20:39</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40130303565/job/120980408461">Build log</a> · <a href="../rocky/10/aarch64/Packages/">Packages</a></td></tr>
-<tr><td align="left"><code>x86_64</code></td><td align="left"><code>1.0.2-2.el10</code></td><td align="left">2026-10-24 20:30</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40125016953/job/120964475973">Build log</a> · <a href="../rocky/10/x86_64/Packages/">Packages</a></td></tr>
+<tr><td align="left"><code>aarch64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>x86_64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -258,8 +258,8 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>aarch64</code></td><td align="left"><code>1.0.2-2.fc43</code></td><td align="left">2026-10-24 21:16</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40130331255/job/120980497322">Build log</a> · <a href="../fedora/43/aarch64/Packages/">Packages</a></td></tr>
-<tr><td align="left"><code>x86_64</code></td><td align="left"><code>1.0.2-2.fc43</code></td><td align="left">2026-10-24 21:03</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40130319995/job/120980461656">Build log</a> · <a href="../fedora/43/x86_64/Packages/">Packages</a></td></tr>
+<tr><td align="left"><code>aarch64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>x86_64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
@@ -272,8 +272,8 @@
 <table>
 <thead><tr><th>Architecture</th><th>Available</th><th>Published (UTC)</th><th>In build</th><th>Links</th></tr></thead>
 <tbody>
-<tr><td align="left"><code>aarch64</code></td><td align="left"><code>1.0.2-2.fc44</code></td><td align="left">2026-10-24 21:46</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40134929647/job/120994327857">Build log</a> · <a href="../fedora/44/aarch64/Packages/">Packages</a></td></tr>
-<tr><td align="left"><code>x86_64</code></td><td align="left"><code>1.0.2-2.fc44</code></td><td align="left">2026-10-24 21:29</td><td align="center">—</td><td align="left"><a href="https://github.com/SNodeC/mqttsuite/actions/runs/40130542381/job/120981132514">Build log</a> · <a href="../fedora/44/x86_64/Packages/">Packages</a></td></tr>
+<tr><td align="left"><code>aarch64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
+<tr><td align="left"><code>x86_64</code></td><td align="left">—</td><td align="left">—</td><td align="center">—</td><td align="left">—</td></tr>
 </tbody>
 </table>
 
