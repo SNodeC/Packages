@@ -1,7 +1,3 @@
-# SNode.C Packages
+# Packages
 
-Package documentation, public signing keys and installation helpers for the SNode.C ecosystem.
-
-- [Documentation](docs/README.md)
-- [Public signing keys](keys/README.md)
-- [Installation helpers](install/)
+This repository holds the stable package feeds for the SNode.C ecosystem. It will be rebuilt by the new slim CI.
