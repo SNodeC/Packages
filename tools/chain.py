@@ -202,6 +202,7 @@ def main():
                     state = "succeeded"
                 except Exception as error:
                     state = "failed"
+                    print(f'{unit["package"]}: {error}', flush=True)
                     if unit["action"] == "build":
                         callback("unit", "failed", build_id=unit["build_id"], phase="build", reason=str(error))
             if state != "succeeded":
