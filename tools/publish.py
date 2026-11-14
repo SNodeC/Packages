@@ -131,7 +131,8 @@ def place(feed, target, unit, source, verified):
         files[str(relative)] = sha256(output)
     assert files, "no packages in successful unit artifact"
     result = {"unit": {key: value for key, value in unit.items() if key != "declaration"},
-              "target": {key: value for key, value in target.items() if key not in ("units", "feed_branch")},
+              "target": {key: value for key, value in target.items()
+                         if key not in ("units", "feed_branch", "feed_commit")},
               "files": files, "packages": packages}
     return result
 

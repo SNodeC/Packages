@@ -69,6 +69,22 @@ class WaveTests(unittest.TestCase):
         request.assert_called_once_with("https://raw.githubusercontent.com/owner/repo/" + "a" * 40 + "/ci/packages.json")
         return None
 
+    def test_reused_units_share_one_immutable_feed_snapshot(self):
+        declarations = {name: dict(schema=1, package=name, depends_on=[], targets=["one", "two"])
+                        for name in ("a", "b")}
+        units = [dict(package=name, repo="owner/repo", commit=name * 40, action=action)
+                 for name, action in (("a", "reuse"), ("b", "build"))]
+        plan = dict(feed_branch="feed-staging", targets=[dict(id=name, units=units) for name in ("one", "two")])
+        responses = [json.dumps(dict(sha="f" * 40)).encode()] + [json.dumps(declarations[name]).encode()
+                     for name in ("a", "b", "a", "b")]
+        with patch("plan.fetch", side_effect=responses) as request:
+            matrix = prepare(plan, {name: dict(id=name) for name in ("one", "two")}, ["owner/repo"])
+        self.assertEqual([target["feed_commit"] for target in matrix], ["f" * 40, "f" * 40])
+        self.assertEqual(request.call_args_list[0].args,
+                         ("https://api.github.com/repos/SNodeC/Packages/commits/feed-staging",))
+        self.assertEqual(sum("api.github.com" in call.args[0] for call in request.call_args_list), 1)
+        return None
+
 
 if __name__ == "__main__":
     unittest.main()

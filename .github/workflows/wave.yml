@@ -19,9 +19,6 @@ on:
         required: true
 permissions:
   contents: read
-concurrency:
-  group: wave-${{ inputs.feed_branch }}
-  cancel-in-progress: false
 env:
   WAVE_ID: ${{ inputs.wave_id }}
   CALLBACK_URL: ${{ inputs.callback_url }}
@@ -67,6 +64,9 @@ jobs:
     if: always()
     runs-on: ubuntu-24.04
     environment: publish
+    concurrency:
+      group: wave-${{ inputs.feed_branch }}
+      cancel-in-progress: false
     permissions:
       contents: write
     steps:

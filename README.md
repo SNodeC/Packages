@@ -84,7 +84,7 @@ apk add snodec mqttsuite
 
 Versions are `<version>-<revision>~<codename>` for DEB, `<version>-<revision>.<disttag>` for RPM, and `<version>-r<revision>` for OpenWrt. Each target artifact contains packages and a SHA-256 manifest. Publication verifies hashes, applies retention, rebuilds touched indices completely, signs packages/indices, and pushes one orphan-root commit. APT supports SHA-256 by-hash paths. `publications.json` records retained publications and binary package names for exact-version reuse.
 
-The `publish` environment holds `PACKAGES_GPG_PRIVATE_KEY`, `OPENWRT_USIGN_PRIVATE_KEY`, and `OPENWRT_APK_PRIVATE_KEY`, and permits `main` only. `CORECI_CALLBACK_SECRET` is a repository secret. Empty `callback_url` disables callbacks; otherwise reports use core-ci's timestamp/body HMAC. Dispatch inputs are `wave_id`, `plan_url`, `callback_url`, `feed_branch`, and optional base64 `plan_json` for manual runs.
+The `publish` environment holds `PACKAGES_GPG_PRIVATE_KEY`, `OPENWRT_USIGN_PRIVATE_KEY`, and `OPENWRT_APK_PRIVATE_KEY`, and permits `main` only. `CORECI_CALLBACK_SECRET` is a repository secret. Empty `callback_url` disables callbacks; otherwise reports use core-ci's timestamp/body HMAC. Dispatch inputs are `wave_id`, `plan_url`, `callback_url`, `feed_branch`, and optional base64 `plan_json` for manual runs. The `wave-<feed_branch>` concurrency group locks publication only, with cancellation disabled; independent manual builds can overlap. Plans with reused units resolve the feed branch to one immutable commit for all dependency reads, while publication merges into the latest feed branch under its lock.
 
 ### CodexUI availability
 

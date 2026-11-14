@@ -21,7 +21,7 @@ def as_builder(container, *args, **kwargs):
 
 
 def install_feed(container, target):
-    base = "https://raw.githubusercontent.com/SNodeC/Packages/" + target["feed_branch"]
+    base = "https://raw.githubusercontent.com/SNodeC/Packages/" + target["feed_commit"]
     if target["family"] == "deb":
         execute(container, "sh", "-ec",
                 "gpg --dearmor < /work/keys/packages-gpg.asc > /usr/share/keyrings/snodec.gpg; "
@@ -114,7 +114,7 @@ def build(container, target, unit, output):
 
 
 def reuse(container, target, unit):
-    base = "https://raw.githubusercontent.com/SNodeC/Packages/" + target["feed_branch"]
+    base = "https://raw.githubusercontent.com/SNodeC/Packages/" + target["feed_commit"]
     ledger = json.loads(fetch(base + "/publications.json"))
     publication = next(item for item in ledger if item["target"]["id"] == target["id"] and
                        item["unit"]["package"] == unit["package"] and

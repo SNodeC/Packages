@@ -37,12 +37,21 @@ class ChainTests(unittest.TestCase):
         return None
 
     def test_reuse_installs_all_binary_components_at_exact_version(self):
-        target = dict(id="target", family="deb", feed_branch="feed-staging", codename="trixie")
+        target = dict(id="target", family="deb", feed_branch="feed-staging", feed_commit="f" * 40, codename="trixie")
         unit = dict(package="a", version="1.2.3", revision=4)
         ledger = [dict(target=target, unit=unit, packages=["a", "a-dev"])]
-        with patch("chain.fetch", return_value=json.dumps(ledger).encode()), patch("chain.execute") as execute:
+        with patch("chain.fetch", return_value=json.dumps(ledger).encode()) as fetch, patch("chain.execute") as execute:
             chain.reuse("container", target, unit)
+        fetch.assert_called_once_with("https://raw.githubusercontent.com/SNodeC/Packages/" + "f" * 40 + "/publications.json")
         execute.assert_called_once_with("container", "apt-get", "install", "-y", "a=1.2.3-4~trixie", "a-dev=1.2.3-4~trixie")
+        return None
+
+    def test_feed_install_uses_immutable_snapshot(self):
+        target = dict(family="deb", feed_branch="feed-staging", feed_commit="f" * 40, codename="trixie")
+        with patch("chain.execute") as execute:
+            chain.install_feed("container", target)
+        self.assertIn("/" + "f" * 40 + "/apt trixie main", execute.call_args.args[-1])
+        self.assertNotIn("feed-staging", execute.call_args.args[-1])
         return None
 
 

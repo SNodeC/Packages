@@ -9,6 +9,10 @@ from common import callback, fetch, read_json, write_json
 
 def prepare(plan, catalog, repositories):
     assert plan["feed_branch"] in ("feed", "feed-staging")
+    feed_commit = None
+    if any(unit["action"] == "reuse" for target in plan["targets"] for unit in target["units"]):
+        feed_commit = json.loads(fetch(
+            "https://api.github.com/repos/SNodeC/Packages/commits/" + plan["feed_branch"]))["sha"]
     matrix = []
     for planned in plan["targets"]:
         target = dict(catalog[planned["id"]])
@@ -28,6 +32,7 @@ def prepare(plan, catalog, repositories):
             seen.add(unit["package"])
         target["units"] = planned["units"]
         target["feed_branch"] = plan["feed_branch"]
+        target["feed_commit"] = feed_commit
         matrix.append(target)
     return matrix
 
