@@ -15,6 +15,11 @@ def execute(container, *args, **kwargs):
     return result
 
 
+def as_builder(container, *args, **kwargs):
+    result = execute(container, "runuser", "-u", "builder", "--", *args, **kwargs)
+    return result
+
+
 def install_feed(container, target):
     base = "https://raw.githubusercontent.com/SNodeC/Packages/" + target["feed_branch"]
     if target["family"] == "deb":
@@ -42,13 +47,14 @@ def setup(container, target):
             execute(container, "dnf", "install", "-y", "epel-release")
             if target["release"] == "9":
                 dependencies += ["gcc-toolset-14-gcc-c++"]
-        execute(container, "dnf", "install", "-y", "git", "jq", "rpm-build", "gnupg2", *dependencies)
+        execute(container, "dnf", "install", "-y", "git", "jq", "rpm-build", "gnupg2", "file",
+                "shadow-utils", "util-linux", *dependencies)
     else:
         execute(container, "apt-get", "update")
-        base = ["ca-certificates", "git", "jq", "gnupg", "dpkg-dev"]
+        base = ["ca-certificates", "git", "jq", "gnupg", "dpkg-dev", "file", "passwd", "util-linux"]
         if openwrt:
             base += ["build-essential", "clang", "flex", "bison", "gawk", "gettext", "libncurses-dev",
-                     "libssl-dev", "python3", "python3-setuptools", "rsync", "swig", "unzip", "zstd", "wget", "file"]
+                     "libssl-dev", "python3", "python3-setuptools", "rsync", "swig", "unzip", "zstd", "wget"]
         execute(container, "env", "DEBIAN_FRONTEND=noninteractive", "apt-get", "install", "-y", *base,
                 *([] if openwrt else dependencies))
         if target["distribution"] == "raspberrypios":
@@ -56,6 +62,7 @@ def setup(container, target):
             execute(container, "sh", "-ec", "dpkg -i /work/raspberrypi-keyring.deb; "
                     'printf "%s\\n" "$1" > /etc/apt/sources.list.d/raspberrypi.list; apt-get update', "sh",
                     f'deb [signed-by=/usr/share/keyrings/raspberrypi-archive-keyring.pgp] https://archive.raspberrypi.com/debian/ {target["release"]} main')
+    execute(container, "useradd", "--uid", str(os.getuid()), "--create-home", "builder")
     if any(unit["action"] == "reuse" for unit in target["units"]):
         install_feed(container, target)
     if openwrt:
@@ -67,7 +74,7 @@ def setup(container, target):
         assert sdk["sha256"] + " *" + sdk["url"].rsplit("/", 1)[1] in checksums
         Path("work/sdk").mkdir()
         run("tar", "--zstd", "-xf", str(archive), "-C", "work/sdk", "--strip-components=1")
-        execute(container, "sh", "-ec", "cd /work/sdk; ./scripts/feeds update -a; ./scripts/feeds install -a")
+        as_builder(container, "sh", "-ec", "cd /work/sdk; ./scripts/feeds update -a; ./scripts/feeds install -a")
         Path("work/sdk/.config").write_text("CONFIG_ALL_NONSHARED=n\nCONFIG_ALL_KMODS=n\nCONFIG_SIGNED_PACKAGES=n\n")
     return None
 
@@ -78,7 +85,6 @@ def build(container, target, unit, output):
     run("git", "-C", str(source), "fetch", "--depth=1", f'https://github.com/{unit["repo"]}.git', unit["commit"])
     run("git", "-C", str(source), "checkout", "--detach", "FETCH_HEAD")
     run("git", "-C", str(source), "submodule", "update", "--init", "--recursive", "--depth=1")
-    execute(container, "git", "config", "--global", "--add", "safe.directory", "/work/source/" + unit["package"])
     openwrt = target["family"] in ("ipk", "apk")
     full_version = version(unit, target)
     release = str(unit["revision"]) if openwrt else full_version[len(unit["version"]) + 1:]
@@ -89,7 +95,7 @@ def build(container, target, unit, output):
     command = 'exec sh "$SOURCE_DIR/$1"'
     if target["distribution"] == "rocky" and target["release"] == "9":
         command = '. /opt/rh/gcc-toolset-14/enable; ' + command
-    execute(container, *args, "sh", "-ec", command, "sh", hook)
+    as_builder(container, *args, "sh", "-ec", command, "sh", hook)
     suffix = "." + target["family"]
     packages = sorted((Path("work/output") / unit["package"]).glob("*" + suffix))
     assert packages, "hook produced no packages"
@@ -130,7 +136,7 @@ def reuse(container, target, unit):
         if target["family"] == "ipk":
             for name in ("Packages", "Packages.sig"):
                 (directory / name).write_bytes(fetch(remote + "/" + name))
-            execute(container, tools + "usign", "-V", "-p", "/work/keys/openwrt-usign.pub",
+            as_builder(container, tools + "usign", "-V", "-p", "/work/keys/openwrt-usign.pub",
                     "-m", local_directory + "/Packages", "-x", local_directory + "/Packages.sig")
             stanzas = [dict(line.split(": ", 1) for line in block.splitlines()
                             if not line.startswith(" ") and ": " in line)
@@ -140,15 +146,15 @@ def reuse(container, target, unit):
             (directory / "keys").mkdir()
             shutil.copy2("keys/openwrt-apk.pub", directory / "keys/snodec.pub")
             (directory / "packages.adb").write_bytes(fetch(remote + "/packages.adb"))
-            execute(container, tools + "apk", "verify", "--keys-dir", local_directory + "/keys",
+            as_builder(container, tools + "apk", "verify", "--keys-dir", local_directory + "/keys",
                     local_directory + "/packages.adb")
-            index = execute(container, tools + "apk", "adbdump", "--format", "json", local_directory + "/packages.adb",
+            index = as_builder(container, tools + "apk", "adbdump", "--format", "json", local_directory + "/packages.adb",
                             capture_output=True, text=True)
             names = {Path(file).name for file in publication["files"]}
             packages = [package["name"] for package in json.loads(index.stdout)["packages"]
                         if package["name"] + "-" + package["version"] + ".apk" in names]
             assert len(packages) == len(names)
-            execute(container, tools + "apk", "--no-cache", "--keys-dir", local_directory + "/keys", "--arch", target["arch"],
+            as_builder(container, tools + "apk", "--no-cache", "--keys-dir", local_directory + "/keys", "--arch", target["arch"],
                     "--repository", remote + "/packages.adb", "fetch", "--all-matches", "--output", local_directory, *packages)
         staging = "/work/sdk/staging_dir/" + next(Path("work/sdk/staging_dir").glob("target-*")).name
         for file, digest in publication["files"].items():
@@ -161,9 +167,9 @@ def reuse(container, target, unit):
                 with tarfile.open(local) as archive:
                     member = next(member for member in archive if member.name.lstrip("./") == "data.tar.gz")
                     (directory / "data.tar.gz").write_bytes(archive.extractfile(member).read())
-                execute(container, "tar", "-xzf", local_directory + "/data.tar.gz", "-C", staging)
+                as_builder(container, "tar", "-xzf", local_directory + "/data.tar.gz", "-C", staging)
             else:
-                execute(container, tools + "apk", "extract", "--allow-untrusted", "--destination", staging,
+                as_builder(container, tools + "apk", "extract", "--allow-untrusted", "--destination", staging,
                         local_directory + "/" + local.name)
     return None
 
