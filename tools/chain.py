@@ -131,16 +131,30 @@ def reuse(container, target, unit):
                 (directory / name).write_bytes(fetch(remote + "/" + name))
             execute(container, tools + "usign", "-V", "-p", "/work/keys/openwrt-usign.pub",
                     "-m", local_directory + "/Packages", "-x", local_directory + "/Packages.sig")
+            stanzas = [dict(line.split(": ", 1) for line in block.splitlines()
+                            if not line.startswith(" ") and ": " in line)
+                       for block in (directory / "Packages").read_text().strip().split("\n\n")]
+            trusted = {stanza["Filename"]: stanza["SHA256sum"] for stanza in stanzas}
         else:
             (directory / "keys").mkdir()
             shutil.copy2("keys/openwrt-apk.pub", directory / "keys/snodec.pub")
             (directory / "packages.adb").write_bytes(fetch(remote + "/packages.adb"))
             execute(container, tools + "apk", "verify", "--keys-dir", local_directory + "/keys",
                     local_directory + "/packages.adb")
+            index = execute(container, tools + "apk", "adbdump", "--format", "json", local_directory + "/packages.adb",
+                            capture_output=True, text=True)
+            names = {Path(file).name for file in publication["files"]}
+            packages = [package["name"] for package in json.loads(index.stdout)["packages"]
+                        if package["name"] + "-" + package["version"] + ".apk" in names]
+            assert len(packages) == len(names)
+            execute(container, tools + "apk", "--keys-dir", local_directory + "/keys", "--arch", target["arch"],
+                    "--repository", remote + "/packages.adb", "fetch", "--all-matches", "--output", local_directory, *packages)
         staging = "/work/sdk/staging_dir/" + next(Path("work/sdk/staging_dir").glob("target-*")).name
         for file, digest in publication["files"].items():
             local = directory / Path(file).name
-            local.write_bytes(fetch(base + "/" + file))
+            if target["family"] == "ipk":
+                assert trusted[local.name] == digest
+                local.write_bytes(fetch(base + "/" + file))
             assert sha256(local) == digest
             if target["family"] == "ipk":
                 with tarfile.open(local) as archive:

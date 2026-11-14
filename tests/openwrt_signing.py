@@ -42,10 +42,25 @@ def main():
         files.mkdir()
         (files / "fixture").write_text("fixture\n")
         subprocess.run([str(tools / "apk"), "mkpkg", "--info", "name:fixture", "--info", "version:1.0.0-r1",
-                        "--info", "arch:x86_64", "--files", str(files), "--output", str(directory / "fixture.apk")], check=True)
+                        "--info", "arch:x86_64", "--files", str(files), "--output", str(directory / "fixture-1.0.0-r1.apk")], check=True)
+        subprocess.run([str(tools / "apk"), "mkpkg", "--info", "name:fixture", "--info", "version:1.0.0-r2",
+                        "--info", "arch:x86_64", "--files", str(files), "--output", str(directory / "fixture-1.0.0-r2.apk")], check=True)
         subprocess.run([str(tools / "apk"), "mkndx", "--allow-untrusted", "--sign-key", str(directory / "apk.pem"),
-                        "--output", str(directory / "packages.adb"), str(directory / "fixture.apk")], check=True)
+                        "--output", str(directory / "packages.adb"), str(directory / "fixture-1.0.0-r1.apk"),
+                        str(directory / "fixture-1.0.0-r2.apk")], check=True)
         subprocess.run([str(tools / "apk"), "verify", "--keys-dir", str(keys), str(directory / "packages.adb")], check=True)
+        downloads = directory / "downloads"
+        downloads.mkdir()
+        fetch = [str(tools / "apk"), "--arch", "x86_64", "--keys-dir", str(keys), "--repository", str(directory / "packages.adb"),
+                 "fetch", "--all-matches", "--output", str(downloads), "fixture"]
+        subprocess.run(fetch, check=True)
+        assert (downloads / "fixture-1.0.0-r1.apk").read_bytes() == (directory / "fixture-1.0.0-r1.apk").read_bytes()
+        assert len(list(downloads.glob("*.apk"))) == 2
+        (downloads / "fixture-1.0.0-r1.apk").unlink()
+        (files / "fixture").write_text("replaced package\n")
+        subprocess.run([str(tools / "apk"), "mkpkg", "--info", "name:fixture", "--info", "version:1.0.0-r1",
+                        "--info", "arch:x86_64", "--files", str(files), "--output", str(directory / "fixture-1.0.0-r1.apk")], check=True)
+        assert subprocess.run(fetch, capture_output=True).returncode != 0, "signed index accepted a replaced package"
         print("OpenWrt ipk and apk index signing/verification passed")
     return None
 
