@@ -52,10 +52,10 @@ def setup(container, target):
         execute(container, "env", "DEBIAN_FRONTEND=noninteractive", "apt-get", "install", "-y", *base,
                 *([] if openwrt else dependencies))
         if target["distribution"] == "raspberrypios":
-            Path("work/raspberrypi.gpg").write_bytes(fetch("https://archive.raspberrypi.com/debian/raspberrypi.gpg.key"))
-            execute(container, "sh", "-ec", "gpg --dearmor < /work/raspberrypi.gpg > /usr/share/keyrings/raspberrypi.gpg; "
+            Path("work/raspberrypi-keyring.deb").write_bytes(fetch("https://archive.raspberrypi.com/debian/pool/main/r/raspberrypi-archive-keyring/raspberrypi-archive-keyring_2025.1+rpt1_all.deb"))
+            execute(container, "sh", "-ec", "dpkg -i /work/raspberrypi-keyring.deb; "
                     'printf "%s\\n" "$1" > /etc/apt/sources.list.d/raspberrypi.list; apt-get update', "sh",
-                    f'deb [signed-by=/usr/share/keyrings/raspberrypi.gpg] https://archive.raspberrypi.com/debian/ {target["release"]} main')
+                    f'deb [signed-by=/usr/share/keyrings/raspberrypi-archive-keyring.pgp] https://archive.raspberrypi.com/debian/ {target["release"]} main')
     if any(unit["action"] == "reuse" for unit in target["units"]):
         install_feed(container, target)
     if openwrt:
