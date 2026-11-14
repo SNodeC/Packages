@@ -71,7 +71,7 @@ apk add snodec mqttsuite
 
 ## Declarations and hooks
 
-`ci/registry.json` lists participating repositories. `ci/targets.json` contains 40 targets. Each source's `ci/packages.json` declares its package, dependencies, targets, build dependencies, and hooks. Declarations and hooks come from the plan's exact source commit. Native hooks configure CMake Release under `/usr`, build with `--parallel $(nproc)`, run `ctest -LE mariadb --output-on-failure`, and invoke CPack. OpenWrt hooks use the product recipes inside one shared SDK per target. Hooks and SDK operations run as an unprivileged user matching the mounted source owner; the runner installs build tools and native packages as root.
+`ci/registry.json` lists participating repositories. `ci/targets.json` contains 40 targets. Each source's `ci/packages.json` declares its package, dependencies, targets, build dependencies, and hooks. Declarations and hooks come from the plan's exact source commit. Native hooks configure CMake Release under `/usr`, build with `--parallel $(nproc)`, run `ctest -LE mariadb --output-on-failure`, and invoke CPack. CodexUI's package hook sets `CODEXUI_TIMING_POLICY=report` and uses verbose CTest output to record elapsed-time overruns; the repository's own test defaults stay strict. OpenWrt hooks use the product recipes inside one shared SDK per target. Hooks and SDK operations run as an unprivileged user matching the mounted source owner; the runner installs build tools and native packages as root.
 
 | Environment | Meaning |
 | --- | --- |
