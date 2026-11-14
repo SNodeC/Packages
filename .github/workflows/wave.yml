@@ -1,0 +1,26 @@
+name: Package wave
+on:
+  workflow_dispatch:
+    inputs:
+      wave_id:
+        description: Wave identity
+        required: true
+      plan_url:
+        description: Public JSON plan URL
+      plan_json:
+        description: Base64 JSON plan for manual runs
+      callback_url:
+        description: Wave report endpoint; empty disables callbacks
+      feed_branch:
+        description: Destination feed
+        type: choice
+        options: [feed, feed-staging]
+        default: feed
+        required: true
+permissions:
+  contents: read
+jobs:
+  registration:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: exit 1
