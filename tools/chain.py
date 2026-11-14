@@ -78,6 +78,7 @@ def build(container, target, unit, output):
     run("git", "-C", str(source), "fetch", "--depth=1", f'https://github.com/{unit["repo"]}.git', unit["commit"])
     run("git", "-C", str(source), "checkout", "--detach", "FETCH_HEAD")
     run("git", "-C", str(source), "submodule", "update", "--init", "--recursive", "--depth=1")
+    execute(container, "git", "config", "--global", "--add", "safe.directory", "/work/source/" + unit["package"])
     openwrt = target["family"] in ("ipk", "apk")
     full_version = version(unit, target)
     release = str(unit["revision"]) if openwrt else full_version[len(unit["version"]) + 1:]
