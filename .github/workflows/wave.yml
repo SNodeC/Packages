@@ -1,0 +1,91 @@
+name: Package wave
+on:
+  workflow_dispatch:
+    inputs:
+      wave_id:
+        description: Wave identity
+        required: true
+      plan_url:
+        description: Public JSON plan URL
+      plan_json:
+        description: Base64 JSON plan for manual runs
+      callback_url:
+        description: Wave report endpoint; empty disables callbacks
+      feed_branch:
+        description: Destination feed
+        type: choice
+        options: [feed, feed-staging]
+        default: feed
+        required: true
+permissions:
+  contents: read
+concurrency:
+  group: wave-${{ inputs.feed_branch }}
+  cancel-in-progress: false
+env:
+  WAVE_ID: ${{ inputs.wave_id }}
+  CALLBACK_URL: ${{ inputs.callback_url }}
+  FEED_BRANCH: ${{ inputs.feed_branch }}
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: plan
+        env:
+          PLAN_URL: ${{ inputs.plan_url }}
+          PLAN_JSON: ${{ inputs.plan_json }}
+          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
+        run: python3 tools/plan.py
+  chain:
+    needs: plan
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    runs-on: ${{ matrix.runner }}
+    name: chain (${{ matrix.id }})
+    steps:
+      - uses: actions/checkout@v4
+      - if: matrix.emulated
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu-user-static
+          sudo update-binfmts --enable
+      - env:
+          TARGET: ${{ toJSON(matrix) }}
+          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
+        run: python3 tools/chain.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.id }}
+          path: artifacts/${{ matrix.id }}
+  publish:
+    needs: [plan, chain]
+    if: always()
+    runs-on: ubuntu-24.04
+    environment: publish
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y rpm createrepo-c zstd
+      - env:
+          PACKAGES_GPG_PRIVATE_KEY: ${{ secrets.PACKAGES_GPG_PRIVATE_KEY }}
+          OPENWRT_USIGN_PRIVATE_KEY: ${{ secrets.OPENWRT_USIGN_PRIVATE_KEY }}
+          OPENWRT_APK_PRIVATE_KEY: ${{ secrets.OPENWRT_APK_PRIVATE_KEY }}
+          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
+          GPG_FINGERPRINT: D1AAD199DB3D3E6A34B75E3047F6536301C7C67D
+        run: python3 tools/publish.py
+      - if: always()
+        env:
+          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
+          CONCLUSION: ${{ job.status == 'success' && needs.chain.result == 'success' && 'success' || 'failure' }}
+        run: python3 tools/common.py
