@@ -99,6 +99,8 @@ CodexUI requires Qt6 Widgets/Network ≥ 6.6, KF6Sonnet ≥ 6.13, and libgit2 fr
 
 Ubuntu noble and Raspberry Pi OS bookworm have older Qt/KF versions; Rocky's standard repositories lack the required KF6Sonnet. core-ci excludes Raspberry Pi OS bookworm's GCC-12 toolchain. Rocky 9 uses GCC Toolset 14. Raspberry Pi OS containers use Debian arm64 plus Raspberry Pi's signed archive.
 
+armhf runs natively on `ubuntu-24.04-arm`: [runner qualification](https://github.com/SNodeC/Packages/actions/runs/43633330866) confirmed 32-bit execution with no QEMU handler. RISC-V uses Ubuntu's `qemu-user-static` on `ubuntu-24.04`. OpenWrt SDKs run on x86_64 using point releases 24.10.8 and 25.12.6. For OpenWrt reuse, the exact source recipe supplies SDK development headers, then the signed published runtime packages are installed into that staging tree.
+
 ## Verification
 
 Run `python3 -m unittest discover -s tests -v`, `actionlint .github/workflows/wave.yml`, and `sh -n` for the source hooks. Tests cover version encoding, retention, APT Release golden fields, and the callback vector from core-ci main `649d0f8`. Staging qualification builds the canary targets and installs signed APT/RPM packages in fresh containers before implementation merges.
