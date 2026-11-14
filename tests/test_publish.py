@@ -47,7 +47,7 @@ class PublicationTests(unittest.TestCase):
                 "--quick-generate-key", "Fixture <fixture@example.invalid>", "rsa2048", "sign", "0")
         command("gpg", "--homedir", home, "--batch", "--output", "keys/fixture.gpg", "--export")
         command("gpg", "--homedir", home, "--batch", "--armor", "--output", "keys/fixture.asc", "--export")
-        target = dict(id="debian-trixie-amd64", family="deb", codename="trixie", arch="amd64")
+        target = dict(id="debian-trixie-amd64", family="deb", codename="trixie", arch="amd64", feed_commit="f" * 40)
         package = Path("package/DEBIAN")
         package.mkdir(parents=True)
         artifact = Path("artifacts/debian-trixie-amd64")
@@ -71,6 +71,7 @@ class PublicationTests(unittest.TestCase):
                     "feed-work/apt/dists/trixie/Release.gpg", "feed-work/apt/dists/trixie/Release")
             command("gpgv", "--keyring", str(Path("keys/fixture.gpg").resolve()), "feed-work/apt/dists/trixie/InRelease")
             ledger = json.loads(Path("feed-work/publications.json").read_text())
+            self.assertNotIn("feed_commit", ledger[-1]["target"])
             self.assertEqual([entry["unit"]["revision"] for entry in ledger], list(range(max(1, revision - 1), revision + 1)))
             self.assertEqual(ledger[-1]["unit"]["build_id"], str(publication))
             for entry in ledger:
