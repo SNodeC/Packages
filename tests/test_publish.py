@@ -52,13 +52,14 @@ class PublicationTests(unittest.TestCase):
         package.mkdir(parents=True)
         artifact = Path("artifacts/debian-trixie-amd64")
         (artifact / "fixture").mkdir(parents=True)
-        for revision in (1, 2, 3):
+        for publication, revision in enumerate((1, 2, 3, 3), 1):
             version = f"1.0.0-{revision}~trixie"
             (package / "control").write_text(f"Package: fixture\nVersion: {version}\nArchitecture: amd64\n"
                                              "Maintainer: Fixture <fixture@example.invalid>\nDescription: Disposable feed fixture\n")
             output = artifact / "fixture" / ("fixture_" + version + "_amd64.deb")
+            (package.parent / "payload").write_text(str(publication))
             command("dpkg-deb", "--build", "--root-owner-group", "package", str(output))
-            unit = dict(package="fixture", version="1.0.0", revision=revision, action="build", build_id=str(revision))
+            unit = dict(package="fixture", version="1.0.0", revision=revision, action="build", build_id=str(publication))
             manifest = dict(target=target, units=[dict(unit=unit, state="succeeded")],
                             files={str(output.relative_to(artifact)): sha256(output)})
             (artifact / "manifest.json").write_text(json.dumps(manifest))
@@ -71,6 +72,10 @@ class PublicationTests(unittest.TestCase):
             command("gpgv", "--keyring", str(Path("keys/fixture.gpg").resolve()), "feed-work/apt/dists/trixie/InRelease")
             ledger = json.loads(Path("feed-work/publications.json").read_text())
             self.assertEqual([entry["unit"]["revision"] for entry in ledger], list(range(max(1, revision - 1), revision + 1)))
+            self.assertEqual(ledger[-1]["unit"]["build_id"], str(publication))
+            for entry in ledger:
+                for file, digest in entry["files"].items():
+                    self.assertEqual(sha256(Path("feed-work") / file), digest)
             index = Path("feed-work/apt/dists/trixie/main/binary-amd64/Packages")
             text = index.read_text()
             self.assertIn("Version: " + version, text)

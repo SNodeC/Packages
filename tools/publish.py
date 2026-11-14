@@ -13,12 +13,14 @@ from common import callback, fetch, read_json, run, sha256, version, write_json
 
 
 def retained(publications):
-    counts = {}
+    versions = {}
     selected = []
     for publication in reversed(publications):
         key = (publication["unit"]["package"], publication["target"]["id"])
-        counts[key] = counts.get(key, 0) + 1
-        if counts[key] <= 2:
+        versions.setdefault(key, set())
+        identity = (publication["unit"]["version"], publication["unit"]["revision"])
+        if len(versions[key]) < 2 and identity not in versions[key]:
+            versions[key].add(identity)
             selected.append(publication)
     result = list(reversed(selected))
     return result

@@ -1,6 +1,6 @@
 # SNode.C packages
 
-This repository builds and signs the SNode.C ecosystem's distribution packages. `main` owns the schema-1 registry, target catalog, and wave workflow; source repositories own their declarations and build hooks. core-ci supplies an ordered plan and serializes waves. The `feed` branch is the production repository; `feed-staging` is used for qualification. Each feed has one root commit and retains the newest two publications per package and target.
+This repository builds and signs the SNode.C ecosystem's distribution packages. `main` owns the schema-1 registry, target catalog, and wave workflow; source repositories own their declarations and build hooks. core-ci supplies an ordered plan and serializes waves. The `feed` branch is the production repository; `feed-staging` is used for qualification. Each feed has one root commit and retains the newest two publications per package and target. Republishing the same version/revision replaces that publication.
 
 ## Installation
 
