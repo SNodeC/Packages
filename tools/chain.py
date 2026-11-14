@@ -148,7 +148,7 @@ def reuse(container, target, unit):
             packages = [package["name"] for package in json.loads(index.stdout)["packages"]
                         if package["name"] + "-" + package["version"] + ".apk" in names]
             assert len(packages) == len(names)
-            execute(container, tools + "apk", "--keys-dir", local_directory + "/keys", "--arch", target["arch"],
+            execute(container, tools + "apk", "--no-cache", "--keys-dir", local_directory + "/keys", "--arch", target["arch"],
                     "--repository", remote + "/packages.adb", "fetch", "--all-matches", "--output", local_directory, *packages)
         staging = "/work/sdk/staging_dir/" + next(Path("work/sdk/staging_dir").glob("target-*")).name
         for file, digest in publication["files"].items():
