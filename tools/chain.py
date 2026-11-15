@@ -10,6 +10,24 @@ from pathlib import Path
 from common import callback, fetch, read_json, run, sha256, version, write_json
 
 
+class SetupError(RuntimeError):
+    pass
+
+
+def setup_run(step, *args, **kwargs):
+    try:
+        result = run(*args, capture_output=True, text=True, **kwargs)
+    except (subprocess.CalledProcessError, OSError) as error:
+        stdout, stderr = getattr(error, "stdout", ""), getattr(error, "stderr", "")
+        print(stdout or "", end="", flush=True)
+        print(stderr or "", end="", flush=True)
+        lines = ((stderr or stdout or "").strip() or str(error)).splitlines()
+        raise SetupError(f"setup: {step}: {lines[0]}") from error
+    print(result.stdout or "", end="", flush=True)
+    print(result.stderr or "", end="", flush=True)
+    return result
+
+
 def execute(container, *args, **kwargs):
     result = run("docker", "exec", container, *args, **kwargs)
     return result
@@ -22,16 +40,16 @@ def as_builder(container, *args, **kwargs):
 
 def install_native(container, target, paths):
     if target["family"] == "deb":
-        execute(container, "env", "DEBIAN_FRONTEND=noninteractive", "apt-get", "install", "-y", *paths)
+        setup_run("install", "docker", "exec", container, "env", "DEBIAN_FRONTEND=noninteractive", "apt-get", "install", "-y", *paths)
     else:
-        execute(container, "dnf", "install", "-y", *paths)
+        setup_run("install", "docker", "exec", container, "dnf", "install", "-y", *paths)
     return None
 
 
 def install_feed(container, target):
     base = "https://raw.githubusercontent.com/SNodeC/Packages/" + target["feed_commit"]
     if target["family"] == "deb":
-        execute(container, "sh", "-ec",
+        setup_run("repositories", "docker", "exec", container, "sh", "-ec",
                 "gpg --dearmor < /work/keys/packages-gpg.asc > /usr/share/keyrings/snodec.gpg; "
                 "printf '%s\\n' \"$1\" > /etc/apt/sources.list.d/snodec.list; apt-get update",
                 "sh", f'deb [signed-by=/usr/share/keyrings/snodec.gpg] {base}/apt {target["codename"]} main')
@@ -39,7 +57,7 @@ def install_feed(container, target):
         repo = ("[snodec]\nname=SNode.C\nbaseurl=" + base + "/rpm/" +
                 "/".join(target[key] for key in ("distribution", "release", "arch")) +
                 "\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=file:///work/keys/packages-gpg.asc\n")
-        execute(container, "sh", "-ec", 'printf "%s" "$1" > /etc/yum.repos.d/snodec.repo', "sh", repo)
+        setup_run("repositories", "docker", "exec", container, "sh", "-ec", 'printf "%s" "$1" > /etc/yum.repos.d/snodec.repo', "sh", repo)
     return None
 
 
@@ -49,41 +67,47 @@ def setup(container, target):
     dependencies = sorted({dependency for unit in target["units"]
                            for dependency in unit["declaration"]["build_dependencies"][family]})
     if target["family"] == "rpm":
-        execute(container, "dnf", "install", "-y", "dnf-plugins-core")
+        setup_run("repositories", "docker", "exec", container, "dnf", "install", "-y", "dnf-plugins-core")
         if target["distribution"] == "rocky":
-            execute(container, "dnf", "config-manager", "--set-enabled", "crb")
-            execute(container, "dnf", "install", "-y", "epel-release")
+            setup_run("repositories", "docker", "exec", container, "dnf", "config-manager", "--set-enabled", "crb")
+            setup_run("repositories", "docker", "exec", container, "dnf", "install", "-y", "epel-release")
             if target["release"] == "9":
                 dependencies += ["gcc-toolset-14-gcc-c++"]
-        execute(container, "dnf", "install", "-y", "git", "jq", "rpm-build", "gnupg2", "file",
+        setup_run("dependencies", "docker", "exec", container, "dnf", "install", "-y", "git", "jq", "rpm-build", "gnupg2", "file",
                 "shadow-utils", "util-linux", *dependencies)
     else:
-        execute(container, "apt-get", "update")
+        setup_run("repositories", "docker", "exec", container, "apt-get", "update")
         base = ["ca-certificates", "git", "jq", "gnupg", "dpkg-dev", "file", "passwd", "util-linux"]
         if openwrt:
             base += ["build-essential", "clang", "flex", "bison", "gawk", "gettext", "libncurses-dev",
                      "libssl-dev", "python3", "python3-setuptools", "rsync", "swig", "unzip", "zstd", "wget"]
-        execute(container, "env", "DEBIAN_FRONTEND=noninteractive", "apt-get", "install", "-y", *base,
+        setup_run("dependencies", "docker", "exec", container, "env", "DEBIAN_FRONTEND=noninteractive", "apt-get", "install", "-y", *base,
                 *([] if openwrt else dependencies))
         if target["distribution"] == "raspberrypios":
             Path("work/raspberrypi-keyring.deb").write_bytes(fetch("https://archive.raspberrypi.com/debian/pool/main/r/raspberrypi-archive-keyring/raspberrypi-archive-keyring_2025.1+rpt1_all.deb"))
-            execute(container, "sh", "-ec", "dpkg -i /work/raspberrypi-keyring.deb; "
+            setup_run("repositories", "docker", "exec", container, "sh", "-ec", "dpkg -i /work/raspberrypi-keyring.deb; "
                     'printf "%s\\n" "$1" > /etc/apt/sources.list.d/raspberrypi.list; apt-get update', "sh",
                     f'deb [signed-by=/usr/share/keyrings/raspberrypi-archive-keyring.pgp] https://archive.raspberrypi.com/debian/ {target["release"]} main')
-    execute(container, "useradd", "--uid", str(os.getuid()), "--create-home", "builder")
+    setup_run("builder", "docker", "exec", container, "useradd", "--uid", str(os.getuid()), "--create-home", "builder")
     if any(unit["action"] == "reuse" for unit in target["units"]):
         install_feed(container, target)
     if openwrt:
-        sdk = target["sdk"]
-        archive = Path("work/sdk.tar.zst")
-        archive.write_bytes(fetch(sdk["url"]))
-        assert sha256(archive) == sdk["sha256"]
-        checksums = fetch(sdk["sha256sums"]).decode()
-        assert sdk["sha256"] + " *" + sdk["url"].rsplit("/", 1)[1] in checksums
-        Path("work/sdk").mkdir()
-        run("tar", "--zstd", "-xf", str(archive), "-C", "work/sdk", "--strip-components=1")
-        as_builder(container, "sh", "-ec", "cd /work/sdk; ./scripts/feeds update -a; ./scripts/feeds install -a")
-        Path("work/sdk/.config").write_text("CONFIG_ALL_NONSHARED=n\nCONFIG_ALL_KMODS=n\nCONFIG_SIGNED_PACKAGES=n\n")
+        try:
+            sdk = target["sdk"]
+            archive = Path("work/sdk.tar.zst")
+            archive.write_bytes(fetch(sdk["url"]))
+            assert sha256(archive) == sdk["sha256"], "SDK SHA256 mismatch"
+            checksums = fetch(sdk["sha256sums"]).decode()
+            assert sdk["sha256"] + " *" + sdk["url"].rsplit("/", 1)[1] in checksums, "SDK checksum list mismatch"
+            Path("work/sdk").mkdir()
+            setup_run("SDK", "tar", "--zstd", "-xf", str(archive), "-C", "work/sdk", "--strip-components=1")
+            setup_run("SDK", "docker", "exec", container, "runuser", "-u", "builder", "--", "sh", "-ec",
+                      "cd /work/sdk; ./scripts/feeds update -a; ./scripts/feeds install -a")
+            Path("work/sdk/.config").write_text("CONFIG_ALL_NONSHARED=n\nCONFIG_ALL_KMODS=n\nCONFIG_SIGNED_PACKAGES=n\n")
+        except Exception as error:
+            if isinstance(error, SetupError):
+                raise
+            raise SetupError(f"setup: SDK: {str(error).splitlines()[0]}") from error
     return None
 
 
@@ -188,50 +212,84 @@ def main():
                 else {"target": target, "units": [], "files": {}})
     units = target["units"]
     if phase == "second":
-        assert len(manifest["units"]) == 1, "incomplete first chain job"
-        units = units[1:]
+        recorded = {item["unit"]["package"] for item in manifest["units"]}
+        assert manifest["units"] and (manifest["units"][0]["unit"] == units[0] or
+                                      all(unit["package"] in recorded for unit in units if unit["action"] == "build")), \
+            "incomplete first chain job"
+        units = [unit for unit in units[1:] if unit["package"] not in recorded]
+        if not any(unit["action"] == "build" for unit in units):
+            units = []
     elif target["emulated"]:
         units = units[:1]
-    Path("work").mkdir()
-    shutil.copytree("keys", "work/keys")
     container = "wave-chain"
     failed = {item["unit"]["package"] for item in manifest["units"] if item["state"] != "succeeded"}
+    step = "workspace"
     try:
-        run("docker", "run", "-d", "--name", container, "--platform", target["platform"],
-            "-v", str(Path("work").resolve()) + ":/work", "-v", str(output.resolve()) + ":/previous:ro",
-            target["image"], "sleep", "infinity")
-        setup(container, target)
-        for item in manifest["units"]:
-            if item["state"] == "succeeded":
-                unit = item["unit"]
-                if unit["action"] == "reuse":
-                    reuse(container, target, unit)
-                else:
-                    paths = ["/previous/" + file for file in manifest["files"]
-                             if Path(file).parts[0] == unit["package"]]
-                    install_native(container, target, paths)
+        if units:
+            Path("work").mkdir()
+            shutil.copytree("keys", "work/keys")
+            if target["emulated"]:
+                setup_run("emulation", "sudo", "apt-get", "update")
+                setup_run("emulation", "sudo", "apt-get", "install", "-y", "qemu-user-static", "binfmt-support")
+                setup_run("emulation", "sudo", "update-binfmts", "--enable")
+            setup_run("container", "docker", "run", "-d", "--name", container, "--platform", target["platform"],
+                      "-v", str(Path("work").resolve()) + ":/work", "-v", str(output.resolve()) + ":/previous:ro",
+                      target["image"], "sleep", "infinity")
+            step = "dependencies"
+            setup(container, target)
+            for item in manifest["units"]:
+                if item["state"] == "succeeded":
+                    unit = item["unit"]
+                    step = "restore " + unit["package"]
+                    if unit["action"] == "reuse":
+                        reuse(container, target, unit)
+                    else:
+                        paths = ["/previous/" + file for file in manifest["files"]
+                                 if Path(file).parts[0] == unit["package"]]
+                        install_native(container, target, paths)
         for unit in units:
             started = time.monotonic()
             state = "skipped"
+            reason = ""
             if not (set(unit["declaration"]["depends_on"]) & failed):
+                if unit["action"] == "build":
+                    step = "callback " + unit["package"]
+                    callback("unit", "started", build_id=unit["build_id"], phase="build")
                 try:
                     if unit["action"] == "build":
-                        callback("unit", "started", build_id=unit["build_id"], phase="build")
                         files = build(container, target, unit, output)
                         manifest["files"].update(files)
-                        callback("unit", "succeeded", build_id=unit["build_id"], phase="build", artifact=target["id"])
                     else:
+                        step = "reuse " + unit["package"]
                         reuse(container, target, unit)
                     state = "succeeded"
                 except Exception as error:
+                    if unit["action"] == "reuse" or isinstance(error, SetupError):
+                        raise
                     state = "failed"
-                    print(f'{unit["package"]}: {error}', flush=True)
-                    if unit["action"] == "build":
-                        callback("unit", "failed", build_id=unit["build_id"], phase="build", reason=str(error))
+                    reason = str(error)
+                    print(f'{unit["package"]}: {reason}', flush=True)
             if state != "succeeded":
                 failed.add(unit["package"])
-            manifest["units"].append({"unit": unit, "state": state, "seconds": round(time.monotonic() - started, 1)})
+            manifest["units"].append({"unit": unit, "state": state, "reason": reason, "seconds": round(time.monotonic() - started, 1)})
             write_json(output / "manifest.json", manifest)
+            if unit["action"] == "build" and state != "skipped":
+                step = "callback " + unit["package"]
+                callback("unit", state, build_id=unit["build_id"], phase="build",
+                         **({"artifact": target["id"]} if state == "succeeded" else {"reason": reason}))
+    except Exception as error:
+        reason = str(error) if isinstance(error, SetupError) else f"setup: {step}: {(str(error) or type(error).__name__).splitlines()[0]}"
+        print(reason, flush=True)
+        recorded = {item["unit"]["package"] for item in manifest["units"]}
+        for unit in target["units"]:
+            if unit["action"] == "build" and unit["package"] not in recorded:
+                manifest["units"].append({"unit": unit, "state": "failed", "reason": reason, "seconds": 0})
+                write_json(output / "manifest.json", manifest)
+                try:
+                    callback("unit", "failed", build_id=unit["build_id"], phase="build", reason=reason)
+                except Exception as report_error:
+                    print(f'Report failed for {unit["build_id"]}: {type(report_error).__name__}', flush=True)
+        raise
     finally:
         write_json(output / "manifest.json", manifest)
         subprocess.run(["docker", "rm", "-f", container], check=False)

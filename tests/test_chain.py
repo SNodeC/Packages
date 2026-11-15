@@ -1,6 +1,7 @@
 import json
 import os
 import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -12,6 +13,131 @@ import chain
 
 
 class ChainTests(unittest.TestCase):
+    def test_sdk_download_failure_reports_every_build_unit(self):
+        units = [dict(package=name, build_id=name, action="build",
+                      declaration=dict(depends_on=[], build_dependencies=dict(openwrt=[]))) for name in ("a", "b")]
+        target = dict(id="target", family="ipk", distribution="openwrt", sdk=dict(url="fixture"),
+                      platform="linux/amd64", image="fixture", emulated=False, units=units)
+        root = Path("/tmp/codex/build/Packages/tests")
+        root.mkdir(parents=True, exist_ok=True)
+        original = Path.cwd()
+        with tempfile.TemporaryDirectory(dir=root) as temporary:
+            os.chdir(temporary)
+            try:
+                Path("keys").mkdir()
+                with patch.dict(os.environ, TARGET=json.dumps(target), CHAIN_PHASE="first"), \
+                        patch("chain.run", return_value=subprocess.CompletedProcess([], 0, stdout="", stderr="")), \
+                        patch("chain.subprocess.run"), patch("chain.fetch", side_effect=RuntimeError("download unavailable")), \
+                        patch("chain.callback") as report:
+                    with self.assertRaisesRegex(RuntimeError, "setup: SDK: download unavailable"):
+                        chain.main()
+                self.assertEqual([(call.kwargs["build_id"], call.kwargs["reason"]) for call in report.call_args_list],
+                                 [(name, "setup: SDK: download unavailable") for name in ("a", "b")])
+            finally:
+                os.chdir(original)
+        return None
+
+    def test_unknown_success_callback_does_not_send_a_contradictory_failure(self):
+        units = [dict(package=name, build_id=name, action="build", declaration=dict(depends_on=[]))
+                 for name in ("a", "b", "c")]
+        target = dict(id="target", platform="linux/amd64", image="fixture", emulated=False, units=units)
+        root = Path("/tmp/codex/build/Packages/tests")
+        root.mkdir(parents=True, exist_ok=True)
+        original = Path.cwd()
+
+        def response(scope, status, **fields):
+            if status == "succeeded" or fields["build_id"] == "b":
+                raise RuntimeError("callback unavailable")
+            return None
+
+        with tempfile.TemporaryDirectory(dir=root) as temporary:
+            os.chdir(temporary)
+            try:
+                Path("keys").mkdir()
+                with patch.dict(os.environ, TARGET=json.dumps(target), CHAIN_PHASE="first"), \
+                        patch("chain.run", return_value=subprocess.CompletedProcess([], 0, stdout="", stderr="")), \
+                        patch("chain.subprocess.run"), patch("chain.setup"), patch("chain.build", return_value={}), \
+                        patch("chain.callback", side_effect=response) as report:
+                    with self.assertRaisesRegex(RuntimeError, "callback unavailable"):
+                        chain.main()
+                self.assertEqual([(call.args[1], call.kwargs["build_id"]) for call in report.call_args_list],
+                                 [("started", "a"), ("succeeded", "a"), ("failed", "b"), ("failed", "c")])
+                manifest = json.loads(Path("artifacts/target/manifest.json").read_text())
+                self.assertEqual([item["state"] for item in manifest["units"]], ["succeeded", "failed", "failed"])
+            finally:
+                os.chdir(original)
+        return None
+
+    def test_setup_failure_reports_all_remaining_build_units_with_first_error(self):
+        units = [dict(package=name, build_id=name, action=action,
+                      declaration=dict(depends_on=[]))
+                 for name, action in (("a", "build"), ("b", "reuse"), ("c", "build"))]
+        target = dict(id="target", platform="linux/amd64", image="fixture", emulated=False, units=units)
+        root = Path("/tmp/codex/build/Packages/tests")
+        root.mkdir(parents=True, exist_ok=True)
+        original = Path.cwd()
+        for failure in ("container", "dependencies", "reuse"):
+            with self.subTest(failure=failure), tempfile.TemporaryDirectory(dir=root) as temporary:
+                os.chdir(temporary)
+                try:
+                    Path("keys").mkdir()
+                    process = subprocess.CompletedProcess([], 0, stdout="", stderr="")
+                    container_error = subprocess.CalledProcessError(125, ["docker"], stderr="manifest unknown\nsecond line")
+                    with patch.dict(os.environ, TARGET=json.dumps(target), CHAIN_PHASE="first"), \
+                            patch("chain.run", side_effect=container_error if failure == "container" else None,
+                                  return_value=process), patch("chain.subprocess.run"), \
+                            patch("chain.setup", side_effect=RuntimeError("repository unavailable")
+                                  if failure == "dependencies" else None), \
+                            patch("chain.build", return_value={}) as build, \
+                            patch("chain.reuse", side_effect=RuntimeError("SDK unavailable")
+                                  if failure == "reuse" else None), patch("chain.callback") as report:
+                        with self.assertRaisesRegex((RuntimeError,), "setup:|unavailable"):
+                            chain.main()
+                    manifest = json.loads(Path("artifacts/target/manifest.json").read_text())
+                    failed = [item for item in manifest["units"] if item["state"] == "failed"]
+                    names = ["c"] if failure == "reuse" else ["a", "c"]
+                    reason = {"container": "setup: container: manifest unknown",
+                              "dependencies": "setup: dependencies: repository unavailable",
+                              "reuse": "setup: reuse b: SDK unavailable"}[failure]
+                    self.assertEqual([item["unit"]["package"] for item in failed], names)
+                    self.assertTrue(all(item["reason"] == reason for item in failed))
+                    self.assertEqual([(call.kwargs["build_id"], call.kwargs["reason"])
+                                      for call in report.call_args_list if call.args[1] == "failed"],
+                                     [(name, reason) for name in names])
+                    self.assertEqual(build.call_count, int(failure == "reuse"))
+                finally:
+                    os.chdir(original)
+        return None
+
+    def test_emulated_setup_failure_reports_second_phase_without_repeating_callbacks(self):
+        units = [dict(package=name, build_id=name, action="build", declaration=dict(depends_on=[]))
+                 for name in ("a", "b", "c")]
+        target = dict(id="target", platform="linux/riscv64", image="fixture", emulated=True, units=units)
+        root = Path("/tmp/codex/build/Packages/tests")
+        root.mkdir(parents=True, exist_ok=True)
+        original = Path.cwd()
+        with tempfile.TemporaryDirectory(dir=root) as temporary:
+            os.chdir(temporary)
+            try:
+                Path("keys").mkdir()
+                with patch.dict(os.environ, TARGET=json.dumps(target), CHAIN_PHASE="first"), \
+                        patch("chain.run", side_effect=subprocess.CalledProcessError(
+                            1, ["sudo"], stderr="runner network unavailable\nmore detail")), \
+                        patch("chain.subprocess.run"), patch("chain.callback") as report:
+                    with self.assertRaisesRegex(RuntimeError, "setup: emulation: runner network unavailable"):
+                        chain.main()
+                    self.assertEqual([call.kwargs["build_id"] for call in report.call_args_list], ["a", "b", "c"])
+                with patch.dict(os.environ, TARGET=json.dumps(target), CHAIN_PHASE="second"), \
+                        patch("chain.run") as run, patch("chain.subprocess.run"), \
+                        patch("chain.callback") as report:
+                    with self.assertRaisesRegex(AssertionError, "a, b, c"):
+                        chain.main()
+                    run.assert_not_called()
+                    report.assert_not_called()
+            finally:
+                os.chdir(original)
+        return None
+
     def test_failed_prerequisite_skips_dependents_but_independent_unit_builds(self):
         units = [dict(package=name, build_id=name, action="build", declaration=dict(depends_on=dependencies))
                  for name, dependencies in (("a", []), ("b", ["a"]), ("c", []), ("d", ["b", "c"]))]
@@ -127,7 +253,7 @@ class ChainTests(unittest.TestCase):
 
     def test_feed_install_uses_immutable_snapshot(self):
         target = dict(family="deb", feed_branch="feed-staging", feed_commit="f" * 40, codename="trixie")
-        with patch("chain.execute") as execute:
+        with patch("chain.run", return_value=subprocess.CompletedProcess([], 0, stdout="", stderr="")) as execute:
             chain.install_feed("container", target)
         self.assertIn("/" + "f" * 40 + "/apt trixie main", execute.call_args.args[-1])
         self.assertNotIn("feed-staging", execute.call_args.args[-1])
