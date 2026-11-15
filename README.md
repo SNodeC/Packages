@@ -90,9 +90,11 @@ The `publish` environment holds `PACKAGES_GPG_PRIVATE_KEY`, `OPENWRT_USIGN_PRIVA
 
 CodexUI requires Qt6 Widgets/Network ≥ 6.6, KF6Sonnet ≥ 6.13, and libgit2 from standard repositories.
 
+Decision: Qt desktop application; 13 functional test failures under riscv64 emulation, tracked as [CodexUI issue #121](https://github.com/SNodeC/CodexUI/issues/121). Debian riscv64 is excluded from CodexUI's package declaration.
+
 | Distribution | Releases | Architectures | Repository evidence |
 | --- | --- | --- | --- |
-| Debian | trixie, forky, sid | amd64, arm64, armhf, riscv64 | [Qt6](https://packages.debian.org/trixie/qt6-base-dev), [Sonnet](https://packages.debian.org/trixie/libkf6sonnet-dev), [libgit2](https://packages.debian.org/trixie/libgit2-dev) |
+| Debian | trixie, forky, sid | amd64, arm64, armhf | [Qt6](https://packages.debian.org/trixie/qt6-base-dev), [Sonnet](https://packages.debian.org/trixie/libkf6sonnet-dev), [libgit2](https://packages.debian.org/trixie/libgit2-dev) |
 | Ubuntu | resolute | amd64, arm64 | [Qt6](https://packages.ubuntu.com/resolute/qt6-base-dev), [Sonnet](https://packages.ubuntu.com/resolute/libkf6sonnet-dev), [libgit2](https://packages.ubuntu.com/resolute/libgit2-dev) |
 | Fedora | 43, 44 | x86_64, aarch64 | [Qt6](https://packages.fedoraproject.org/pkgs/qt6-qtbase/qt6-qtbase-devel/), [Sonnet](https://packages.fedoraproject.org/pkgs/kf6-sonnet/kf6-sonnet-devel/), [libgit2](https://packages.fedoraproject.org/pkgs/libgit2/libgit2-devel/) |
 | Raspberry Pi OS | trixie | arm64 | Debian trixie base repositories |
