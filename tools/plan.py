@@ -24,6 +24,8 @@ def prepare(plan, catalog, repositories):
             declaration = json.loads(fetch(
                 f'https://raw.githubusercontent.com/{unit["repo"]}/{unit["commit"]}/ci/packages.json'))
             assert declaration["schema"] == 1
+            assert all(isinstance(declaration["build_dependencies"].get(family), list)
+                       for family in ("deb", "rpm", "openwrt"))
             assert declaration["package"] == unit["package"]
             assert target["id"] in declaration["targets"]
             assert set(declaration["depends_on"]) <= seen

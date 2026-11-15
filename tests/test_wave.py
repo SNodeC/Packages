@@ -60,7 +60,8 @@ class WaveTests(unittest.TestCase):
         return None
 
     def test_plan_uses_commit_declaration_and_dependency_order(self):
-        declaration = dict(schema=1, package="b", depends_on=["a"], targets=["target"])
+        declaration = dict(schema=1, package="b", depends_on=["a"], targets=["target"],
+                           build_dependencies=dict(deb=[], rpm=[], openwrt=[]))
         unit = dict(package="b", repo="owner/repo", commit="a" * 40, action="build")
         plan = dict(feed_branch="feed-staging", targets=[dict(id="target", units=[unit])])
         with patch("plan.fetch", return_value=json.dumps(declaration).encode()) as request:
@@ -70,7 +71,8 @@ class WaveTests(unittest.TestCase):
         return None
 
     def test_reused_units_share_one_immutable_feed_snapshot(self):
-        declarations = {name: dict(schema=1, package=name, depends_on=[], targets=["one", "two"])
+        declarations = {name: dict(schema=1, package=name, depends_on=[], targets=["one", "two"],
+                                  build_dependencies=dict(deb=[], rpm=[], openwrt=[]))
                         for name in ("a", "b")}
         units = [dict(package=name, repo="owner/repo", commit=name * 40, action=action)
                  for name, action in (("a", "reuse"), ("b", "build"))]
@@ -83,6 +85,16 @@ class WaveTests(unittest.TestCase):
         self.assertEqual(request.call_args_list[0].args,
                          ("https://api.github.com/repos/SNodeC/Packages/commits/feed-staging",))
         self.assertEqual(sum("api.github.com" in call.args[0] for call in request.call_args_list), 1)
+        return None
+
+    def test_native_declaration_still_requires_openwrt_dependency_array(self):
+        declaration = dict(schema=1, package="a", depends_on=[], targets=["target"],
+                           build_dependencies=dict(deb=[], rpm=[]))
+        unit = dict(package="a", repo="owner/repo", commit="a" * 40, action="build")
+        plan = dict(feed_branch="feed-staging", targets=[dict(id="target", units=[unit])])
+        with patch("plan.fetch", return_value=json.dumps(declaration).encode()):
+            with self.assertRaises(AssertionError):
+                prepare(plan, {"target": dict(id="target", family="deb")}, ["owner/repo"])
         return None
 
 
