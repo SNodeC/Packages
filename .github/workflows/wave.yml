@@ -19,8 +19,61 @@ on:
         required: true
 permissions:
   contents: read
+env:
+  WAVE_ID: ${{ inputs.wave_id }}
+  CALLBACK_URL: ${{ inputs.callback_url }}
+  FEED_BRANCH: ${{ inputs.feed_branch }}
 jobs:
-  registration:
+  plan:
     runs-on: ubuntu-24.04
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
     steps:
-      - run: exit 1
+      - uses: actions/checkout@v4
+      - id: plan
+        env:
+          PLAN_URL: ${{ inputs.plan_url }}
+          PLAN_JSON: ${{ inputs.plan_json }}
+          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
+        run: python3 tools/plan.py
+  chain:
+    needs: plan
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    name: chain (${{ matrix.id }})
+    uses: ./.github/workflows/chain.yml
+    with:
+      target: ${{ toJSON(matrix) }}
+      callback_url: ${{ inputs.callback_url }}
+    secrets: inherit
+  publish:
+    needs: [plan, chain]
+    if: always()
+    runs-on: ubuntu-24.04
+    environment: publish
+    concurrency:
+      group: wave-${{ inputs.feed_branch }}
+      queue: max
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y rpm createrepo-c zstd
+      - env:
+          PACKAGES_GPG_PRIVATE_KEY: ${{ secrets.PACKAGES_GPG_PRIVATE_KEY }}
+          OPENWRT_USIGN_PRIVATE_KEY: ${{ secrets.OPENWRT_USIGN_PRIVATE_KEY }}
+          OPENWRT_APK_PRIVATE_KEY: ${{ secrets.OPENWRT_APK_PRIVATE_KEY }}
+          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
+          GPG_FINGERPRINT: D1AAD199DB3D3E6A34B75E3047F6536301C7C67D
+        run: python3 tools/publish.py
+      - if: always()
+        env:
+          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
+          CONCLUSION: ${{ job.status == 'success' && needs.chain.result == 'success' && 'success' || 'failure' }}
+        run: python3 tools/common.py
