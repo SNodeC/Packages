@@ -187,12 +187,11 @@ def main():
     manifest = (read_json(output / "manifest.json") if phase == "second"
                 else {"target": target, "units": [], "files": {}})
     units = target["units"]
-    midpoint = (len(units) + 1) // 2
     if phase == "second":
-        assert len(manifest["units"]) == midpoint, "incomplete first chain job"
-        units = units[midpoint:]
+        assert len(manifest["units"]) == 1, "incomplete first chain job"
+        units = units[1:]
     elif target["emulated"]:
-        units = units[:midpoint]
+        units = units[:1]
     Path("work").mkdir()
     shutil.copytree("keys", "work/keys")
     container = "wave-chain"

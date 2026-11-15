@@ -74,12 +74,14 @@ class ChainTests(unittest.TestCase):
                                         chain.main()
                                 else:
                                     chain.main()
+                            if phase == "first":
+                                self.assertEqual(len(json.loads(Path("artifacts/target/manifest.json").read_text())["units"]), 1)
                     names = ["a", "c"] if failing else ["a", "c", "d"]
                     self.assertEqual([call.args[2]["package"] for call in build.call_args_list], names)
                     expected = ([("started", "a"), ("failed", "a"), ("started", "c"), ("succeeded", "c")]
                                 if failing else [(status, name) for name in names for status in ("started", "succeeded")])
                     self.assertEqual([(call.args[1], call.kwargs["build_id"]) for call in callback.call_args_list], expected)
-                    self.assertEqual(reuse.call_count, 0 if failing else 2)
+                    self.assertEqual(reuse.call_count, 0 if failing else 1)
                     self.assertEqual([call.args[2] for call in install.call_args_list],
                                      [] if failing else [["/previous/a/a.deb"]])
                     manifest = json.loads(Path("artifacts/target/manifest.json").read_text())
