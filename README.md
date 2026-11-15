@@ -103,4 +103,4 @@ armhf runs natively on `ubuntu-24.04-arm`: [runner qualification](https://github
 
 ## Verification
 
-Run `python3 -m unittest discover -s tests -v`, `actionlint .github/workflows/wave.yml`, and `sh -n` for the source hooks. Tests cover version encoding, retention, APT Release golden fields, and the callback vector from core-ci main `649d0f8`. Staging qualification builds the canary targets and installs signed APT/RPM packages in fresh containers before implementation merges.
+Run `python3 -m unittest discover -s tests -v`, `actionlint -ignore 'unexpected key "queue" for "concurrency" section' .github/workflows/wave.yml`, and `sh -n` for the source hooks. Actionlint 1.7.12 does not recognize GitHub's documented `queue: max`; this exact diagnostic is excluded while GitHub validates the workflow on dispatch. Tests cover version encoding, retention, APT Release golden fields, and the callback vector from core-ci main `649d0f8`. Staging qualification builds the canary targets and installs signed APT/RPM packages in fresh containers before implementation merges.
