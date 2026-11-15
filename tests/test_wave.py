@@ -4,7 +4,7 @@ import os
 import sys
 import unittest
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from common import callback, signature, version
@@ -77,14 +77,14 @@ class WaveTests(unittest.TestCase):
         units = [dict(package=name, repo="owner/repo", commit=name * 40, action=action)
                  for name, action in (("a", "reuse"), ("b", "build"))]
         plan = dict(feed_branch="feed-staging", targets=[dict(id=name, units=units) for name in ("one", "two")])
-        responses = [json.dumps(dict(sha="f" * 40)).encode()] + [json.dumps(declarations[name]).encode()
+        responses = [json.dumps(declarations[name]).encode()
                      for name in ("a", "b", "a", "b")]
-        with patch("plan.fetch", side_effect=responses) as request:
+        with patch("plan.fetch", side_effect=responses), \
+                patch("plan.run", return_value=Mock(stdout="f" * 40 + "\trefs/heads/feed-staging\n")) as branch:
             matrix = prepare(plan, {name: dict(id=name) for name in ("one", "two")}, ["owner/repo"])
         self.assertEqual([target["feed_commit"] for target in matrix], ["f" * 40, "f" * 40])
-        self.assertEqual(request.call_args_list[0].args,
-                         ("https://api.github.com/repos/SNodeC/Packages/commits/feed-staging",))
-        self.assertEqual(sum("api.github.com" in call.args[0] for call in request.call_args_list), 1)
+        branch.assert_called_once()
+        self.assertEqual(branch.call_args.args[-1], "refs/heads/feed-staging")
         return None
 
     def test_native_declaration_still_requires_openwrt_dependency_array(self):

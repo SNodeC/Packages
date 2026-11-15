@@ -4,15 +4,15 @@ import json
 import os
 import re
 
-from common import callback, fetch, read_json, write_json
+from common import callback, fetch, read_json, run, write_json
 
 
 def prepare(plan, catalog, repositories):
     assert plan["feed_branch"] in ("feed", "feed-staging")
     feed_commit = None
     if any(unit["action"] == "reuse" for target in plan["targets"] for unit in target["units"]):
-        feed_commit = json.loads(fetch(
-            "https://api.github.com/repos/SNodeC/Packages/commits/" + plan["feed_branch"]))["sha"]
+        feed_commit = run("git", "ls-remote", "--exit-code", "--heads", "origin", "refs/heads/" + plan["feed_branch"],
+                          capture_output=True, text=True).stdout.split()[0]
     matrix = []
     for planned in plan["targets"]:
         target = dict(catalog[planned["id"]])
