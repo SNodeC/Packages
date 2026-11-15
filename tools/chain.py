@@ -20,6 +20,14 @@ def as_builder(container, *args, **kwargs):
     return result
 
 
+def install_native(container, target, paths):
+    if target["family"] == "deb":
+        execute(container, "env", "DEBIAN_FRONTEND=noninteractive", "apt-get", "install", "-y", *paths)
+    else:
+        execute(container, "dnf", "install", "-y", *paths)
+    return None
+
+
 def install_feed(container, target):
     base = "https://raw.githubusercontent.com/SNodeC/Packages/" + target["feed_commit"]
     if target["family"] == "deb":
@@ -105,10 +113,7 @@ def build(container, target, unit, output):
         shutil.copy2(package, destination / package.name)
     if not openwrt:
         paths = ["/work/output/" + unit["package"] + "/" + package.name for package in packages]
-        if target["family"] == "deb":
-            execute(container, "env", "DEBIAN_FRONTEND=noninteractive", "apt-get", "install", "-y", *paths)
-        else:
-            execute(container, "dnf", "install", "-y", *paths)
+        install_native(container, target, paths)
     result = {str(path.relative_to(output)): sha256(path) for path in destination.iterdir()}
     return result
 
@@ -176,18 +181,37 @@ def reuse(container, target, unit):
 
 def main():
     target = json.loads(os.environ["TARGET"])
+    phase = os.environ["CHAIN_PHASE"]
     output = Path("artifacts") / target["id"]
-    output.mkdir(parents=True)
-    manifest = {"target": target, "units": [], "files": {}}
+    output.mkdir(parents=True, exist_ok=phase == "second")
+    manifest = (read_json(output / "manifest.json") if phase == "second"
+                else {"target": target, "units": [], "files": {}})
+    units = target["units"]
+    midpoint = (len(units) + 1) // 2
+    if phase == "second":
+        assert len(manifest["units"]) == midpoint, "incomplete first chain job"
+        units = units[midpoint:]
+    elif target["emulated"]:
+        units = units[:midpoint]
     Path("work").mkdir()
     shutil.copytree("keys", "work/keys")
     container = "wave-chain"
-    failed = set()
+    failed = {item["unit"]["package"] for item in manifest["units"] if item["state"] != "succeeded"}
     try:
         run("docker", "run", "-d", "--name", container, "--platform", target["platform"],
-            "-v", str(Path("work").resolve()) + ":/work", target["image"], "sleep", "infinity")
+            "-v", str(Path("work").resolve()) + ":/work", "-v", str(output.resolve()) + ":/previous:ro",
+            target["image"], "sleep", "infinity")
         setup(container, target)
-        for unit in target["units"]:
+        for item in manifest["units"]:
+            if item["state"] == "succeeded":
+                unit = item["unit"]
+                if unit["action"] == "reuse":
+                    reuse(container, target, unit)
+                else:
+                    paths = ["/previous/" + file for file in manifest["files"]
+                             if Path(file).parts[0] == unit["package"]]
+                    install_native(container, target, paths)
+        for unit in units:
             started = time.monotonic()
             state = "skipped"
             if not (set(unit["declaration"]["depends_on"]) & failed):

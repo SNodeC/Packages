@@ -1,0 +1,54 @@
+name: Target chain
+on:
+  workflow_call:
+    inputs:
+      target:
+        type: string
+        required: true
+      callback_url:
+        type: string
+permissions:
+  contents: read
+env:
+  TARGET: ${{ inputs.target }}
+  CALLBACK_URL: ${{ inputs.callback_url }}
+jobs:
+  first:
+    runs-on: ${{ fromJSON(inputs.target).runner }}
+    env:
+      CHAIN_PHASE: first
+    steps:
+      - &checkout
+        uses: actions/checkout@v4
+      - &qemu
+        if: fromJSON(inputs.target).emulated
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu-user-static binfmt-support
+          sudo update-binfmts --enable
+      - &chain
+        env:
+          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
+        run: python3 tools/chain.py
+      - &upload
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ fromJSON(inputs.target).id }}
+          path: artifacts/${{ fromJSON(inputs.target).id }}
+          overwrite: true
+  second:
+    needs: first
+    if: ${{ !cancelled() && fromJSON(inputs.target).emulated && fromJSON(inputs.target).units[1] != null }}
+    runs-on: ${{ fromJSON(inputs.target).runner }}
+    env:
+      CHAIN_PHASE: second
+    steps:
+      - *checkout
+      - uses: actions/download-artifact@v4
+        with:
+          name: ${{ fromJSON(inputs.target).id }}
+          path: artifacts/${{ fromJSON(inputs.target).id }}
+      - *qemu
+      - *chain
+      - *upload

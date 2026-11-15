@@ -41,24 +41,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
-    runs-on: ${{ matrix.runner }}
     name: chain (${{ matrix.id }})
-    steps:
-      - uses: actions/checkout@v4
-      - if: matrix.emulated
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y qemu-user-static binfmt-support
-          sudo update-binfmts --enable
-      - env:
-          TARGET: ${{ toJSON(matrix) }}
-          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
-        run: python3 tools/chain.py
-      - if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ matrix.id }}
-          path: artifacts/${{ matrix.id }}
+    uses: ./.github/workflows/chain.yml
+    with:
+      target: ${{ toJSON(matrix) }}
+      callback_url: ${{ inputs.callback_url }}
+    secrets: inherit
   publish:
     needs: [plan, chain]
     if: always()
