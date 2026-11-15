@@ -20,12 +20,6 @@ jobs:
     steps:
       - &checkout
         uses: actions/checkout@v4
-      - &qemu
-        if: fromJSON(inputs.target).emulated
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y qemu-user-static binfmt-support
-          sudo update-binfmts --enable
       - &chain
         env:
           CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
@@ -49,6 +43,5 @@ jobs:
         with:
           name: ${{ fromJSON(inputs.target).id }}
           path: artifacts/${{ fromJSON(inputs.target).id }}
-      - *qemu
       - *chain
       - *upload
