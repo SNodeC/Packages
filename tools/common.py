@@ -31,6 +31,17 @@ def fetch(url):
     return result
 
 
+def owns_wave():
+    result = True
+    url = os.environ.get("PLAN_URL", "")
+    if url:
+        plan = json.loads(fetch(url))
+        assert plan["wave"] == os.environ["WAVE_ID"], "plan wave mismatch"
+        owner = plan["owner_run_id"]
+        result = type(owner) is int and owner == int(os.environ["GITHUB_RUN_ID"])
+    return result
+
+
 def signature(secret, timestamp, body):
     result = "sha256=" + hmac.new(secret.encode(), timestamp.encode() + b"." + body,
                                   hashlib.sha256).hexdigest()
@@ -40,6 +51,7 @@ def signature(secret, timestamp, body):
 def callback(scope, status, **fields):
     url = os.environ.get("CALLBACK_URL", "")
     if url:
+        fields["run_id"] = os.environ["GITHUB_RUN_ID"]
         body = urllib.parse.urlencode(dict(scope=scope, status=status, **fields)).encode()
         timestamp = str(int(time.time()))
         request = urllib.request.Request(url, body, headers={
@@ -71,4 +83,5 @@ def sha256(path):
 
 
 if __name__ == "__main__":
-    callback("wave", "finished", run_id=os.environ["GITHUB_RUN_ID"], conclusion=os.environ["CONCLUSION"])
+    if owns_wave():
+        callback("wave", "finished", conclusion=os.environ["CONCLUSION"])

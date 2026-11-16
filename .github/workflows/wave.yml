@@ -23,6 +23,7 @@ env:
   WAVE_ID: ${{ inputs.wave_id }}
   CALLBACK_URL: ${{ inputs.callback_url }}
   FEED_BRANCH: ${{ inputs.feed_branch }}
+  PLAN_URL: ${{ inputs.plan_url }}
 jobs:
   plan:
     runs-on: ubuntu-24.04
@@ -32,7 +33,6 @@ jobs:
       - uses: actions/checkout@v4
       - id: plan
         env:
-          PLAN_URL: ${{ inputs.plan_url }}
           PLAN_JSON: ${{ inputs.plan_json }}
           CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
         run: python3 tools/plan.py

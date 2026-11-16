@@ -9,7 +9,7 @@ import subprocess
 import tarfile
 from pathlib import Path
 
-from common import callback, fetch, read_json, run, sha256, version, write_json
+from common import callback, fetch, owns_wave, read_json, run, sha256, version, write_json
 
 
 def retained(publications):
@@ -160,7 +160,6 @@ def publish():
         for item in data["units"]:
             if item["state"] == "succeeded" and item["unit"]["action"] == "build":
                 unit = item["unit"]
-                callback("unit", "started", build_id=unit["build_id"], phase="publish")
                 added.append(place(feed, data["target"], unit, manifest.parent / unit["package"], data["files"]))
     combined = ledger + added
     selected = retained(combined)
@@ -203,28 +202,33 @@ def publish():
     run("git", "add", "--", *paths, cwd=feed, env=environment)
     tree = capture("git", "write-tree", env=environment)
     commit = capture("git", "commit-tree", tree, "-m", "Publish wave " + os.environ["WAVE_ID"], env=environment)
-    run("git", "push", "--force", "origin", commit + ":refs/heads/" + branch)
+    if owns_wave():
+        run("git", "push", "--force", "origin", commit + ":refs/heads/" + branch)
+    else:
+        added = []
+        commit = None
     return added, commit
 
 
 def main():
-    os.umask(0o077)
-    Path("signing/gnupg").mkdir(parents=True, mode=0o700)
-    for environment, name in (("PACKAGES_GPG_PRIVATE_KEY", "gpg.asc"),
-                              ("OPENWRT_USIGN_PRIVATE_KEY", "usign.key"),
-                              ("OPENWRT_APK_PRIVATE_KEY", "apk.pem")):
-        Path("signing", name).write_text(os.environ[environment])
-    gpg("--import", "signing/gpg.asc")
-    try:
-        added, commit = publish()
-    except Exception as error:
-        for manifest in Path("artifacts").glob("*/manifest.json"):
-            for item in read_json(manifest)["units"]:
-                if item["state"] == "succeeded" and item["unit"]["action"] == "build":
-                    callback("unit", "failed", build_id=item["unit"]["build_id"], phase="publish", reason=str(error))
-        raise
-    for item in added:
-        callback("unit", "succeeded", build_id=item["unit"]["build_id"], phase="publish", feed_commit=commit)
+    if owns_wave():
+        os.umask(0o077)
+        Path("signing/gnupg").mkdir(parents=True, mode=0o700)
+        for environment, name in (("PACKAGES_GPG_PRIVATE_KEY", "gpg.asc"),
+                                  ("OPENWRT_USIGN_PRIVATE_KEY", "usign.key"),
+                                  ("OPENWRT_APK_PRIVATE_KEY", "apk.pem")):
+            Path("signing", name).write_text(os.environ[environment])
+        gpg("--import", "signing/gpg.asc")
+        try:
+            added, commit = publish()
+        except Exception as error:
+            for manifest in Path("artifacts").glob("*/manifest.json"):
+                for item in read_json(manifest)["units"]:
+                    if item["state"] == "succeeded" and item["unit"]["action"] == "build":
+                        callback("unit", "failed", build_id=item["unit"]["build_id"], phase="publish", reason=str(error))
+            raise
+        for item in added:
+            callback("unit", "succeeded", build_id=item["unit"]["build_id"], phase="publish", feed_commit=commit)
     return None
 
 

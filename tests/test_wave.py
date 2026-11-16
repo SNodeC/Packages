@@ -1,8 +1,11 @@
 import datetime
 import json
 import os
+import runpy
 import sys
 import unittest
+import urllib.error
+import urllib.parse
 from pathlib import Path
 from unittest.mock import Mock, patch
 
@@ -57,6 +60,39 @@ class WaveTests(unittest.TestCase):
         with patch.dict(os.environ, {"CALLBACK_URL": ""}), patch("urllib.request.urlopen") as request:
             callback("wave", "finished", conclusion="success")
         request.assert_not_called()
+        return None
+
+    def test_callbacks_take_run_identity_from_actions(self):
+        environment = dict(CALLBACK_URL="https://fixture.invalid/report", GITHUB_RUN_ID="42", CORECI_CALLBACK_SECRET="fixture")
+        with patch.dict(os.environ, environment), patch("urllib.request.urlopen") as request:
+            callback("unit", "started", build_id="unit", phase="build", run_id="foreign")
+        values = urllib.parse.parse_qs(request.call_args.args[0].data.decode())
+        self.assertEqual(values["run_id"], ["42"])
+        self.assertEqual(values["build_id"], ["unit"])
+        return None
+
+    def test_finished_callback_obeys_plan_owner_and_fails_closed(self):
+        environment = dict(PLAN_URL="https://fixture.invalid/plan", CALLBACK_URL="https://fixture.invalid/report",
+                           WAVE_ID="w1", GITHUB_RUN_ID="42", CONCLUSION="success", CORECI_CALLBACK_SECRET="fixture")
+        script = Path(__file__).resolve().parents[1] / "tools/common.py"
+        for owner in (None, 43, "42", True, 42):
+            with self.subTest(owner=owner), patch.dict(os.environ, environment), patch("urllib.request.urlopen") as request:
+                request.return_value.__enter__.return_value.read.return_value = json.dumps(dict(wave="w1", owner_run_id=owner)).encode()
+                runpy.run_path(str(script), run_name="__main__")
+                self.assertEqual(request.call_count, 2 if type(owner) is int and owner == 42 else 1)
+                if type(owner) is int and owner == 42:
+                    values = urllib.parse.parse_qs(request.call_args.args[0].data.decode())
+                    self.assertEqual(values, dict(scope=["wave"], status=["finished"], run_id=["42"], conclusion=["success"]))
+        for body in (b'{"wave":"w1"}', b'{"wave":"other","owner_run_id":42}', b'not-json'):
+            with self.subTest(body=body), patch.dict(os.environ, environment), patch("urllib.request.urlopen") as request:
+                request.return_value.__enter__.return_value.read.return_value = body
+                with self.assertRaises((AssertionError, KeyError, ValueError)):
+                    runpy.run_path(str(script), run_name="__main__")
+                self.assertEqual(request.call_count, 1)
+        with patch.dict(os.environ, environment), patch("urllib.request.urlopen", side_effect=urllib.error.URLError("offline")) as request:
+            with self.assertRaises(urllib.error.URLError):
+                runpy.run_path(str(script), run_name="__main__")
+            self.assertEqual(request.call_count, 1)
         return None
 
     def test_plan_uses_commit_declaration_and_dependency_order(self):

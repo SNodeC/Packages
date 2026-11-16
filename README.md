@@ -86,6 +86,8 @@ Versions are `<version>-<revision>~<codename>` for DEB, `<version>-<revision>.<d
 
 The `publish` environment holds `PACKAGES_GPG_PRIVATE_KEY`, `OPENWRT_USIGN_PRIVATE_KEY`, and `OPENWRT_APK_PRIVATE_KEY`, and permits `main` only. `CORECI_CALLBACK_SECRET` is a repository secret. Empty `callback_url` disables callbacks; otherwise reports use core-ci's timestamp/body HMAC. Dispatch inputs are `wave_id`, `plan_url`, `callback_url`, `feed_branch`, and optional base64 `plan_json` for manual runs. The `wave-<feed_branch>` concurrency group locks publication only, with cancellation disabled; independent manual builds can overlap. Plans with reused units resolve the feed branch through the checkout's Git transport to one immutable commit for all dependency reads, while publication merges into the latest feed branch under its lock.
 
+For a non-empty `plan_url`, only its first accepted `WaveStarted` owner may publish: the publisher re-fetches `owner_run_id` before pushing and otherwise succeeds without publishing or sending publisher/final callbacks. All wire callbacks include the Actions `run_id`; an empty `plan_url` preserves manual publication.
+
 ### CodexUI availability
 
 CodexUI requires Qt6 Widgets/Network ≥ 6.6, KF6Sonnet ≥ 6.13, and libgit2 from standard repositories.
