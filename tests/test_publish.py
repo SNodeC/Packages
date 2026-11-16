@@ -10,7 +10,7 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
 from common import sha256
-from publish import publish
+from publish import main, publish
 
 
 class PublicationTests(unittest.TestCase):
@@ -64,7 +64,9 @@ class PublicationTests(unittest.TestCase):
                             files={str(output.relative_to(artifact)): sha256(output)})
             (artifact / "manifest.json").write_text(json.dumps(manifest))
             environment = dict(FEED_BRANCH="feed-staging", CALLBACK_URL="", WAVE_ID=str(revision))
-            with patch.dict(os.environ, environment):
+            environment.update(PLAN_URL="https://fixture.invalid/plan" if publication == 2 else "", GITHUB_RUN_ID="42")
+            plan = json.dumps(dict(wave=str(revision), owner_run_id=42)).encode()
+            with patch.dict(os.environ, environment), patch("common.fetch", return_value=plan):
                 publish()
             self.assertEqual(command("git", "--git-dir", str(work / "remote.git"), "rev-list", "--count", "feed-staging"), "1")
             command("gpgv", "--keyring", str(Path("keys/fixture.gpg").resolve()),
@@ -87,6 +89,20 @@ class PublicationTests(unittest.TestCase):
                 self.assertEqual(len(list(Path("feed-work/apt/pool").rglob("*.deb"))), 2)
             shutil.rmtree("feed-work")
             Path("feed.index").unlink()
+            if publication == 4:
+                before = command("git", "--git-dir", str(work / "remote.git"), "rev-parse", "feed-staging")
+                environment["PLAN_URL"] = "https://fixture.invalid/plan"
+                foreign = json.dumps(dict(wave=str(revision), owner_run_id=43)).encode()
+                with patch.dict(os.environ, environment), patch("common.fetch", return_value=foreign) as latest, \
+                        patch("publish.callback") as report:
+                    added, commit = publish()
+                self.assertEqual(added, [])
+                self.assertIsNone(commit)
+                latest.assert_called_once_with(environment["PLAN_URL"])
+                report.assert_not_called()
+                self.assertEqual(command("git", "--git-dir", str(work / "remote.git"), "rev-parse", "feed-staging"), before)
+                shutil.rmtree("feed-work")
+                Path("feed.index").unlink()
             output.unlink()
         shutil.rmtree("artifacts")
         artifact = Path("artifacts/fedora-44-x86_64")
@@ -118,6 +134,24 @@ class PublicationTests(unittest.TestCase):
                       str(directory / output.name)))
         self.assertEqual(command("git", "--git-dir", str(work / "remote.git"), "rev-list", "--count", "feed-staging"), "1")
         command("gpgconf", "--homedir", home, "--kill", "gpg-agent")
+        return None
+
+    def test_non_owner_main_skips_signing_and_callbacks(self):
+        root = Path("/tmp/codex/build/Packages/tests")
+        root.mkdir(parents=True, exist_ok=True)
+        environment = dict(PLAN_URL="https://fixture.invalid/plan", WAVE_ID="w1", GITHUB_RUN_ID="42")
+        with tempfile.TemporaryDirectory(dir=root) as temporary:
+            original = Path.cwd()
+            os.chdir(temporary)
+            try:
+                with patch.dict(os.environ, environment), \
+                        patch("common.fetch", return_value=b'{"wave":"w1","owner_run_id":43}'), \
+                        patch("publish.callback") as report:
+                    main()
+                report.assert_not_called()
+                self.assertEqual(list(Path.cwd().iterdir()), [])
+            finally:
+                os.chdir(original)
         return None
 
 

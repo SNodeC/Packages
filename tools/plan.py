@@ -50,8 +50,7 @@ def main():
     write_json("plan.json", plan)
     with open(os.environ["GITHUB_OUTPUT"], "a") as output:
         output.write("matrix=" + json.dumps({"include": matrix}, separators=(",", ":")) + "\n")
-    callback("wave", "started", run_id=os.environ["GITHUB_RUN_ID"],
-             run_attempt=os.environ["GITHUB_RUN_ATTEMPT"])
+    callback("wave", "started", run_attempt=os.environ["GITHUB_RUN_ATTEMPT"])
     return None
 
 
