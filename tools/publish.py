@@ -137,6 +137,11 @@ def place(feed, target, unit, source, verified):
     return result
 
 
+def publication_identity(unit, target):
+    result = (unit["package"], target["id"], unit["version"], unit["revision"])
+    return result
+
+
 def publish():
     feed = Path("feed-work")
     feed.mkdir()
@@ -144,13 +149,17 @@ def publish():
     assert branch in ("feed", "feed-staging")
     exists = subprocess.run(["git", "ls-remote", "--exit-code", "--heads", "origin", branch], capture_output=True)
     assert exists.returncode in (0, 2), exists.stderr.decode()
+    commit = None
     if exists.returncode == 0:
         run("git", "fetch", "--depth=1", "origin", branch)
+        commit = capture("git", "rev-parse", "FETCH_HEAD")
         archive = subprocess.check_output(["git", "archive", "FETCH_HEAD"])
         with tarfile.open(fileobj=io.BytesIO(archive)) as contents:
             contents.extractall(feed, filter="data")
     ledger = read_json(feed / "publications.json") if (feed / "publications.json").exists() else []
     added = []
+    published = []
+    identities = {publication_identity(item["unit"], item["target"]) for item in ledger}
     for manifest in sorted(Path("artifacts").glob("*/manifest.json")):
         data = read_json(manifest)
         for file, digest in data["files"].items():
@@ -160,54 +169,61 @@ def publish():
         for item in data["units"]:
             if item["state"] == "succeeded" and item["unit"]["action"] == "build":
                 unit = item["unit"]
-                added.append(place(feed, data["target"], unit, manifest.parent / unit["package"], data["files"]))
-    combined = ledger + added
-    selected = retained(combined)
-    live = {file for item in selected for file in item["files"]}
-    for file in {file for item in combined for file in item["files"]} - live:
-        (feed / file).unlink()
-    shutil.copytree("keys", feed / "keys", dirs_exist_ok=True)
-    write_json(feed / "publications.json", selected)
-    touched = {item["target"]["id"]: item["target"] for item in added}
-    suites = set()
-    tools = None
-    for target in touched.values():
-        family = target["family"]
-        if family == "deb":
-            suites.add(target["codename"])
-        elif family == "rpm":
-            directory = feed / "rpm" / target["distribution"] / target["release"] / target["arch"]
-            run("createrepo_c", str(directory))
-            gpg("--armor", "--detach-sign", "--output", str(directory / "repodata/repomd.xml.asc"),
-                str(directory / "repodata/repomd.xml"))
-        else:
-            if tools is None:
-                tools = openwrt_tools(read_json("ci/targets.json")["targets"])
-            directory = feed / "openwrt" / target["release"] / target["arch"]
-            if family == "ipk":
-                ipk_index(directory)
-                run(str(tools / "usign"), "-S", "-s", "signing/usign.key", "-m", str(directory / "Packages"),
-                    "-x", str(directory / "Packages.sig"))
+                identity = publication_identity(unit, data["target"])
+                reason = "already published" if identity in identities else ""
+                if not reason:
+                    added.append(place(feed, data["target"], unit, manifest.parent / unit["package"], data["files"]))
+                    identities.add(identity)
+                published.append(dict(unit=unit, reason=reason))
+    if added:
+        combined = ledger + added
+        selected = retained(combined)
+        live = {file for item in selected for file in item["files"]}
+        for file in {file for item in combined for file in item["files"]} - live:
+            (feed / file).unlink()
+        shutil.copytree("keys", feed / "keys", dirs_exist_ok=True)
+        write_json(feed / "publications.json", selected)
+        touched = {item["target"]["id"]: item["target"] for item in added}
+        suites = set()
+        tools = None
+        for target in touched.values():
+            family = target["family"]
+            if family == "deb":
+                suites.add(target["codename"])
+            elif family == "rpm":
+                directory = feed / "rpm" / target["distribution"] / target["release"] / target["arch"]
+                run("createrepo_c", str(directory))
+                gpg("--armor", "--detach-sign", "--output", str(directory / "repodata/repomd.xml.asc"),
+                    str(directory / "repodata/repomd.xml"))
             else:
-                run(str(tools / "apk"), "mkndx", "--allow-untrusted", "--sign-key", str(Path("signing/apk.pem").resolve()),
-                    "--output", "packages.adb", *[p.name for p in sorted(directory.glob("*.apk"))], cwd=directory)
-    for codename in sorted(suites):
-        apt_indices(feed, selected, codename)
-    environment = dict(os.environ, GIT_DIR=str(Path(".git").resolve()), GIT_WORK_TREE=str(feed.resolve()),
-                       GIT_INDEX_FILE=str(Path("feed.index").resolve()), GIT_AUTHOR_NAME="github-actions[bot]",
-                       GIT_AUTHOR_EMAIL="41898282+github-actions[bot]@users.noreply.github.com",
-                       GIT_COMMITTER_NAME="github-actions[bot]", GIT_COMMITTER_EMAIL="41898282+github-actions[bot]@users.noreply.github.com")
-    run("git", "read-tree", "--empty", env=environment)
-    paths = [path.name for path in feed.iterdir()]
-    run("git", "add", "--", *paths, cwd=feed, env=environment)
-    tree = capture("git", "write-tree", env=environment)
-    commit = capture("git", "commit-tree", tree, "-m", "Publish wave " + os.environ["WAVE_ID"], env=environment)
+                if tools is None:
+                    tools = openwrt_tools(read_json("ci/targets.json")["targets"])
+                directory = feed / "openwrt" / target["release"] / target["arch"]
+                if family == "ipk":
+                    ipk_index(directory)
+                    run(str(tools / "usign"), "-S", "-s", "signing/usign.key", "-m", str(directory / "Packages"),
+                        "-x", str(directory / "Packages.sig"))
+                else:
+                    run(str(tools / "apk"), "mkndx", "--allow-untrusted", "--sign-key", str(Path("signing/apk.pem").resolve()),
+                        "--output", "packages.adb", *[p.name for p in sorted(directory.glob("*.apk"))], cwd=directory)
+        for codename in sorted(suites):
+            apt_indices(feed, selected, codename)
+        environment = dict(os.environ, GIT_DIR=str(Path(".git").resolve()), GIT_WORK_TREE=str(feed.resolve()),
+                           GIT_INDEX_FILE=str(Path("feed.index").resolve()), GIT_AUTHOR_NAME="github-actions[bot]",
+                           GIT_AUTHOR_EMAIL="41898282+github-actions[bot]@users.noreply.github.com",
+                           GIT_COMMITTER_NAME="github-actions[bot]", GIT_COMMITTER_EMAIL="41898282+github-actions[bot]@users.noreply.github.com")
+        run("git", "read-tree", "--empty", env=environment)
+        paths = [path.name for path in feed.iterdir()]
+        run("git", "add", "--", *paths, cwd=feed, env=environment)
+        tree = capture("git", "write-tree", env=environment)
+        commit = capture("git", "commit-tree", tree, "-m", "Publish wave " + os.environ["WAVE_ID"], env=environment)
     if owns_wave():
-        run("git", "push", "--force", "origin", commit + ":refs/heads/" + branch)
+        if added:
+            run("git", "push", "--force", "origin", commit + ":refs/heads/" + branch)
     else:
-        added = []
+        published = []
         commit = None
-    return added, commit
+    return published, commit
 
 
 def main():
@@ -220,15 +236,17 @@ def main():
             Path("signing", name).write_text(os.environ[environment])
         gpg("--import", "signing/gpg.asc")
         try:
-            added, commit = publish()
+            published, commit = publish()
         except Exception as error:
             for manifest in Path("artifacts").glob("*/manifest.json"):
                 for item in read_json(manifest)["units"]:
                     if item["state"] == "succeeded" and item["unit"]["action"] == "build":
                         callback("unit", "failed", build_id=item["unit"]["build_id"], phase="publish", reason=str(error))
             raise
-        for item in added:
-            callback("unit", "succeeded", build_id=item["unit"]["build_id"], phase="publish", feed_commit=commit)
+        for item in published:
+            print(item["unit"]["build_id"] + ": " + (item["reason"] or "published"), flush=True)
+            callback("unit", "succeeded", build_id=item["unit"]["build_id"], phase="publish", feed_commit=commit,
+                     reason=item["reason"])
     return None
 
 

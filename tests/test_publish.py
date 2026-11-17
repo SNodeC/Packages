@@ -67,7 +67,17 @@ class PublicationTests(unittest.TestCase):
             environment.update(PLAN_URL="https://fixture.invalid/plan" if publication == 2 else "", GITHUB_RUN_ID="42")
             plan = json.dumps(dict(wave=str(revision), owner_run_id=42)).encode()
             with patch.dict(os.environ, environment), patch("common.fetch", return_value=plan):
-                publish()
+                published, commit = publish()
+            head = command("git", "--git-dir", str(work / "remote.git"), "rev-parse", "feed-staging")
+            self.assertEqual(commit, head)
+            self.assertEqual(published, [dict(unit=unit, reason="already published" if publication == 4 else "")])
+            snapshot = {str(path.relative_to("feed-work")): path.read_bytes()
+                        for path in Path("feed-work").rglob("*") if path.is_file()}
+            if publication == 4:
+                self.assertEqual(head, previous_head)
+                self.assertEqual(snapshot, previous_snapshot)
+                self.assertFalse(Path("feed.index").exists())
+            previous_head, previous_snapshot = head, snapshot
             self.assertEqual(command("git", "--git-dir", str(work / "remote.git"), "rev-list", "--count", "feed-staging"), "1")
             command("gpgv", "--keyring", str(Path("keys/fixture.gpg").resolve()),
                     "feed-work/apt/dists/trixie/Release.gpg", "feed-work/apt/dists/trixie/Release")
@@ -75,7 +85,7 @@ class PublicationTests(unittest.TestCase):
             ledger = json.loads(Path("feed-work/publications.json").read_text())
             self.assertNotIn("feed_commit", ledger[-1]["target"])
             self.assertEqual([entry["unit"]["revision"] for entry in ledger], list(range(max(1, revision - 1), revision + 1)))
-            self.assertEqual(ledger[-1]["unit"]["build_id"], str(publication))
+            self.assertEqual(ledger[-1]["unit"]["build_id"], str(min(publication, 3)))
             for entry in ledger:
                 for file, digest in entry["files"].items():
                     self.assertEqual(sha256(Path("feed-work") / file), digest)
@@ -88,7 +98,7 @@ class PublicationTests(unittest.TestCase):
                 self.assertNotIn("Version: 1.0.0-1~trixie", text)
                 self.assertEqual(len(list(Path("feed-work/apt/pool").rglob("*.deb"))), 2)
             shutil.rmtree("feed-work")
-            Path("feed.index").unlink()
+            Path("feed.index").unlink(missing_ok=True)
             if publication == 4:
                 before = command("git", "--git-dir", str(work / "remote.git"), "rev-parse", "feed-staging")
                 environment["PLAN_URL"] = "https://fixture.invalid/plan"
@@ -102,9 +112,10 @@ class PublicationTests(unittest.TestCase):
                 report.assert_not_called()
                 self.assertEqual(command("git", "--git-dir", str(work / "remote.git"), "rev-parse", "feed-staging"), before)
                 shutil.rmtree("feed-work")
-                Path("feed.index").unlink()
-            output.unlink()
-        shutil.rmtree("artifacts")
+                Path("feed.index").unlink(missing_ok=True)
+            if publication != 4:
+                output.unlink()
+        repeated_unit = unit
         artifact = Path("artifacts/fedora-44-x86_64")
         (artifact / "fixture").mkdir(parents=True)
         Path("fixture.spec").write_text("Name: fixture\nVersion: 1.0.0\nRelease: 1.fc44\n"
@@ -124,7 +135,14 @@ class PublicationTests(unittest.TestCase):
         fingerprint = next(line.split(":")[9] for line in command("gpg", "--homedir", home,
                            "--with-colons", "--list-keys").splitlines() if line.startswith("fpr:"))
         with patch.dict(os.environ, dict(FEED_BRANCH="feed-staging", CALLBACK_URL="", WAVE_ID="rpm", GPG_FINGERPRINT=fingerprint)):
-            publish()
+            published, commit = publish()
+        self.assertEqual(published, [dict(unit=repeated_unit, reason="already published"), dict(unit=unit, reason="")])
+        self.assertNotEqual(commit, previous_head)
+        mixed_ledger = json.loads(Path("feed-work/publications.json").read_text())
+        for entry in ledger:
+            self.assertIn(entry, mixed_ledger)
+            for file, digest in entry["files"].items():
+                self.assertEqual(sha256(Path("feed-work") / file), digest)
         directory = Path("feed-work/rpm/fedora/44/x86_64")
         command("gpgv", "--keyring", str(Path("keys/fixture.gpg").resolve()),
                 str(directory / "repodata/repomd.xml.asc"), str(directory / "repodata/repomd.xml"))
@@ -134,6 +152,25 @@ class PublicationTests(unittest.TestCase):
                       str(directory / output.name)))
         self.assertEqual(command("git", "--git-dir", str(work / "remote.git"), "rev-list", "--count", "feed-staging"), "1")
         command("gpgconf", "--homedir", home, "--kill", "gpg-agent")
+        return None
+
+    def test_already_published_success_callback_uses_current_build_and_commit(self):
+        root = Path("/tmp/codex/build/Packages/tests")
+        root.mkdir(parents=True, exist_ok=True)
+        environment = dict(PLAN_URL="", PACKAGES_GPG_PRIVATE_KEY="fixture", OPENWRT_USIGN_PRIVATE_KEY="fixture",
+                           OPENWRT_APK_PRIVATE_KEY="fixture")
+        with tempfile.TemporaryDirectory(dir=root) as temporary:
+            original = Path.cwd()
+            os.chdir(temporary)
+            try:
+                with patch.dict(os.environ, environment), patch("publish.gpg"), patch("publish.os.umask"), \
+                        patch("publish.publish", return_value=([dict(unit=dict(build_id="current"),
+                              reason="already published")], "a" * 40)), patch("publish.callback") as report:
+                    main()
+                report.assert_called_once_with("unit", "succeeded", build_id="current", phase="publish",
+                                               feed_commit="a" * 40, reason="already published")
+            finally:
+                os.chdir(original)
         return None
 
     def test_non_owner_main_skips_signing_and_callbacks(self):
