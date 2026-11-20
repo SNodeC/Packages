@@ -170,11 +170,11 @@ class ChainTests(unittest.TestCase):
                 work = Path(temporary)
 
                 def produce(container, planned, unit, output):
-                    if failing and unit["package"] == "a":
-                        raise RuntimeError("fixture failure")
                     package = output / unit["package"] / (unit["package"] + ".deb")
                     package.parent.mkdir()
                     package.write_bytes(b"fixture package")
+                    if failing and unit["package"] == "a":
+                        raise RuntimeError("fixture failure")
                     result = {str(package.relative_to(output)): chain.sha256(package)}
                     return result
 
@@ -203,6 +203,8 @@ class ChainTests(unittest.TestCase):
                     self.assertEqual(set(manifest["files"]), {name + "/" + name + ".deb" for name in names if not failing or name != "a"})
                     for name, digest in manifest["files"].items():
                         self.assertEqual(chain.sha256(Path("artifacts/target") / name), digest)
+                    self.assertEqual({str(path.relative_to("artifacts/target")) for path in Path("artifacts/target").glob("*/*")
+                                      if path.is_file()}, set(manifest["files"]))
                 finally:
                     os.chdir(original)
         return None

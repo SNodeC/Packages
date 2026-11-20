@@ -1,6 +1,5 @@
 name: Package publication
 on:
-  pull_request:
   workflow_dispatch:
     inputs:
       publication_id:
@@ -32,7 +31,6 @@ env:
   PLAN_JSON: ${{ inputs.plan_json }}
 jobs:
   plan:
-    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-24.04
     outputs:
       matrix: ${{ steps.plan.outputs.matrix }}

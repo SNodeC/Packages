@@ -271,19 +271,24 @@ def main():
     publication_items(plan, {target["id"]: target for target in read_json("ci/targets.json")["targets"]})
     if owns_publication():
         try:
-            os.umask(0o077)
-            Path("signing/gnupg").mkdir(parents=True, mode=0o700)
-            for environment, name in (("PACKAGES_GPG_PRIVATE_KEY", "gpg.asc"),
-                                      ("OPENWRT_USIGN_PRIVATE_KEY", "usign.key"),
-                                      ("OPENWRT_APK_PRIVATE_KEY", "apk.pem")):
-                Path("signing", name).write_text(os.environ[environment])
-            gpg("--import", "signing/gpg.asc")
+            try:
+                os.umask(0o077)
+                Path("signing/gnupg").mkdir(parents=True, mode=0o700)
+                for environment, name in (("PACKAGES_GPG_PRIVATE_KEY", "gpg.asc"),
+                                          ("OPENWRT_USIGN_PRIVATE_KEY", "usign.key"),
+                                          ("OPENWRT_APK_PRIVATE_KEY", "apk.pem")):
+                    Path("signing", name).write_text(os.environ[environment])
+                gpg("--import", "signing/gpg.asc")
+            except Exception as error:
+                raise PublicationError("signing", str(error)) from error
             published, commit = publish(plan)
         except Exception as error:
+            failure = getattr(error, "failure", "other")
             for item in plan["items"]:
                 for unit in item["units"]:
+                    print(f'{unit["build_id"]}: failure={failure}: {error}', flush=True)
                     callback("unit", "failed", build_id=unit["build_id"], phase="publish", reason=str(error),
-                             failure=getattr(error, "failure", "other"))
+                             failure=failure)
             raise
         for item in published:
             print(item["unit"]["build_id"] + ": " + (item["reason"] or "published"), flush=True)

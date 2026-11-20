@@ -270,6 +270,9 @@ def main():
                     print(f'Report failed for {unit["build_id"]}: {type(report_error).__name__}', flush=True)
         raise
     finally:
+        for package in output.glob("*/*"):
+            if package.is_file() and str(package.relative_to(output)) not in manifest["files"]:
+                package.unlink()
         write_json(output / "manifest.json", manifest)
         if "GITHUB_OUTPUT" in os.environ:
             with open(os.environ["GITHUB_OUTPUT"], "a") as result:

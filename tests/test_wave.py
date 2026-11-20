@@ -10,7 +10,7 @@ from pathlib import Path
 from unittest.mock import Mock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
-from common import callback, owns_publication, signature, version
+from common import callback, load_plan, signature, version
 from plan import prepare, publication_items
 from publish import release, retained
 
@@ -60,6 +60,17 @@ class WaveTests(unittest.TestCase):
         with patch.dict(os.environ, {"CALLBACK_URL": ""}), patch("urllib.request.urlopen") as request:
             callback("wave", "finished", conclusion="success")
         request.assert_not_called()
+        return None
+
+    def test_url_is_authoritative_and_never_falls_back_to_inline(self):
+        environment = dict(PLAN_URL="https://fixture.invalid/plan", PLAN_JSON="invalid-base64",
+                           WAVE_ID="w1", FEED_BRANCH="feed-staging")
+        body = b'{"wave":"w1","feed_branch":"feed-staging"}'
+        with patch.dict(os.environ, environment), patch("common.fetch", return_value=body) as request:
+            self.assertEqual(load_plan()["wave"], "w1")
+        request.assert_called_once_with(environment["PLAN_URL"])
+        with patch.dict(os.environ, environment), patch("common.fetch", side_effect=OSError("offline")), self.assertRaises(OSError):
+            load_plan()
         return None
 
     def test_callbacks_take_run_identity_from_actions(self):

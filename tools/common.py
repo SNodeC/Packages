@@ -34,7 +34,8 @@ def fetch(url):
 
 def load_plan():
     inline = os.environ.get("PLAN_JSON", "")
-    result = json.loads(base64.b64decode(inline, validate=True) if inline else fetch(os.environ["PLAN_URL"]))
+    url = os.environ.get("PLAN_URL", "")
+    result = json.loads(fetch(url) if url else base64.b64decode(inline, validate=True))
     scope = "publication" if "PUBLICATION_ID" in os.environ else "wave"
     assert result[scope] == os.environ[scope.upper() + "_ID"], "plan identity mismatch"
     assert result["feed_branch"] == os.environ["FEED_BRANCH"] in ("feed", "feed-staging")
