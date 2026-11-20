@@ -1,6 +1,5 @@
 import json
 import os
-import shutil
 import subprocess
 import sys
 import tempfile
@@ -94,7 +93,7 @@ class ChainTests(unittest.TestCase):
                         with self.assertRaisesRegex((RuntimeError,), "setup:|unavailable"):
                             chain.main()
                     manifest = json.loads(Path("artifacts/target/manifest.json").read_text())
-                    failed = [item for item in manifest["units"] if item["state"] == "failed"]
+                    failed = [item for item in manifest["units"] if item["state"] == "failed" and item["unit"]["action"] == "build"]
                     names = ["c"] if failure == "reuse" else ["a", "c"]
                     reason = {"container": "setup: container: manifest unknown",
                               "dependencies": "setup: dependencies: repository unavailable",
@@ -109,7 +108,7 @@ class ChainTests(unittest.TestCase):
                     os.chdir(original)
         return None
 
-    def test_emulated_setup_failure_reports_second_phase_without_repeating_callbacks(self):
+    def test_emulated_setup_failure_reports_all_units_in_one_job(self):
         units = [dict(package=name, build_id=name, action="build", declaration=dict(depends_on=[]))
                  for name in ("a", "b", "c")]
         target = dict(id="target", platform="linux/riscv64", image="fixture", emulated=True, units=units)
@@ -127,13 +126,8 @@ class ChainTests(unittest.TestCase):
                     with self.assertRaisesRegex(RuntimeError, "setup: emulation: runner network unavailable"):
                         chain.main()
                     self.assertEqual([call.kwargs["build_id"] for call in report.call_args_list], ["a", "b", "c"])
-                with patch.dict(os.environ, TARGET=json.dumps(target), CHAIN_PHASE="second"), \
-                        patch("chain.run") as run, patch("chain.subprocess.run"), \
-                        patch("chain.callback") as report:
-                    with self.assertRaisesRegex(AssertionError, "a, b, c"):
-                        chain.main()
-                    run.assert_not_called()
-                    report.assert_not_called()
+                manifest = json.loads(Path("artifacts/target/manifest.json").read_text())
+                self.assertEqual([item["state"] for item in manifest["units"]], ["failed"] * 3)
             finally:
                 os.chdir(original)
         return None
@@ -163,7 +157,7 @@ class ChainTests(unittest.TestCase):
                 os.chdir(original)
         return None
 
-    def test_split_handoff_preserves_packages_callbacks_and_dependency_failures(self):
+    def test_emulated_chain_preserves_packages_callbacks_and_dependency_failures(self):
         units = [dict(package=name, build_id=name, action="reuse" if name == "b" else "build",
                       declaration=dict(depends_on=dependencies))
                  for name, dependencies in (("a", []), ("b", ["a"]), ("c", []), ("d", ["b", "c"]))]
@@ -176,11 +170,11 @@ class ChainTests(unittest.TestCase):
                 work = Path(temporary)
 
                 def produce(container, planned, unit, output):
-                    if failing and unit["package"] == "a":
-                        raise RuntimeError("fixture failure")
                     package = output / unit["package"] / (unit["package"] + ".deb")
                     package.parent.mkdir()
                     package.write_bytes(b"fixture package")
+                    if failing and unit["package"] == "a":
+                        raise RuntimeError("fixture failure")
                     result = {str(package.relative_to(output)): chain.sha256(package)}
                     return result
 
@@ -188,34 +182,29 @@ class ChainTests(unittest.TestCase):
                     with patch("chain.run"), patch("chain.subprocess.run"), patch("chain.setup"), \
                             patch("chain.callback") as callback, patch("chain.build", side_effect=produce) as build, \
                             patch("chain.reuse") as reuse, patch("chain.install_native") as install:
-                        for phase in ("first", "second"):
-                            workspace = work / phase
-                            (workspace / "keys").mkdir(parents=True)
-                            if phase == "second":
-                                shutil.copytree(work / "first/artifacts", workspace / "artifacts")
-                            os.chdir(workspace)
-                            with patch.dict(os.environ, TARGET=json.dumps(target), CHAIN_PHASE=phase):
-                                if failing:
-                                    with self.assertRaises(AssertionError):
-                                        chain.main()
-                                else:
+                        (work / "keys").mkdir()
+                        os.chdir(work)
+                        with patch.dict(os.environ, TARGET=json.dumps(target)):
+                            if failing:
+                                with self.assertRaises(AssertionError):
                                     chain.main()
-                            if phase == "first":
-                                self.assertEqual(len(json.loads(Path("artifacts/target/manifest.json").read_text())["units"]), 1)
+                            else:
+                                chain.main()
                     names = ["a", "c"] if failing else ["a", "c", "d"]
                     self.assertEqual([call.args[2]["package"] for call in build.call_args_list], names)
                     expected = ([("started", "a"), ("failed", "a"), ("started", "c"), ("succeeded", "c")]
                                 if failing else [(status, name) for name in names for status in ("started", "succeeded")])
                     self.assertEqual([(call.args[1], call.kwargs["build_id"]) for call in callback.call_args_list], expected)
                     self.assertEqual(reuse.call_count, 0 if failing else 1)
-                    self.assertEqual([call.args[2] for call in install.call_args_list],
-                                     [] if failing else [["/previous/a/a.deb"]])
+                    install.assert_not_called()
                     manifest = json.loads(Path("artifacts/target/manifest.json").read_text())
                     self.assertEqual([item["state"] for item in manifest["units"]],
                                      ["failed", "skipped", "succeeded", "skipped"] if failing else ["succeeded"] * 4)
                     self.assertEqual(set(manifest["files"]), {name + "/" + name + ".deb" for name in names if not failing or name != "a"})
                     for name, digest in manifest["files"].items():
                         self.assertEqual(chain.sha256(Path("artifacts/target") / name), digest)
+                    self.assertEqual({str(path.relative_to("artifacts/target")) for path in Path("artifacts/target").glob("*/*")
+                                      if path.is_file()}, set(manifest["files"]))
                 finally:
                     os.chdir(original)
         return None
@@ -230,23 +219,23 @@ class ChainTests(unittest.TestCase):
         execute.assert_called_once_with("container", "apt-get", "install", "-y", "a=1.2.3-4~trixie", "a-dev=1.2.3-4~trixie")
         return None
 
-    def test_incomplete_handoff_does_not_repeat_unknown_builds(self):
-        target = dict(id="target", emulated=True, units=[{}, {}])
+    def test_no_packages_reports_empty_upload_output_and_skips_failed_dependents(self):
+        units = [dict(package=name, build_id=name, action="build", declaration=dict(depends_on=depends))
+                 for name, depends in (("a", []), ("b", ["a"]))]
+        target = dict(id="target", emulated=False, units=units)
         root = Path("/tmp/codex/build/Packages/tests")
         root.mkdir(parents=True, exist_ok=True)
         original = Path.cwd()
         with tempfile.TemporaryDirectory(dir=root) as temporary:
             os.chdir(temporary)
             try:
-                output = Path("artifacts/target")
-                output.mkdir(parents=True)
-                chain.write_json(output / "manifest.json", dict(target=target, units=[], files={}))
-                with patch.dict(os.environ, TARGET=json.dumps(target), CHAIN_PHASE="second"), \
-                        patch("chain.build") as build, patch("chain.callback") as callback:
-                    with self.assertRaisesRegex(AssertionError, "incomplete first chain job"):
+                with patch.dict(os.environ, TARGET=json.dumps(target), GITHUB_OUTPUT="output"), \
+                        patch("chain.build") as build, patch("chain.subprocess.run"), patch("chain.callback") as callback:
+                    with self.assertRaises(FileNotFoundError):
                         chain.main()
                 build.assert_not_called()
-                callback.assert_not_called()
+                self.assertEqual([call.kwargs["build_id"] for call in callback.call_args_list], ["a"])
+                self.assertEqual(Path("output").read_text(), "packages=false\n")
             finally:
                 os.chdir(original)
         return None

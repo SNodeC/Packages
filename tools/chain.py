@@ -4,7 +4,6 @@ import os
 import shutil
 import subprocess
 import tarfile
-import time
 from pathlib import Path
 
 from common import callback, fetch, read_json, run, sha256, version, write_json
@@ -132,12 +131,12 @@ def build(container, target, unit, output):
     packages = sorted((Path("work/output") / unit["package"]).glob("*" + suffix))
     assert packages, "hook produced no packages"
     destination = output / unit["package"]
-    destination.mkdir()
-    for package in packages:
-        shutil.copy2(package, destination / package.name)
     if not openwrt:
         paths = ["/work/output/" + unit["package"] + "/" + package.name for package in packages]
         install_native(container, target, paths)
+    destination.mkdir()
+    for package in packages:
+        shutil.copy2(package, destination / package.name)
     result = {str(path.relative_to(output)): sha256(path) for path in destination.iterdir()}
     return result
 
@@ -205,24 +204,12 @@ def reuse(container, target, unit):
 
 def main():
     target = json.loads(os.environ["TARGET"])
-    phase = os.environ["CHAIN_PHASE"]
     output = Path("artifacts") / target["id"]
-    output.mkdir(parents=True, exist_ok=phase == "second")
-    manifest = (read_json(output / "manifest.json") if phase == "second"
-                else {"target": target, "units": [], "files": {}})
+    output.mkdir(parents=True)
+    manifest = {"target": target, "units": [], "files": {}}
     units = target["units"]
-    if phase == "second":
-        recorded = {item["unit"]["package"] for item in manifest["units"]}
-        assert manifest["units"] and (manifest["units"][0]["unit"] == units[0] or
-                                      all(unit["package"] in recorded for unit in units if unit["action"] == "build")), \
-            "incomplete first chain job"
-        units = [unit for unit in units[1:] if unit["package"] not in recorded]
-        if not any(unit["action"] == "build" for unit in units):
-            units = []
-    elif target["emulated"]:
-        units = units[:1]
     container = "wave-chain"
-    failed = {item["unit"]["package"] for item in manifest["units"] if item["state"] != "succeeded"}
+    failed = set()
     step = "workspace"
     try:
         if units:
@@ -233,22 +220,11 @@ def main():
                 setup_run("emulation", "sudo", "apt-get", "install", "-y", "qemu-user-static", "binfmt-support")
                 setup_run("emulation", "sudo", "update-binfmts", "--enable")
             setup_run("container", "docker", "run", "-d", "--name", container, "--platform", target["platform"],
-                      "-v", str(Path("work").resolve()) + ":/work", "-v", str(output.resolve()) + ":/previous:ro",
+                      "-v", str(Path("work").resolve()) + ":/work",
                       target["image"], "sleep", "infinity")
             step = "dependencies"
             setup(container, target)
-            for item in manifest["units"]:
-                if item["state"] == "succeeded":
-                    unit = item["unit"]
-                    step = "restore " + unit["package"]
-                    if unit["action"] == "reuse":
-                        reuse(container, target, unit)
-                    else:
-                        paths = ["/previous/" + file for file in manifest["files"]
-                                 if Path(file).parts[0] == unit["package"]]
-                        install_native(container, target, paths)
         for unit in units:
-            started = time.monotonic()
             state = "skipped"
             reason = ""
             if not (set(unit["declaration"]["depends_on"]) & failed):
@@ -271,27 +247,36 @@ def main():
                     print(f'{unit["package"]}: {reason}', flush=True)
             if state != "succeeded":
                 failed.add(unit["package"])
-            manifest["units"].append({"unit": unit, "state": state, "reason": reason, "seconds": round(time.monotonic() - started, 1)})
+            manifest["units"].append({"unit": unit, "state": state, "reason": reason})
             write_json(output / "manifest.json", manifest)
             if unit["action"] == "build" and state != "skipped":
                 step = "callback " + unit["package"]
                 callback("unit", state, build_id=unit["build_id"], phase="build",
-                         **({"artifact": target["id"]} if state == "succeeded" else {"reason": reason}))
+                         **({} if state == "succeeded" else {"reason": reason}))
     except Exception as error:
         reason = str(error) if isinstance(error, SetupError) else f"setup: {step}: {(str(error) or type(error).__name__).splitlines()[0]}"
         print(reason, flush=True)
         recorded = {item["unit"]["package"] for item in manifest["units"]}
         for unit in target["units"]:
-            if unit["action"] == "build" and unit["package"] not in recorded:
-                manifest["units"].append({"unit": unit, "state": "failed", "reason": reason, "seconds": 0})
+            if unit["package"] not in recorded:
+                skipped = bool(set(unit["declaration"]["depends_on"]) & failed)
+                failed.add(unit["package"])
+                manifest["units"].append({"unit": unit, "state": "skipped" if skipped else "failed", "reason": reason})
                 write_json(output / "manifest.json", manifest)
                 try:
-                    callback("unit", "failed", build_id=unit["build_id"], phase="build", reason=reason)
+                    if unit["action"] == "build" and not skipped:
+                        callback("unit", "failed", build_id=unit["build_id"], phase="build", reason=reason)
                 except Exception as report_error:
                     print(f'Report failed for {unit["build_id"]}: {type(report_error).__name__}', flush=True)
         raise
     finally:
+        for package in output.glob("*/*"):
+            if package.is_file() and str(package.relative_to(output)) not in manifest["files"]:
+                package.unlink()
         write_json(output / "manifest.json", manifest)
+        if "GITHUB_OUTPUT" in os.environ:
+            with open(os.environ["GITHUB_OUTPUT"], "a") as result:
+                result.write("packages=" + str(bool(manifest["files"])).lower() + "\n")
         subprocess.run(["docker", "rm", "-f", container], check=False)
     assert not failed, "failed or skipped units: " + ", ".join(sorted(failed))
     return None

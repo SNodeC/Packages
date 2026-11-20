@@ -10,8 +10,8 @@ from pathlib import Path
 from unittest.mock import Mock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tools"))
-from common import callback, signature, version
-from plan import prepare
+from common import callback, load_plan, signature, version
+from plan import prepare, publication_items
 from publish import release, retained
 
 
@@ -48,11 +48,11 @@ class WaveTests(unittest.TestCase):
         return None
 
     def test_coreci_verifier_vector(self):
-        # Exact key/timestamp/body from core-ci main 649d0f8 tests/A_CallbackHmac.cpp.
+        # Exact key/timestamp/body from core-ci 4ee51e7 tests/A_CallbackHmac.cpp.
         # Expected digest independently computed with OpenSSL HMAC-SHA256.
-        body = b"phase=build&status=started&run_id=1&run_attempt=1"
+        body = b"scope=unit&build_id=a%7Et&phase=build&status=started&run_id=42"
         self.assertEqual(signature("key", "1000", body),
-                         "sha256=d5fa3f263550df394611a7f93bae5672ce33dfd2673a78fc7cdbf4cc368d39fe")
+                         "sha256=de6e84d9b3c954395b93ee316d046f31f59741249a9958e2a98c5f081fb4226f")
         self.assertNotEqual(signature("key", "1000", body + b"&x=1"), signature("key", "1000", body))
         return None
 
@@ -60,6 +60,17 @@ class WaveTests(unittest.TestCase):
         with patch.dict(os.environ, {"CALLBACK_URL": ""}), patch("urllib.request.urlopen") as request:
             callback("wave", "finished", conclusion="success")
         request.assert_not_called()
+        return None
+
+    def test_url_is_authoritative_and_never_falls_back_to_inline(self):
+        environment = dict(PLAN_URL="https://fixture.invalid/plan", PLAN_JSON="invalid-base64",
+                           WAVE_ID="w1", FEED_BRANCH="feed-staging")
+        body = b'{"wave":"w1","feed_branch":"feed-staging"}'
+        with patch.dict(os.environ, environment), patch("common.fetch", return_value=body) as request:
+            self.assertEqual(load_plan()["wave"], "w1")
+        request.assert_called_once_with(environment["PLAN_URL"])
+        with patch.dict(os.environ, environment), patch("common.fetch", side_effect=OSError("offline")), self.assertRaises(OSError):
+            load_plan()
         return None
 
     def test_callbacks_take_run_identity_from_actions(self):
@@ -71,19 +82,22 @@ class WaveTests(unittest.TestCase):
         self.assertEqual(values["build_id"], ["unit"])
         return None
 
-    def test_finished_callback_obeys_plan_owner_and_fails_closed(self):
+    def test_publication_finished_callback_obeys_plan_owner_and_fails_closed(self):
         environment = dict(PLAN_URL="https://fixture.invalid/plan", CALLBACK_URL="https://fixture.invalid/report",
-                           WAVE_ID="w1", GITHUB_RUN_ID="42", CONCLUSION="success", CORECI_CALLBACK_SECRET="fixture")
+                           PUBLICATION_ID="p1", FEED_BRANCH="feed-staging", GITHUB_RUN_ID="42", CONCLUSION="success",
+                           CORECI_CALLBACK_SECRET="fixture")
         script = Path(__file__).resolve().parents[1] / "tools/common.py"
         for owner in (None, 43, "42", True, 42):
             with self.subTest(owner=owner), patch.dict(os.environ, environment), patch("urllib.request.urlopen") as request:
-                request.return_value.__enter__.return_value.read.return_value = json.dumps(dict(wave="w1", owner_run_id=owner)).encode()
+                request.return_value.__enter__.return_value.read.return_value = json.dumps(
+                    dict(publication="p1", feed_branch="feed-staging", owner_run_id=owner)).encode()
                 runpy.run_path(str(script), run_name="__main__")
                 self.assertEqual(request.call_count, 2 if type(owner) is int and owner == 42 else 1)
                 if type(owner) is int and owner == 42:
                     values = urllib.parse.parse_qs(request.call_args.args[0].data.decode())
-                    self.assertEqual(values, dict(scope=["wave"], status=["finished"], run_id=["42"], conclusion=["success"]))
-        for body in (b'{"wave":"w1"}', b'{"wave":"other","owner_run_id":42}', b'not-json'):
+                    self.assertEqual(values, dict(scope=["publication"], status=["finished"], run_id=["42"], conclusion=["success"]))
+        for body in (b'{"publication":"p1","feed_branch":"feed-staging"}',
+                     b'{"publication":"other","feed_branch":"feed-staging","owner_run_id":42}', b'not-json'):
             with self.subTest(body=body), patch.dict(os.environ, environment), patch("urllib.request.urlopen") as request:
                 request.return_value.__enter__.return_value.read.return_value = body
                 with self.assertRaises((AssertionError, KeyError, ValueError)):
@@ -93,6 +107,35 @@ class WaveTests(unittest.TestCase):
             with self.assertRaises(urllib.error.URLError):
                 runpy.run_path(str(script), run_name="__main__")
             self.assertEqual(request.call_count, 1)
+        return None
+
+    def test_wave_finished_and_target_finished_wire_fields(self):
+        script = Path(__file__).resolve().parents[1] / "tools/common.py"
+        environment = dict(CALLBACK_URL="https://fixture.invalid/report", GITHUB_RUN_ID="42",
+                           CORECI_CALLBACK_SECRET="fixture", CONCLUSION="failure")
+        for artifact in (None, "", "coreci-w1-target"):
+            with self.subTest(artifact=artifact), patch.dict(os.environ, environment), patch("urllib.request.urlopen") as request:
+                if artifact is not None:
+                    os.environ.update(TARGET='{"id":"target"}', ARTIFACT=artifact)
+                runpy.run_path(str(script), run_name="__main__")
+                values = urllib.parse.parse_qs(request.call_args.args[0].data.decode(), keep_blank_values=True)
+                expected = (dict(scope=["wave"], conclusion=["failure"]) if artifact is None else
+                            dict(scope=["target"], target=["target"], artifact=[artifact]))
+                self.assertEqual(values, dict(expected, status=["finished"], run_id=["42"]))
+        return None
+
+    def test_publication_plan_batches_and_rejects_ambiguous_targets_or_builds(self):
+        unit = dict(build_id="b1", package="a", version="1.0", revision=1)
+        item = dict(wave="w1", wave_run_id="123", target="one", artifact="coreci-w1-one", units=[unit])
+        plan = dict(items=[item])
+        catalog = {"one": {}, "two": {}}
+        self.assertEqual(publication_items(plan, catalog), [item])
+        for items in ([], [item, item], [dict(item, target="unknown")], [dict(item, wave_run_id="bad")],
+                      [dict(item, units=[])], [dict(item, units=[unit, unit])]):
+            with self.subTest(items=items), self.assertRaises(AssertionError):
+                publication_items(dict(items=items), catalog)
+        self.assertEqual(publication_items(dict(items=[item, dict(item, target="two", artifact="other",
+                         units=[dict(unit, build_id="b2")])]), catalog)[1]["target"], "two")
         return None
 
     def test_plan_uses_commit_declaration_and_dependency_order(self):
