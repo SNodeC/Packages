@@ -148,9 +148,7 @@ def place(feed, target, unit, source, verified):
     result = {"unit": {key: value for key, value in unit.items() if key != "declaration"},
               "target": {key: value for key, value in target.items()
                          if key not in ("units", "feed_branch", "feed_commit")},
-              "files": files, "packages": packages,
-              "source_files": {path.name: verified[str(path.relative_to(source.parent))]
-                               for path in sorted(source.glob("*." + family))}}
+              "files": files, "packages": packages}
     return result
 
 
@@ -202,7 +200,15 @@ def publish(plan):
             if previous:
                 incoming = {Path(file).name: digest for file, digest in data["files"].items()
                             if Path(file).parts[0] == unit["package"]}
-                original = previous.get("source_files", {Path(file).name: digest for file, digest in previous["files"].items()})
+                original = {}
+                for file, digest in previous["files"].items():
+                    if target["family"] == "rpm":
+                        unsigned = Path("signing/unsigned.rpm")
+                        shutil.copy2(feed / file, unsigned)
+                        run("rpmsign", "--delsign", str(unsigned))
+                        digest = sha256(unsigned)
+                        unsigned.unlink()
+                    original[Path(file).name] = digest
                 if incoming != original:
                     raise PublicationError("immutable-conflict", "different bytes for published version-revision")
             else:

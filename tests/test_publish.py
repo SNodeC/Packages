@@ -182,6 +182,9 @@ class PublicationTests(unittest.TestCase):
         command("rpm", "--define", "_keyringpath " + database, "--dbpath", database, "--import", "keys/fixture.asc")
         self.assertIn("digests signatures OK", command("rpmkeys", "--define", "_keyringpath " + database, "--dbpath", database, "--checksig",
                       str(directory / output.name)))
+        shutil.copy2(directory / output.name, "unsigned.rpm")
+        command("rpmsign", "--delsign", "unsigned.rpm")
+        self.assertEqual(sha256("unsigned.rpm"), sha256(output))
         self.assertEqual(command("git", "--git-dir", str(work / "remote.git"), "rev-list", "--count", "feed-staging"), "1")
         shutil.rmtree("feed-work")
         Path("feed.index").unlink()
