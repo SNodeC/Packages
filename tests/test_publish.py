@@ -194,11 +194,24 @@ class PublicationTests(unittest.TestCase):
         self.assertEqual([item["reason"] for item in repeated], ["already published"] * 2)
         shutil.rmtree("feed-work")
         missing = dict(plan, items=[dict(plan["items"][0], target="debian-trixie-arm64", artifact="non-existent")])
+        unavailable = Path("artifacts/debian-trixie-arm64/download.json")
+        unavailable.parent.mkdir()
+        unavailable.write_text('{"available":false}')
         with patch.dict(os.environ, environment), self.assertRaises(PublicationError) as caught:
             publish(missing)
         self.assertEqual(caught.exception.failure, "artifact-unavailable")
         self.assertEqual(command("git", "--git-dir", str(work / "remote.git"), "rev-parse", "feed-staging"), commit)
         shutil.rmtree("feed-work")
+        for evidence in ('{"available":true}', None):
+            if evidence is None:
+                unavailable.unlink()
+            else:
+                unavailable.write_text(evidence)
+            with patch.dict(os.environ, environment), self.assertRaises(PublicationError) as caught:
+                publish(missing)
+            self.assertEqual(caught.exception.failure, "other")
+            self.assertEqual(command("git", "--git-dir", str(work / "remote.git"), "rev-parse", "feed-staging"), commit)
+            shutil.rmtree("feed-work")
         unit = dict(unit, revision=2, build_id="lease")
         manifest["units"][0]["unit"] = unit
         (artifact / "manifest.json").write_text(json.dumps(manifest))

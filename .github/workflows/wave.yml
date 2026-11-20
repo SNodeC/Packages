@@ -60,6 +60,7 @@ jobs:
         with:
           name: coreci-${{ inputs.wave_id }}-${{ matrix.id }}
           path: artifacts/${{ matrix.id }}
+          overwrite: true
       - if: always()
         env:
           CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}

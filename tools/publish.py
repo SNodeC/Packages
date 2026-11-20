@@ -179,7 +179,9 @@ def publish(plan):
     for planned in publication_items(plan, catalog):
         manifest = Path("artifacts") / planned["target"] / "manifest.json"
         if not manifest.is_file():
-            raise PublicationError("artifact-unavailable", "missing artifact: " + planned["artifact"])
+            evidence = manifest.parent / "download.json"
+            unavailable = evidence.is_file() and read_json(evidence)["available"] is False
+            raise PublicationError("artifact-unavailable" if unavailable else "other", "missing artifact: " + planned["artifact"])
         data = read_json(manifest)
         target = catalog[planned["target"]]
         assert data["target"]["id"] == target["id"], "artifact target mismatch"
