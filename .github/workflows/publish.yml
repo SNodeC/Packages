@@ -1,0 +1,88 @@
+name: Package publication
+on:
+  workflow_dispatch:
+    inputs:
+      publication_id:
+        description: Publication identity
+        required: true
+      plan_url:
+        description: Public JSON plan URL
+      plan_json:
+        description: Base64 JSON plan for manual runs
+      callback_url:
+        description: Publication report endpoint; empty disables callbacks
+      feed_branch:
+        description: Destination feed
+        type: choice
+        options: [feed, feed-staging]
+        default: feed
+        required: true
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: publish-${{ inputs.feed_branch }}
+  cancel-in-progress: false
+env:
+  PUBLICATION_ID: ${{ inputs.publication_id }}
+  CALLBACK_URL: ${{ inputs.callback_url }}
+  FEED_BRANCH: ${{ inputs.feed_branch }}
+  PLAN_URL: ${{ inputs.plan_url }}
+  PLAN_JSON: ${{ inputs.plan_json }}
+jobs:
+  plan:
+    runs-on: ubuntu-24.04
+    outputs:
+      matrix: ${{ steps.plan.outputs.matrix }}
+      owned: ${{ steps.plan.outputs.owned }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: plan
+        env:
+          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
+        run: python3 tools/plan.py
+  download:
+    needs: plan
+    if: needs.plan.outputs.owned == 'true'
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          name: ${{ matrix.artifact }}
+          run-id: ${{ matrix.wave_run_id }}
+          github-token: ${{ github.token }}
+          path: artifact
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.target }}
+          path: artifact
+          if-no-files-found: ignore
+  publish:
+    needs: [plan, download]
+    if: ${{ always() && needs.plan.outputs.owned == 'true' }}
+    runs-on: ubuntu-24.04
+    environment: publish
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - run: |
+          sudo apt-get update
+          sudo apt-get install -y rpm createrepo-c zstd
+      - env:
+          PACKAGES_GPG_PRIVATE_KEY: ${{ secrets.PACKAGES_GPG_PRIVATE_KEY }}
+          OPENWRT_USIGN_PRIVATE_KEY: ${{ secrets.OPENWRT_USIGN_PRIVATE_KEY }}
+          OPENWRT_APK_PRIVATE_KEY: ${{ secrets.OPENWRT_APK_PRIVATE_KEY }}
+          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
+          GPG_FINGERPRINT: D1AAD199DB3D3E6A34B75E3047F6536301C7C67D
+        run: python3 tools/publish.py
+      - if: always()
+        env:
+          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
+          CONCLUSION: ${{ job.status }}
+        run: python3 tools/common.py

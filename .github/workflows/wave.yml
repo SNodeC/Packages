@@ -19,6 +19,9 @@ on:
         required: true
 permissions:
   contents: read
+concurrency:
+  group: wave-${{ inputs.feed_branch }}
+  cancel-in-progress: false
 env:
   WAVE_ID: ${{ inputs.wave_id }}
   CALLBACK_URL: ${{ inputs.callback_url }}
@@ -42,38 +45,34 @@ jobs:
       fail-fast: false
       matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
     name: chain (${{ matrix.id }})
-    uses: ./.github/workflows/chain.yml
-    with:
-      target: ${{ toJSON(matrix) }}
-      callback_url: ${{ inputs.callback_url }}
-    secrets: inherit
-  publish:
-    needs: [plan, chain]
-    if: always()
-    runs-on: ubuntu-24.04
-    environment: publish
-    concurrency:
-      group: wave-${{ inputs.feed_branch }}
-      queue: max
-    permissions:
-      contents: write
+    runs-on: ${{ matrix.runner }}
+    env:
+      TARGET: ${{ toJSON(matrix) }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-      - run: |
-          sudo apt-get update
-          sudo apt-get install -y rpm createrepo-c zstd
-      - env:
-          PACKAGES_GPG_PRIVATE_KEY: ${{ secrets.PACKAGES_GPG_PRIVATE_KEY }}
-          OPENWRT_USIGN_PRIVATE_KEY: ${{ secrets.OPENWRT_USIGN_PRIVATE_KEY }}
-          OPENWRT_APK_PRIVATE_KEY: ${{ secrets.OPENWRT_APK_PRIVATE_KEY }}
+      - id: chain
+        env:
           CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
-          GPG_FINGERPRINT: D1AAD199DB3D3E6A34B75E3047F6536301C7C67D
-        run: python3 tools/publish.py
+        run: python3 tools/chain.py
+      - id: upload
+        if: ${{ always() && steps.chain.outputs.packages == 'true' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: coreci-${{ inputs.wave_id }}-${{ matrix.id }}
+          path: artifacts/${{ matrix.id }}
       - if: always()
         env:
           CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
-          CONCLUSION: ${{ job.status == 'success' && needs.chain.result == 'success' && 'success' || 'failure' }}
+          ARTIFACT: ${{ steps.upload.outputs.artifact-id && format('coreci-{0}-{1}', inputs.wave_id, matrix.id) || '' }}
+        run: python3 tools/common.py
+  report:
+    needs: [plan, chain]
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - if: always()
+        env:
+          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
+          CONCLUSION: ${{ needs.plan.result == 'success' && needs.chain.result == 'success' && 'success' || 'failure' }}
         run: python3 tools/common.py

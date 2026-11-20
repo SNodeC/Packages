@@ -1,4 +1,5 @@
-"""Wire formats shared by the wave jobs."""
+"""Plan identity and wire formats shared by build and publication jobs."""
+import base64
 import hashlib
 import hmac
 import json
@@ -31,14 +32,18 @@ def fetch(url):
     return result
 
 
-def owns_wave():
-    result = True
-    url = os.environ.get("PLAN_URL", "")
-    if url:
-        plan = json.loads(fetch(url))
-        assert plan["wave"] == os.environ["WAVE_ID"], "plan wave mismatch"
-        owner = plan["owner_run_id"]
-        result = type(owner) is int and owner == int(os.environ["GITHUB_RUN_ID"])
+def load_plan():
+    inline = os.environ.get("PLAN_JSON", "")
+    result = json.loads(base64.b64decode(inline, validate=True) if inline else fetch(os.environ["PLAN_URL"]))
+    scope = "publication" if "PUBLICATION_ID" in os.environ else "wave"
+    assert result[scope] == os.environ[scope.upper() + "_ID"], "plan identity mismatch"
+    assert result["feed_branch"] == os.environ["FEED_BRANCH"] in ("feed", "feed-staging")
+    return result
+
+
+def owns_publication():
+    owner = load_plan()["owner_run_id"]
+    result = type(owner) is int and owner == int(os.environ["GITHUB_RUN_ID"])
     return result
 
 
@@ -83,5 +88,10 @@ def sha256(path):
 
 
 if __name__ == "__main__":
-    if owns_wave():
+    if "TARGET" in os.environ:
+        callback("target", "finished", target=json.loads(os.environ["TARGET"])["id"], artifact=os.environ["ARTIFACT"])
+    elif "PUBLICATION_ID" in os.environ:
+        if owns_publication():
+            callback("publication", "finished", conclusion=os.environ["CONCLUSION"])
+    else:
         callback("wave", "finished", conclusion=os.environ["CONCLUSION"])

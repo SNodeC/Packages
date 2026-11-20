@@ -1,10 +1,9 @@
 """Resolve a public plan and tag-bound declarations into the Actions matrix."""
-import base64
 import json
 import os
 import re
 
-from common import callback, fetch, read_json, run, write_json
+from common import callback, fetch, load_plan, owns_publication, read_json, run
 
 
 def prepare(plan, catalog, repositories):
@@ -39,18 +38,34 @@ def prepare(plan, catalog, repositories):
     return matrix
 
 
+def publication_items(plan, catalog):
+    targets = set()
+    builds = set()
+    for item in plan["items"]:
+        assert item["target"] in catalog and item["target"] not in targets
+        targets.add(item["target"])
+        assert isinstance(item["artifact"], str) and item["artifact"] and item["wave"]
+        assert str(item["wave_run_id"]).isdigit() and int(item["wave_run_id"]) > 0
+        assert item["units"]
+        for unit in item["units"]:
+            assert unit["build_id"] not in builds
+            builds.add(unit["build_id"])
+            assert all(key in unit for key in ("package", "version", "revision"))
+    assert targets
+    return plan["items"]
+
+
 def main():
-    inline = os.environ.get("PLAN_JSON", "")
-    raw = base64.b64decode(inline, validate=True) if inline else fetch(os.environ["PLAN_URL"])
-    plan = json.loads(raw)
-    assert str(plan["wave"]) == os.environ["WAVE_ID"]
-    assert plan["feed_branch"] == os.environ["FEED_BRANCH"]
+    scope = "publication" if "PUBLICATION_ID" in os.environ else "wave"
+    callback(scope, "started", run_attempt=os.environ["GITHUB_RUN_ATTEMPT"])
+    plan = load_plan()
     catalog = {entry["id"]: entry for entry in read_json("ci/targets.json")["targets"]}
-    matrix = prepare(plan, catalog, read_json("ci/registry.json")["repositories"])
-    write_json("plan.json", plan)
+    matrix = (publication_items(plan, catalog) if scope == "publication" else
+              prepare(plan, catalog, read_json("ci/registry.json")["repositories"]))
     with open(os.environ["GITHUB_OUTPUT"], "a") as output:
         output.write("matrix=" + json.dumps({"include": matrix}, separators=(",", ":")) + "\n")
-    callback("wave", "started", run_attempt=os.environ["GITHUB_RUN_ATTEMPT"])
+        if scope == "publication":
+            output.write("owned=" + str(owns_publication()).lower() + "\n")
     return None
 
 

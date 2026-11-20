@@ -9,7 +9,22 @@ import subprocess
 import tarfile
 from pathlib import Path
 
-from common import callback, fetch, owns_wave, read_json, run, sha256, version, write_json
+from common import callback, fetch, load_plan, owns_publication, read_json, run, sha256, version, write_json
+from plan import publication_items
+
+
+class PublicationError(RuntimeError):
+    def __init__(self, failure, reason):
+        super().__init__(reason)
+        self.failure = failure
+
+
+def sign(*args):
+    try:
+        run(*args)
+    except Exception as error:
+        raise PublicationError("signing", str(error)) from error
+    return None
 
 
 def retained(publications):
@@ -42,7 +57,7 @@ def capture(*args, **kwargs):
 
 
 def gpg(*args):
-    run("gpg", "--batch", "--yes", "--homedir", str(Path("signing/gnupg").resolve()), *args)
+    sign("gpg", "--batch", "--yes", "--homedir", str(Path("signing/gnupg").resolve()), *args)
     return None
 
 
@@ -123,7 +138,7 @@ def place(feed, target, unit, source, verified):
         output = feed / relative
         shutil.copy2(package, output)
         if family == "rpm":
-            run("rpmsign", "--define", "_gpg_name " + os.environ["GPG_FINGERPRINT"],
+            sign("rpmsign", "--define", "_gpg_name " + os.environ["GPG_FINGERPRINT"],
                 "--define", "_gpg_path " + str(Path("signing/gnupg").resolve()), "--addsign", str(output))
             packages.append(capture("rpm", "-qp", "--qf", "%{NAME}", str(output)))
         elif family == "deb":
@@ -133,7 +148,9 @@ def place(feed, target, unit, source, verified):
     result = {"unit": {key: value for key, value in unit.items() if key != "declaration"},
               "target": {key: value for key, value in target.items()
                          if key not in ("units", "feed_branch", "feed_commit")},
-              "files": files, "packages": packages}
+              "files": files, "packages": packages,
+              "source_files": {path.name: verified[str(path.relative_to(source.parent))]
+                               for path in sorted(source.glob("*." + family))}}
     return result
 
 
@@ -142,7 +159,7 @@ def publication_identity(unit, target):
     return result
 
 
-def publish():
+def publish(plan):
     feed = Path("feed-work")
     feed.mkdir()
     branch = os.environ["FEED_BRANCH"]
@@ -159,22 +176,40 @@ def publish():
     ledger = read_json(feed / "publications.json") if (feed / "publications.json").exists() else []
     added = []
     published = []
-    identities = {publication_identity(item["unit"], item["target"]) for item in ledger}
-    for manifest in sorted(Path("artifacts").glob("*/manifest.json")):
+    identities = {publication_identity(item["unit"], item["target"]): item for item in ledger}
+    catalog = {target["id"]: target for target in read_json("ci/targets.json")["targets"]}
+    for planned in publication_items(plan, catalog):
+        manifest = Path("artifacts") / planned["target"] / "manifest.json"
+        if not manifest.is_file():
+            raise PublicationError("artifact-unavailable", "missing artifact: " + planned["artifact"])
         data = read_json(manifest)
+        target = catalog[planned["target"]]
+        assert data["target"]["id"] == target["id"], "artifact target mismatch"
         for file, digest in data["files"].items():
             path = manifest.parent / file
             assert path.resolve().is_relative_to(manifest.parent.resolve())
             assert sha256(path) == digest, "artifact SHA256 mismatch: " + file
-        for item in data["units"]:
-            if item["state"] == "succeeded" and item["unit"]["action"] == "build":
-                unit = item["unit"]
-                identity = publication_identity(unit, data["target"])
-                reason = "already published" if identity in identities else ""
-                if not reason:
-                    added.append(place(feed, data["target"], unit, manifest.parent / unit["package"], data["files"]))
-                    identities.add(identity)
-                published.append(dict(unit=unit, reason=reason))
+        for requested in planned["units"]:
+            item = next(item for item in data["units"] if item["unit"]["build_id"] == requested["build_id"])
+            unit = item["unit"]
+            assert item["state"] == "succeeded" and unit["action"] == "build"
+            assert all(unit[key] == value for key, value in requested.items()), "artifact unit mismatch"
+            source = manifest.parent / unit["package"]
+            assert source.resolve().is_relative_to(manifest.parent.resolve())
+            identity = publication_identity(unit, target)
+            previous = identities.get(identity)
+            reason = "already published" if previous else ""
+            if previous:
+                incoming = {Path(file).name: digest for file, digest in data["files"].items()
+                            if Path(file).parts[0] == unit["package"]}
+                original = previous.get("source_files", {Path(file).name: digest for file, digest in previous["files"].items()})
+                if incoming != original:
+                    raise PublicationError("immutable-conflict", "different bytes for published version-revision")
+            else:
+                placed = place(feed, target, unit, source, data["files"])
+                added.append(placed)
+                identities[identity] = placed
+            published.append(dict(unit=unit, reason=reason))
     if added:
         combined = ledger + added
         selected = retained(combined)
@@ -201,11 +236,11 @@ def publish():
                 directory = feed / "openwrt" / target["release"] / target["arch"]
                 if family == "ipk":
                     ipk_index(directory)
-                    run(str(tools / "usign"), "-S", "-s", "signing/usign.key", "-m", str(directory / "Packages"),
+                    sign(str(tools / "usign"), "-S", "-s", "signing/usign.key", "-m", str(directory / "Packages"),
                         "-x", str(directory / "Packages.sig"))
                 else:
-                    run(str(tools / "apk"), "mkndx", "--allow-untrusted", "--sign-key", str(Path("signing/apk.pem").resolve()),
-                        "--output", "packages.adb", *[p.name for p in sorted(directory.glob("*.apk"))], cwd=directory)
+                    sign(str(tools / "apk"), "mkndx", "--allow-untrusted", "--sign-key", str(Path("signing/apk.pem").resolve()),
+                         "--output", str(directory / "packages.adb"), *[str(p) for p in sorted(directory.glob("*.apk"))])
         for codename in sorted(suites):
             apt_indices(feed, selected, codename)
         environment = dict(os.environ, GIT_DIR=str(Path(".git").resolve()), GIT_WORK_TREE=str(feed.resolve()),
@@ -216,10 +251,15 @@ def publish():
         paths = [path.name for path in feed.iterdir()]
         run("git", "add", "--", *paths, cwd=feed, env=environment)
         tree = capture("git", "write-tree", env=environment)
-        commit = capture("git", "commit-tree", tree, "-m", "Publish wave " + os.environ["WAVE_ID"], env=environment)
-    if owns_wave():
+        new_commit = capture("git", "commit-tree", tree, "-m", "Publish " + os.environ["PUBLICATION_ID"], env=environment)
+    if owns_publication():
         if added:
-            run("git", "push", "--force", "origin", commit + ":refs/heads/" + branch)
+            try:
+                run("git", "push", "--force-with-lease=refs/heads/" + branch + ":" + (commit or ""),
+                    "origin", new_commit + ":refs/heads/" + branch)
+            except Exception as error:
+                raise PublicationError("feed-push", str(error)) from error
+            commit = new_commit
     else:
         published = []
         commit = None
@@ -227,21 +267,23 @@ def publish():
 
 
 def main():
-    if owns_wave():
-        os.umask(0o077)
-        Path("signing/gnupg").mkdir(parents=True, mode=0o700)
-        for environment, name in (("PACKAGES_GPG_PRIVATE_KEY", "gpg.asc"),
-                                  ("OPENWRT_USIGN_PRIVATE_KEY", "usign.key"),
-                                  ("OPENWRT_APK_PRIVATE_KEY", "apk.pem")):
-            Path("signing", name).write_text(os.environ[environment])
-        gpg("--import", "signing/gpg.asc")
+    plan = load_plan()
+    publication_items(plan, {target["id"]: target for target in read_json("ci/targets.json")["targets"]})
+    if owns_publication():
         try:
-            published, commit = publish()
+            os.umask(0o077)
+            Path("signing/gnupg").mkdir(parents=True, mode=0o700)
+            for environment, name in (("PACKAGES_GPG_PRIVATE_KEY", "gpg.asc"),
+                                      ("OPENWRT_USIGN_PRIVATE_KEY", "usign.key"),
+                                      ("OPENWRT_APK_PRIVATE_KEY", "apk.pem")):
+                Path("signing", name).write_text(os.environ[environment])
+            gpg("--import", "signing/gpg.asc")
+            published, commit = publish(plan)
         except Exception as error:
-            for manifest in Path("artifacts").glob("*/manifest.json"):
-                for item in read_json(manifest)["units"]:
-                    if item["state"] == "succeeded" and item["unit"]["action"] == "build":
-                        callback("unit", "failed", build_id=item["unit"]["build_id"], phase="publish", reason=str(error))
+            for item in plan["items"]:
+                for unit in item["units"]:
+                    callback("unit", "failed", build_id=unit["build_id"], phase="publish", reason=str(error),
+                             failure=getattr(error, "failure", "other"))
             raise
         for item in published:
             print(item["unit"]["build_id"] + ": " + (item["reason"] or "published"), flush=True)
