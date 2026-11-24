@@ -88,6 +88,8 @@ The `publish` environment holds `PACKAGES_GPG_PRIVATE_KEY`, `OPENWRT_USIGN_PRIVA
 
 Each target builds in one job and uploads `coreci-<wave>-<target>` with successful packages and a SHA-256 manifest, then reports target completion. Publication sends its started callback, downloads the listed artifacts from their wave runs, verifies the manifests and publishes all planned units in one orphan-root commit with a lease. It re-fetches `plan_url` immediately before pushing and requires its own `owner_run_id`; a different owner succeeds without push or subsequent callbacks. All wire callbacks include the Actions `run_id`. Publication failures carry `artifact-unavailable`, `immutable-conflict`, `feed-push`, `signing` or `other` for core-ci's recovery decision.
 
+Wave source artifacts are kept for 7 days; target-named copies used within a publication run expire after 1 day. Publication retries re-download the original wave source. Expired sources use the existing `artifact-unavailable` recovery path and require a rebuild. Artifact retention does not change scheduling, callbacks or badges.
+
 Manual publication retains the same exact owner check. Since an inline plan cannot know its run ID before dispatch, qualification supplies `plan_json` plus a temporary public `plan_url`, binds that public plan to the observed run ID once, and reruns the same run. When both inputs are present, `plan_url` is authoritative; a fetch error never falls back to inline data. Empty callbacks do not waive ownership.
 
 This PR must be merged only together with the core-ci state-model deployment implementing CONTRACT W v2 (SPEC section 7, core-ci `4ee51e7`). Do not deploy these workflows ahead of that coordinated rollout.

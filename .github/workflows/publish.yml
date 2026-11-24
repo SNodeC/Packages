@@ -79,6 +79,7 @@ jobs:
         if: always()
         with:
           name: ${{ matrix.target }}
+          retention-days: 1
           path: artifact
           if-no-files-found: ignore
           overwrite: true
