@@ -24,6 +24,8 @@ concurrency:
   group: publish-${{ inputs.feed_branch }}
   cancel-in-progress: false
 env:
+  FEED_ORIGIN: SNodeC/Packages
+  FEED_LABEL: SNode.C
   PUBLICATION_ID: ${{ inputs.publication_id }}
   CALLBACK_URL: ${{ inputs.callback_url }}
   FEED_BRANCH: ${{ inputs.feed_branch }}

@@ -1,4 +1,5 @@
 """Run one target's ordered build chain in one container and one SDK."""
+import io
 import json
 import os
 import shutil
@@ -6,7 +7,7 @@ import subprocess
 import tarfile
 from pathlib import Path
 
-from common import callback, fetch, read_json, run, sha256, version, write_json
+from common import callback, fetch, read_json, run, resolved_packages, sha256, version, write_json
 
 
 class SetupError(RuntimeError):
@@ -41,46 +42,40 @@ def install_native(container, target, paths):
     if target["family"] == "deb":
         setup_run("install", "docker", "exec", container, "env", "DEBIAN_FRONTEND=noninteractive", "apt-get", "install", "-y", *paths)
     else:
-        setup_run("install", "docker", "exec", container, "dnf", "install", "-y", *paths)
+        setup_run("install", "docker", "exec", container, "dnf", "install", "-y", "--allowerasing", *paths)
     return None
 
 
 def install_feed(container, target):
-    base = "https://raw.githubusercontent.com/SNodeC/Packages/" + target["feed_commit"]
+    base = "https://raw.githubusercontent.com/" + os.environ["GITHUB_REPOSITORY"] + "/" + target["feed_commit"]
     if target["family"] == "deb":
         setup_run("repositories", "docker", "exec", container, "sh", "-ec",
-                "gpg --dearmor < /work/keys/packages-gpg.asc > /usr/share/keyrings/snodec.gpg; "
-                "printf '%s\\n' \"$1\" > /etc/apt/sources.list.d/snodec.list; apt-get update",
-                "sh", f'deb [signed-by=/usr/share/keyrings/snodec.gpg] {base}/apt {target["codename"]} main')
+                "gpg --dearmor < /work/keys/packages-gpg.asc > /usr/share/keyrings/packages.gpg; "
+                "printf '%s\\n' \"$1\" > /etc/apt/sources.list.d/packages.list; apt-get update",
+                "sh", f'deb [signed-by=/usr/share/keyrings/packages.gpg] {base}/apt {target["codename"]} main')
     elif target["family"] == "rpm":
-        repo = ("[snodec]\nname=SNode.C\nbaseurl=" + base + "/rpm/" +
+        repo = ("[packages]\nname=Packages\nbaseurl=" + base + "/rpm/" +
                 "/".join(target[key] for key in ("distribution", "release", "arch")) +
                 "\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=file:///work/keys/packages-gpg.asc\n")
-        setup_run("repositories", "docker", "exec", container, "sh", "-ec", 'printf "%s" "$1" > /etc/yum.repos.d/snodec.repo', "sh", repo)
+        setup_run("repositories", "docker", "exec", container, "sh", "-ec", 'printf "%s" "$1" > /etc/yum.repos.d/packages.repo', "sh", repo)
     return None
 
 
 def setup(container, target):
     openwrt = target["family"] in ("ipk", "apk")
-    family = "openwrt" if openwrt else target["family"]
     dependencies = sorted({dependency for unit in target["units"]
-                           for dependency in unit["declaration"]["build_dependencies"][family]})
+                           for dependency in resolved_packages(unit["declaration"], target)})
     if target["family"] == "rpm":
-        setup_run("repositories", "docker", "exec", container, "dnf", "install", "-y", "dnf-plugins-core")
+        setup_run("repositories", "docker", "exec", container, "dnf", "install", "-y", "--allowerasing", "dnf-plugins-core")
         if target["distribution"] == "rocky":
             setup_run("repositories", "docker", "exec", container, "dnf", "config-manager", "--set-enabled", "crb")
-            setup_run("repositories", "docker", "exec", container, "dnf", "install", "-y", "epel-release")
-            if target["release"] == "9":
-                dependencies += ["gcc-toolset-14-gcc-c++"]
-        setup_run("dependencies", "docker", "exec", container, "dnf", "install", "-y", "git", "jq", "rpm-build", "gnupg2", "file",
-                "shadow-utils", "util-linux", *dependencies)
+            setup_run("repositories", "docker", "exec", container, "dnf", "install", "-y", "--allowerasing", "epel-release")
+        setup_run("dependencies", "docker", "exec", container, "dnf", "install", "-y", "--allowerasing", "git", "jq", "rpm-build", "gnupg2", "file",
+                "shadow-utils", "util-linux", *target.get("host_packages", []), *dependencies)
     else:
         setup_run("repositories", "docker", "exec", container, "apt-get", "update")
         base = ["ca-certificates", "git", "jq", "gnupg", "dpkg-dev", "file", "passwd", "util-linux"]
-        if openwrt:
-            base += ["build-essential", "clang", "flex", "bison", "gawk", "gettext", "libncurses-dev",
-                     "libssl-dev", "python3", "python3-setuptools", "rsync", "swig", "unzip", "zstd", "wget"]
-        setup_run("dependencies", "docker", "exec", container, "env", "DEBIAN_FRONTEND=noninteractive", "apt-get", "install", "-y", *base,
+        setup_run("dependencies", "docker", "exec", container, "env", "DEBIAN_FRONTEND=noninteractive", "apt-get", "install", "-y", *base, *target.get("host_packages", []),
                 *([] if openwrt else dependencies))
         if target["distribution"] == "raspberrypios":
             Path("work/raspberrypi-keyring.deb").write_bytes(fetch("https://archive.raspberrypi.com/debian/pool/main/r/raspberrypi-archive-keyring/raspberrypi-archive-keyring_2025.1+rpt1_all.deb"))
@@ -101,7 +96,7 @@ def setup(container, target):
             Path("work/sdk").mkdir()
             setup_run("SDK", "tar", "--zstd", "-xf", str(archive), "-C", "work/sdk", "--strip-components=1")
             setup_run("SDK", "docker", "exec", container, "runuser", "-u", "builder", "--", "sh", "-ec",
-                      "cd /work/sdk; ./scripts/feeds update -a; ./scripts/feeds install -a")
+                      'cd /work/sdk; ./scripts/feeds update -a; ./scripts/feeds install "$@"', "sh", *dependencies)
             Path("work/sdk/.config").write_text("CONFIG_ALL_NONSHARED=n\nCONFIG_ALL_KMODS=n\nCONFIG_SIGNED_PACKAGES=n\n")
         except Exception as error:
             if isinstance(error, SetupError):
@@ -116,17 +111,21 @@ def build(container, target, unit, output):
     run("git", "-C", str(source), "fetch", "--depth=1", f'https://github.com/{unit["repo"]}.git', unit["commit"])
     run("git", "-C", str(source), "checkout", "--detach", "FETCH_HEAD")
     run("git", "-C", str(source), "submodule", "update", "--init", "--recursive", "--depth=1")
+    run("git", "-C", str(source), "fetch", "--depth=1", f'https://github.com/{unit["repo"]}.git', unit["ci_commit"])
+    ci = Path("work/ci") / unit["package"]
+    ci.mkdir(parents=True)
+    archive = run("git", "-C", str(source), "archive", unit["ci_commit"] + ":ci", capture_output=True)
+    with tarfile.open(fileobj=io.BytesIO(archive.stdout)) as files:
+        files.extractall(ci, filter="data")
     openwrt = target["family"] in ("ipk", "apk")
     full_version = version(unit, target)
     release = str(unit["revision"]) if openwrt else full_version[len(unit["version"]) + 1:]
     hook = unit["declaration"]["build"]["openwrt" if openwrt else target["family"]]
-    args = ["env", "SOURCE_DIR=/work/source/" + unit["package"],
+    args = ["env", "SOURCE_DIR=/work/source/" + unit["package"], "CI_DIR=/work/ci/" + unit["package"],
+            "DEPENDENCIES_JSON=" + json.dumps(unit["dependencies"]),
             "OUTPUT_DIR=/work/output/" + unit["package"], "SDK_DIR=/work/sdk",
             "TARGET_JSON=" + json.dumps(target), "PACKAGE_VERSION=" + unit["version"], "PACKAGE_RELEASE=" + release]
-    command = 'exec sh "$SOURCE_DIR/$1"'
-    if target["distribution"] == "rocky" and target["release"] == "9":
-        command = '. /opt/rh/gcc-toolset-14/enable; ' + command
-    as_builder(container, *args, "sh", "-ec", command, "sh", hook)
+    as_builder(container, *args, "sh", "/work/ci/" + unit["package"] + "/" + hook.removeprefix("ci/"))
     suffix = "." + target["family"]
     packages = sorted((Path("work/output") / unit["package"]).glob("*" + suffix))
     assert packages, "hook produced no packages"
@@ -142,7 +141,7 @@ def build(container, target, unit, output):
 
 
 def reuse(container, target, unit):
-    base = "https://raw.githubusercontent.com/SNodeC/Packages/" + target["feed_commit"]
+    base = "https://raw.githubusercontent.com/" + os.environ["GITHUB_REPOSITORY"] + "/" + target["feed_commit"]
     ledger = json.loads(fetch(base + "/publications.json"))
     publication = next(item for item in ledger if item["target"]["id"] == target["id"] and
                        item["unit"]["package"] == unit["package"] and
@@ -150,7 +149,7 @@ def reuse(container, target, unit):
     if target["family"] == "deb":
         execute(container, "apt-get", "install", "-y", *[name + "=" + version(unit, target) for name in publication["packages"]])
     elif target["family"] == "rpm":
-        execute(container, "dnf", "install", "-y", *[name + "-" + version(unit, target) for name in publication["packages"]])
+        execute(container, "dnf", "install", "-y", "--allowerasing", *[name + "-" + version(unit, target) for name in publication["packages"]])
     else:
         # The runtime feed has no development headers; the recipe stages them.
         staging_artifacts = Path("work/staging-artifacts")
@@ -172,7 +171,7 @@ def reuse(container, target, unit):
             trusted = {stanza["Filename"]: stanza["SHA256sum"] for stanza in stanzas}
         else:
             (directory / "keys").mkdir()
-            shutil.copy2("keys/openwrt-apk.pub", directory / "keys/snodec.pub")
+            shutil.copy2("keys/openwrt-apk.pub", directory / "keys/packages.pub")
             (directory / "packages.adb").write_bytes(fetch(remote + "/packages.adb"))
             as_builder(container, tools + "apk", "verify", "--keys-dir", local_directory + "/keys",
                     local_directory + "/packages.adb")
@@ -227,7 +226,7 @@ def main():
         for unit in units:
             state = "skipped"
             reason = ""
-            if not (set(unit["declaration"]["depends_on"]) & failed):
+            if not ({dependency["package"] for dependency in unit["dependencies"]} & failed):
                 if unit["action"] == "build":
                     step = "callback " + unit["package"]
                     callback("unit", "started", build_id=unit["build_id"], phase="build")
@@ -259,7 +258,7 @@ def main():
         recorded = {item["unit"]["package"] for item in manifest["units"]}
         for unit in target["units"]:
             if unit["package"] not in recorded:
-                skipped = bool(set(unit["declaration"]["depends_on"]) & failed)
+                skipped = bool({dependency["package"] for dependency in unit["dependencies"]} & failed)
                 failed.add(unit["package"])
                 manifest["units"].append({"unit": unit, "state": "skipped" if skipped else "failed", "reason": reason})
                 write_json(output / "manifest.json", manifest)

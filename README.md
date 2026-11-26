@@ -71,11 +71,15 @@ apk add snodec mqttsuite
 
 ## Declarations and hooks
 
-`ci/registry.json` lists participating repositories. `ci/targets.json` contains 40 targets. Each source's `ci/packages.json` declares its package, dependencies, targets, build dependencies, and hooks. Declarations and hooks come from the plan's exact source commit. Native hooks configure CMake Release under `/usr`, build with `--parallel $(nproc)`, run `ctest -LE mariadb --output-on-failure`, and invoke CPack. CodexUI's package hook sets `CODEXUI_TIMING_POLICY=report` and uses verbose CTest output to record elapsed-time overruns. The owner's package-gate waiver excludes `^codexui-conversation-performance-`; repository test defaults stay strict. OpenWrt hooks use the product recipes inside one shared SDK per target. Hooks and SDK operations run as an unprivileged user matching the mounted source owner; the runner installs build tools and native packages as root.
+`ci/registry.json` lists participating repositories. `ci/targets.json` contains 40 targets and optional `host_packages` for distribution/SDK prerequisites. Each repository owns a schema-2 `ci/packages.json`: its targets, hooks, versioned `depends_on` entries, and `build_dependencies`. A dependency range such as `>=3.0,<4` uses comma as AND and supports `>=`, `>`, `<=`, `<`, and `==`. Build dependency keys are `deb`, `rpm`, and `openwrt`; an optional selector such as `rpm@rocky-9` adds packages only for that distribution/release.
+
+The chain checks out the tagged source commit with recursive submodules into `SOURCE_DIR` and extracts `ci/` from the plan's independent `ci_commit` into `CI_DIR`. All hook assets belong under `ci/` and must be referenced through `CI_DIR`. Hooks own toolchain activation and build/test/package policy. They run as the unprivileged source owner with network access. The chain installs generic base tooling, catalog host packages and resolved declaration packages; RPM installs allow erasing conflicting packages. OpenWrt installs only the declared feed list into one SDK per target. Rocky CRB/EPEL and Raspberry Pi's signed archive remain generic distribution setup.
 
 | Environment | Meaning |
 | --- | --- |
-| `SOURCE_DIR` | Absolute source checkout at the plan commit |
+| `SOURCE_DIR` | Absolute source checkout at the plan commit, including submodules |
+| `CI_DIR` | Absolute `ci/` tree extracted at the frozen `ci_commit` |
+| `DEPENDENCIES_JSON` | Resolved direct dependencies as `[{"package","version","revision"}]` |
 | `OUTPUT_DIR` | Absolute directory for distribution packages |
 | `TARGET_JSON` | JSON string containing the catalog entry and planned units |
 | `PACKAGE_VERSION` | Upstream version from the plan |
@@ -92,7 +96,7 @@ Wave source artifacts are kept for 7 days; target-named copies used within a pub
 
 Manual publication retains the same exact owner check. Since an inline plan cannot know its run ID before dispatch, qualification supplies `plan_json` plus a temporary public `plan_url`, binds that public plan to the observed run ID once, and reruns the same run. When both inputs are present, `plan_url` is authoritative; a fetch error never falls back to inline data. Empty callbacks do not waive ownership.
 
-This PR must be merged only together with the core-ci state-model deployment implementing CONTRACT W v2 (SPEC section 7, core-ci `4ee51e7`). Do not deploy these workflows ahead of that coordinated rollout.
+Rollout order: release core-ci 0.3.0 with the existing chain first; then merge these workflows together with the registry conversions to schema 2. Install 0.3.0 with dispatch paused before reconciliation. Do not dispatch schema-2 plans through the old chain.
 
 ### CodexUI availability
 
@@ -113,4 +117,4 @@ armhf runs natively on `ubuntu-24.04-arm`: [runner qualification](https://github
 
 ## Verification
 
-Run `python3 -m unittest discover -s tests -v` and `actionlint .github/workflows/*.yml`. Tests cover publication-plan parsing, owner fencing, failure codes, immutable repeats and conflicts, retention, signed APT/RPM feeds, lease rejection, APT Release golden fields, and the callback vector from core-ci `4ee51e7`. Staging qualification builds four canary targets, publishes in two batches, repeats the first batch, rejects a missing artifact, and installs snodec and core-ci in a fresh Debian trixie container.
+Run `python3 -m unittest discover -s tests -v` and `actionlint .github/workflows/*.yml`. Tests cover selector resolution, independent source/CI commits, declared OpenWrt feeds and catalog host packages, absence of project policy in tools/catalog, publication-plan parsing, owner fencing, failure codes, immutable repeats and conflicts, retention, signed APT/RPM feeds, lease rejection, APT Release golden fields, and the callback vector from core-ci `4ee51e7`. Staging qualification builds four canary targets, publishes in two batches, repeats the first batch, rejects a missing artifact, and installs snodec and core-ci in a fresh Debian trixie container.

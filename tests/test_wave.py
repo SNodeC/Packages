@@ -16,6 +16,13 @@ from publish import release, retained
 
 
 class WaveTests(unittest.TestCase):
+    def setUp(self):
+        environment = patch.dict(os.environ, GITHUB_REPOSITORY="fixture/packages",
+                                 FEED_ORIGIN="SNodeC/Packages", FEED_LABEL="SNode.C")
+        environment.start()
+        self.addCleanup(environment.stop)
+        return None
+
     def test_versions(self):
         unit = {"version": "2.3.4", "revision": 17}
         for family, fields, expected in (
@@ -139,21 +146,21 @@ class WaveTests(unittest.TestCase):
         return None
 
     def test_plan_uses_commit_declaration_and_dependency_order(self):
-        declaration = dict(schema=1, package="b", depends_on=["a"], targets=["target"],
+        declaration = dict(build=dict(deb="ci/build.sh", rpm="ci/build.sh"), schema=2, package="b", depends_on=[dict(package="a", version=">=1,<2")], targets=["target"],
                            build_dependencies=dict(deb=[], rpm=[], openwrt=[]))
-        unit = dict(package="b", repo="owner/repo", commit="a" * 40, action="build")
+        unit = dict(package="b", repo="owner/repo", commit="a" * 40, ci_commit="c" * 40, dependencies=[], action="build")
         plan = dict(feed_branch="feed-staging", targets=[dict(id="target", units=[unit])])
         with patch("plan.fetch", return_value=json.dumps(declaration).encode()) as request:
             with self.assertRaises(AssertionError):
                 prepare(plan, {"target": dict(id="target")}, ["owner/repo"])
-        request.assert_called_once_with("https://raw.githubusercontent.com/owner/repo/" + "a" * 40 + "/ci/packages.json")
+        request.assert_called_once_with("https://raw.githubusercontent.com/owner/repo/" + "c" * 40 + "/ci/packages.json")
         return None
 
     def test_reused_units_share_one_immutable_feed_snapshot(self):
-        declarations = {name: dict(schema=1, package=name, depends_on=[], targets=["one", "two"],
+        declarations = {name: dict(build=dict(deb="ci/build.sh", rpm="ci/build.sh"), schema=2, package=name, depends_on=[], targets=["one", "two"],
                                   build_dependencies=dict(deb=[], rpm=[], openwrt=[]))
                         for name in ("a", "b")}
-        units = [dict(package=name, repo="owner/repo", commit=name * 40, action=action)
+        units = [dict(package=name, repo="owner/repo", commit=name * 40, ci_commit="c" * 40, dependencies=[], action=action)
                  for name, action in (("a", "reuse"), ("b", "build"))]
         plan = dict(feed_branch="feed-staging", targets=[dict(id=name, units=units) for name in ("one", "two")])
         responses = [json.dumps(declarations[name]).encode()
@@ -167,9 +174,9 @@ class WaveTests(unittest.TestCase):
         return None
 
     def test_native_declaration_still_requires_openwrt_dependency_array(self):
-        declaration = dict(schema=1, package="a", depends_on=[], targets=["target"],
+        declaration = dict(build=dict(deb="ci/build.sh", rpm="ci/build.sh"), schema=2, package="a", depends_on=[], targets=["target"],
                            build_dependencies=dict(deb=[], rpm=[]))
-        unit = dict(package="a", repo="owner/repo", commit="a" * 40, action="build")
+        unit = dict(package="a", repo="owner/repo", commit="a" * 40, ci_commit="c" * 40, dependencies=[], action="build")
         plan = dict(feed_branch="feed-staging", targets=[dict(id="target", units=[unit])])
         with patch("plan.fetch", return_value=json.dumps(declaration).encode()):
             with self.assertRaises(AssertionError):

@@ -29,6 +29,13 @@ def catalog():
 
 
 class PublicationTests(unittest.TestCase):
+    def setUp(self):
+        environment = patch.dict(os.environ, GITHUB_REPOSITORY="fixture/packages",
+                                 FEED_ORIGIN="SNodeC/Packages", FEED_LABEL="SNode.C")
+        environment.start()
+        self.addCleanup(environment.stop)
+        return None
+
     def test_signed_apt_retention_and_single_root_commit(self):
         root = Path("/tmp/codex/build/Packages/tests")
         root.mkdir(parents=True, exist_ok=True)

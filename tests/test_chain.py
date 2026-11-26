@@ -12,10 +12,20 @@ import chain
 
 
 class ChainTests(unittest.TestCase):
+    def setUp(self):
+        environment = patch.dict(os.environ, GITHUB_REPOSITORY="fixture/packages",
+                                 FEED_ORIGIN="SNodeC/Packages", FEED_LABEL="SNode.C")
+        environment.start()
+        self.addCleanup(environment.stop)
+        return None
+
     def test_sdk_download_failure_reports_every_build_unit(self):
         units = [dict(package=name, build_id=name, action="build",
                       declaration=dict(depends_on=[], build_dependencies=dict(openwrt=[]))) for name in ("a", "b")]
-        target = dict(id="target", family="ipk", distribution="openwrt", sdk=dict(url="fixture"),
+        for unit in units:
+            unit["dependencies"] = [dict(package=name, version="1.0.0", revision=1)
+                                    for name in unit["declaration"]["depends_on"]]
+        target = dict(id="target", family="ipk", distribution="openwrt", release="24.10", sdk=dict(url="fixture"),
                       platform="linux/amd64", image="fixture", emulated=False, units=units)
         root = Path("/tmp/codex/build/Packages/tests")
         root.mkdir(parents=True, exist_ok=True)
@@ -39,6 +49,9 @@ class ChainTests(unittest.TestCase):
     def test_unknown_success_callback_does_not_send_a_contradictory_failure(self):
         units = [dict(package=name, build_id=name, action="build", declaration=dict(depends_on=[]))
                  for name in ("a", "b", "c")]
+        for unit in units:
+            unit["dependencies"] = [dict(package=name, version="1.0.0", revision=1)
+                                    for name in unit["declaration"]["depends_on"]]
         target = dict(id="target", platform="linux/amd64", image="fixture", emulated=False, units=units)
         root = Path("/tmp/codex/build/Packages/tests")
         root.mkdir(parents=True, exist_ok=True)
@@ -71,6 +84,9 @@ class ChainTests(unittest.TestCase):
         units = [dict(package=name, build_id=name, action=action,
                       declaration=dict(depends_on=[]))
                  for name, action in (("a", "build"), ("b", "reuse"), ("c", "build"))]
+        for unit in units:
+            unit["dependencies"] = [dict(package=name, version="1.0.0", revision=1)
+                                    for name in unit["declaration"]["depends_on"]]
         target = dict(id="target", platform="linux/amd64", image="fixture", emulated=False, units=units)
         root = Path("/tmp/codex/build/Packages/tests")
         root.mkdir(parents=True, exist_ok=True)
@@ -111,6 +127,9 @@ class ChainTests(unittest.TestCase):
     def test_emulated_setup_failure_reports_all_units_in_one_job(self):
         units = [dict(package=name, build_id=name, action="build", declaration=dict(depends_on=[]))
                  for name in ("a", "b", "c")]
+        for unit in units:
+            unit["dependencies"] = [dict(package=name, version="1.0.0", revision=1)
+                                    for name in unit["declaration"]["depends_on"]]
         target = dict(id="target", platform="linux/riscv64", image="fixture", emulated=True, units=units)
         root = Path("/tmp/codex/build/Packages/tests")
         root.mkdir(parents=True, exist_ok=True)
@@ -135,6 +154,9 @@ class ChainTests(unittest.TestCase):
     def test_failed_prerequisite_skips_dependents_but_independent_unit_builds(self):
         units = [dict(package=name, build_id=name, action="build", declaration=dict(depends_on=dependencies))
                  for name, dependencies in (("a", []), ("b", ["a"]), ("c", []), ("d", ["b", "c"]))]
+        for unit in units:
+            unit["dependencies"] = [dict(package=name, version="1.0.0", revision=1)
+                                    for name in unit["declaration"]["depends_on"]]
         target = dict(id="target", platform="linux/amd64", image="fixture", emulated=False, units=units)
         root = Path("/tmp/codex/build/Packages/tests")
         root.mkdir(parents=True, exist_ok=True)
@@ -161,6 +183,9 @@ class ChainTests(unittest.TestCase):
         units = [dict(package=name, build_id=name, action="reuse" if name == "b" else "build",
                       declaration=dict(depends_on=dependencies))
                  for name, dependencies in (("a", []), ("b", ["a"]), ("c", []), ("d", ["b", "c"]))]
+        for unit in units:
+            unit["dependencies"] = [dict(package=name, version="1.0.0", revision=1)
+                                    for name in unit["declaration"]["depends_on"]]
         target = dict(id="target", family="deb", platform="linux/riscv64", image="fixture", emulated=True, units=units)
         root = Path("/tmp/codex/build/Packages/tests")
         root.mkdir(parents=True, exist_ok=True)
@@ -215,13 +240,16 @@ class ChainTests(unittest.TestCase):
         ledger = [dict(target=target, unit=unit, packages=["a", "a-dev"])]
         with patch("chain.fetch", return_value=json.dumps(ledger).encode()) as fetch, patch("chain.execute") as execute:
             chain.reuse("container", target, unit)
-        fetch.assert_called_once_with("https://raw.githubusercontent.com/SNodeC/Packages/" + "f" * 40 + "/publications.json")
+        fetch.assert_called_once_with("https://raw.githubusercontent.com/fixture/packages/" + "f" * 40 + "/publications.json")
         execute.assert_called_once_with("container", "apt-get", "install", "-y", "a=1.2.3-4~trixie", "a-dev=1.2.3-4~trixie")
         return None
 
     def test_no_packages_reports_empty_upload_output_and_skips_failed_dependents(self):
         units = [dict(package=name, build_id=name, action="build", declaration=dict(depends_on=depends))
                  for name, depends in (("a", []), ("b", ["a"]))]
+        for unit in units:
+            unit["dependencies"] = [dict(package=name, version="1.0.0", revision=1)
+                                    for name in unit["declaration"]["depends_on"]]
         target = dict(id="target", emulated=False, units=units)
         root = Path("/tmp/codex/build/Packages/tests")
         root.mkdir(parents=True, exist_ok=True)
