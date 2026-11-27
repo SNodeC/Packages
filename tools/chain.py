@@ -276,6 +276,7 @@ def main():
         if "GITHUB_OUTPUT" in os.environ:
             with open(os.environ["GITHUB_OUTPUT"], "a") as result:
                 result.write("packages=" + str(bool(manifest["files"])).lower() + "\n")
+        subprocess.run(["docker", "logs", container], check=False)
         subprocess.run(["docker", "rm", "-f", container], check=False)
     assert not failed, "failed or skipped units: " + ", ".join(sorted(failed))
     return None
