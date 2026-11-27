@@ -134,6 +134,21 @@ class BuildTests(unittest.TestCase):
         self.assertEqual(Path("work/ci/fixture/build.sh").read_text(), "new build hook")
         return None
 
+    def test_ipk_install_creates_its_offline_root_lock_directory(self):
+        paths = ["/work/locked/lib_1.0.0-r1_x86_64.ipk"]
+        operations = []
+
+        def opkg(*arguments):
+            self.assertTrue(Path("work/root/tmp").is_dir())
+            self.assertEqual(arguments[3:5], ("--offline-root", "/work/root"))
+            operations.append(arguments[5:])
+            return None
+
+        with patch("build.docker", side_effect=opkg):
+            build.openwrt_install(target("openwrt-24.10-x86_64"), paths)
+        self.assertEqual(operations, [("update",), ("install", *paths)])
+        return None
+
     def test_openwrt_registers_complete_closure_before_resolving_feeds_in_one_sdk(self):
         library = unit("lib", repository="owner/lib", bindings=[])
         middleware = unit("mid", repository="owner/mid", bindings=[dict(package="lib")])

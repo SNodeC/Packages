@@ -173,7 +173,7 @@ def exact_dependencies(inputs):
 
 def openwrt_install(target, paths):
     # The offline root records exact package-manager state. SDK development staging is done by the recipes.
-    (WORK / "root").mkdir(exist_ok=True)
+    (WORK / ("root/tmp" if target["family"] == "ipk" else "root")).mkdir(parents=True, exist_ok=True)
     repos = target["sdk"]["runtime_repositories"]
     if target["family"] == "ipk":
         conf = WORK / "opkg.conf"
