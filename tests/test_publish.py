@@ -196,6 +196,7 @@ class PublisherTests(unittest.TestCase):
         self.assertFalse((feed / old_path).exists())
         self.assertFalse((feed / index / "by-hash/SHA256" / first_hash).exists())
         self.assertIn("Package: runtime", (feed / index / "Packages").read_text())
+        self.assertIn("/apt/debian trixie main", (feed / "apt/SOURCES.md").read_text())
         release = feed / "apt/debian/dists/trixie"
         text = (release / "Release").read_text()
         self.assertIn("Origin: Fixture/Packages\nLabel: SNode.C\nSuite: trixie\nCodename: trixie\n", text)
@@ -206,6 +207,7 @@ class PublisherTests(unittest.TestCase):
         retired, _ = self.execute_plan(self.plan("p6", expected, [], retire_legacy_apt=True), {}, private)
         self.assertFalse((retired / "apt/dists").exists())
         self.assertFalse((retired / "apt/pool").exists())
+        self.assertFalse((retired / "apt/SOURCES.md").exists())
         self.assertTrue((retired / index / "Packages").exists())
         return None
 

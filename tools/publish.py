@@ -29,18 +29,15 @@ class ItemError(ValueError):
 
 
 def group(item):
-    result = [item[key] for key in ("package", "version", "revision")] + [item["target"]["id"]]
-    return result
+    return [item[key] for key in ("package", "version", "revision")] + [item["target"]["id"]]
 
 
 def index_group(target):
-    result = namespace(target), target["codename"] if target["family"] == "deb" else ""
-    return result
+    return namespace(target), target["codename"] if target["family"] == "deb" else ""
 
 
 def native(entry, target):
-    result = (namespace(target), entry["name"], entry["version"], entry["arch"])
-    return result
+    return namespace(target), entry["name"], entry["version"], entry["arch"]
 
 
 def api(path):
@@ -317,6 +314,9 @@ def publish(plan, workflow, workspace):
     if plan["retire_legacy_apt"]:
         for directory in ("apt/dists", "apt/pool"):
             shutil.rmtree(feed / directory, ignore_errors=True)
+        (feed / "apt/SOURCES.md").unlink(missing_ok=True)
+    elif (feed / "apt/dists").is_dir():
+        shutil.copyfile("ci/legacy-apt.md", feed / "apt/SOURCES.md")
     acknowledged = {tuple(key) for key in plan["acknowledged_receipts"]}
     ledger["receipts"] = [r for r in ledger["receipts"]
                           if (r["publication"], r["attempt"], r["request"]) not in acknowledged] + results
