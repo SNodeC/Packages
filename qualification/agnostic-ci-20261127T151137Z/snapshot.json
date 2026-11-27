@@ -1,0 +1,575 @@
+{
+  "wave": "agnostic-ci-20261127T151137Z",
+  "workflow_commit": "c3ded816ed8d8cb7d379923a3d75d7589abed974",
+  "feeds_before": {
+    "feed": "9fdc1f9f06a3f7724bbc94b96d423a7aebabb5e8",
+    "feed-staging": "fbc3050092c5f4c425efb2d4777c0150f40ab41b"
+  },
+  "sources": [
+    {
+      "package": "snodec",
+      "repo": "SNodeC/snode.c",
+      "tag": "master",
+      "commit": "8e2c749b2a333edf4e02499e8d6abf3b2d43f048",
+      "ci_commit": "8e2c749b2a333edf4e02499e8d6abf3b2d43f048",
+      "ci_tree": "762d0254c8a5677b152af528286439632a7c4773",
+      "version": "3.1.0",
+      "declaration": {
+        "schema": 2,
+        "package": "snodec",
+        "title": "SNode.C",
+        "depends_on": [],
+        "build": {
+          "deb": "ci/package/native.sh",
+          "rpm": "ci/package/native.sh",
+          "openwrt": "ci/package/openwrt.sh"
+        },
+        "build_dependencies": {
+          "deb": [
+            "cmake",
+            "g++",
+            "make",
+            "pkg-config",
+            "curl",
+            "python3",
+            "libssl-dev",
+            "nlohmann-json3-dev",
+            "libmagic-dev",
+            "libbluetooth-dev",
+            "libmariadb-dev",
+            "libncurses-dev",
+            "libpcre2-dev"
+          ],
+          "rpm": [
+            "cmake",
+            "gcc-c++",
+            "make",
+            "pkgconf-pkg-config",
+            "curl",
+            "python3",
+            "openssl-devel",
+            "json-devel",
+            "file-devel",
+            "bluez-libs-devel",
+            "mariadb-connector-c-devel",
+            "ncurses-devel",
+            "pcre2-devel"
+          ],
+          "openwrt": [
+            "nlohmannjson",
+            "openssl",
+            "file",
+            "bluez",
+            "libmariadb",
+            "pcre2"
+          ],
+          "rpm@rocky-9": [
+            "gcc-toolset-14"
+          ]
+        },
+        "targets": [
+          "debian-trixie-amd64",
+          "debian-trixie-arm64",
+          "debian-trixie-armhf",
+          "debian-trixie-riscv64",
+          "debian-forky-amd64",
+          "debian-forky-arm64",
+          "debian-forky-armhf",
+          "debian-forky-riscv64",
+          "debian-sid-amd64",
+          "debian-sid-arm64",
+          "debian-sid-armhf",
+          "debian-sid-riscv64",
+          "ubuntu-noble-amd64",
+          "ubuntu-noble-arm64",
+          "ubuntu-resolute-amd64",
+          "ubuntu-resolute-arm64",
+          "fedora-43-x86_64",
+          "fedora-43-aarch64",
+          "fedora-44-x86_64",
+          "fedora-44-aarch64",
+          "rocky-9-x86_64",
+          "rocky-9-aarch64",
+          "rocky-10-x86_64",
+          "rocky-10-aarch64",
+          "raspberrypios-bookworm-arm64",
+          "raspberrypios-trixie-arm64",
+          "openwrt-24.10-aarch64_cortex-a53",
+          "openwrt-24.10-aarch64_generic",
+          "openwrt-24.10-arm_cortex-a7_neon-vfpv4",
+          "openwrt-24.10-arm_cortex-a9",
+          "openwrt-24.10-mips_24kc",
+          "openwrt-24.10-mipsel_24kc",
+          "openwrt-24.10-x86_64",
+          "openwrt-25.12-aarch64_cortex-a53",
+          "openwrt-25.12-aarch64_generic",
+          "openwrt-25.12-arm_cortex-a7_neon-vfpv4",
+          "openwrt-25.12-arm_cortex-a9",
+          "openwrt-25.12-mips_24kc",
+          "openwrt-25.12-mipsel_24kc",
+          "openwrt-25.12-x86_64"
+        ]
+      }
+    },
+    {
+      "package": "snodec-idp",
+      "repo": "SNodeC/snode.c-idp",
+      "tag": "main",
+      "commit": "66bff0b8d65137ec3b789de7e58cd3c79cf73786",
+      "ci_commit": "66bff0b8d65137ec3b789de7e58cd3c79cf73786",
+      "ci_tree": "6637d0dcc1dd558140a5bf52d1dfccab27b0c88b",
+      "version": "2.0.7",
+      "declaration": {
+        "schema": 2,
+        "package": "snodec-idp",
+        "title": "SNode.C IDP",
+        "depends_on": [
+          {
+            "package": "snodec",
+            "version": ">=0.0.0"
+          }
+        ],
+        "build": {
+          "deb": "ci/package/native.sh",
+          "rpm": "ci/package/native.sh"
+        },
+        "build_dependencies": {
+          "deb": [
+            "cmake",
+            "g++",
+            "make",
+            "pkg-config",
+            "libssl-dev",
+            "openssl",
+            "nlohmann-json3-dev",
+            "libmagic-dev",
+            "libbluetooth-dev",
+            "libmariadb-dev",
+            "libncurses-dev",
+            "libsqlite3-dev",
+            "python3"
+          ],
+          "rpm": [
+            "cmake",
+            "gcc-c++",
+            "make",
+            "pkgconf-pkg-config",
+            "openssl-devel",
+            "openssl",
+            "json-devel",
+            "file-devel",
+            "bluez-libs-devel",
+            "mariadb-connector-c-devel",
+            "ncurses-devel",
+            "sqlite-devel",
+            "python3"
+          ],
+          "openwrt": [],
+          "rpm@rocky-9": [
+            "gcc-toolset-14-gcc-c++"
+          ]
+        },
+        "targets": [
+          "debian-trixie-amd64",
+          "debian-trixie-arm64",
+          "debian-trixie-armhf",
+          "debian-trixie-riscv64",
+          "debian-forky-amd64",
+          "debian-forky-arm64",
+          "debian-forky-armhf",
+          "debian-forky-riscv64",
+          "debian-sid-amd64",
+          "debian-sid-arm64",
+          "debian-sid-armhf",
+          "debian-sid-riscv64",
+          "ubuntu-noble-amd64",
+          "ubuntu-noble-arm64",
+          "ubuntu-resolute-amd64",
+          "ubuntu-resolute-arm64",
+          "fedora-43-x86_64",
+          "fedora-43-aarch64",
+          "fedora-44-x86_64",
+          "fedora-44-aarch64",
+          "rocky-9-x86_64",
+          "rocky-9-aarch64",
+          "rocky-10-x86_64",
+          "rocky-10-aarch64",
+          "raspberrypios-bookworm-arm64",
+          "raspberrypios-trixie-arm64"
+        ]
+      }
+    },
+    {
+      "package": "core-ci",
+      "repo": "SNodeC/core-ci",
+      "tag": "main",
+      "commit": "b6ea338eb92ab4b37de68344cdacfa3cdf2e3e1d",
+      "ci_commit": "b6ea338eb92ab4b37de68344cdacfa3cdf2e3e1d",
+      "ci_tree": "3000c976dad52fa352cfd41120e3df88da954321",
+      "version": "0.3.1",
+      "declaration": {
+        "schema": 2,
+        "package": "core-ci",
+        "title": "core-ci",
+        "depends_on": [
+          {
+            "package": "snodec",
+            "version": ">=0.0.0"
+          },
+          {
+            "package": "snodec-idp",
+            "version": ">=2.0,<2.1"
+          }
+        ],
+        "build": {
+          "deb": "ci/package/native.sh",
+          "rpm": "ci/package/native.sh"
+        },
+        "build_dependencies": {
+          "deb": [
+            "cmake",
+            "g++",
+            "make",
+            "pkg-config",
+            "libssl-dev",
+            "nlohmann-json3-dev",
+            "libmagic-dev",
+            "libbluetooth-dev",
+            "libmariadb-dev",
+            "libncurses-dev",
+            "python3"
+          ],
+          "rpm": [
+            "cmake",
+            "gcc-c++",
+            "make",
+            "pkgconf-pkg-config",
+            "openssl-devel",
+            "json-devel",
+            "file-devel",
+            "bluez-libs-devel",
+            "mariadb-connector-c-devel",
+            "ncurses-devel",
+            "python3"
+          ],
+          "openwrt": [],
+          "rpm@rocky-9": [
+            "gcc-toolset-14-gcc-c++"
+          ]
+        },
+        "targets": [
+          "debian-trixie-amd64",
+          "debian-trixie-arm64",
+          "debian-trixie-armhf",
+          "debian-trixie-riscv64",
+          "debian-forky-amd64",
+          "debian-forky-arm64",
+          "debian-forky-armhf",
+          "debian-forky-riscv64",
+          "debian-sid-amd64",
+          "debian-sid-arm64",
+          "debian-sid-armhf",
+          "debian-sid-riscv64",
+          "ubuntu-noble-amd64",
+          "ubuntu-noble-arm64",
+          "ubuntu-resolute-amd64",
+          "ubuntu-resolute-arm64",
+          "fedora-43-x86_64",
+          "fedora-43-aarch64",
+          "fedora-44-x86_64",
+          "fedora-44-aarch64",
+          "rocky-9-x86_64",
+          "rocky-9-aarch64",
+          "rocky-10-x86_64",
+          "rocky-10-aarch64",
+          "raspberrypios-trixie-arm64"
+        ]
+      }
+    },
+    {
+      "package": "aisuite",
+      "repo": "SNodeC/AISuite",
+      "tag": "master",
+      "commit": "ca621997d8077545676d8de2c41ca3b90712bfe6",
+      "ci_commit": "ca621997d8077545676d8de2c41ca3b90712bfe6",
+      "ci_tree": "1457b5c82f45817ef491f1fd3d36983767502f53",
+      "version": "0.2.0",
+      "declaration": {
+        "schema": 2,
+        "package": "aisuite",
+        "title": "AISuite",
+        "depends_on": [
+          {
+            "package": "snodec",
+            "version": ">=3.0.0,<4"
+          }
+        ],
+        "build": {
+          "deb": "ci/package/native.sh",
+          "rpm": "ci/package/native.sh"
+        },
+        "build_dependencies": {
+          "deb": [
+            "cmake",
+            "g++",
+            "make",
+            "pkg-config",
+            "nodejs",
+            "npm",
+            "libssl-dev",
+            "openssl",
+            "nlohmann-json3-dev",
+            "libmagic-dev",
+            "libbluetooth-dev",
+            "libmariadb-dev",
+            "libncurses-dev"
+          ],
+          "rpm": [
+            "cmake",
+            "gcc-c++",
+            "make",
+            "pkgconf-pkg-config",
+            "nodejs",
+            "npm",
+            "openssl-devel",
+            "openssl",
+            "json-devel",
+            "file-devel",
+            "bluez-libs-devel",
+            "mariadb-connector-c-devel",
+            "ncurses-devel"
+          ],
+          "openwrt": [],
+          "rpm@rocky-9": [
+            "gcc-toolset-14-gcc-c++"
+          ]
+        },
+        "targets": [
+          "debian-trixie-amd64",
+          "debian-trixie-arm64",
+          "debian-trixie-armhf",
+          "debian-trixie-riscv64",
+          "debian-forky-amd64",
+          "debian-forky-arm64",
+          "debian-forky-armhf",
+          "debian-forky-riscv64",
+          "debian-sid-amd64",
+          "debian-sid-arm64",
+          "debian-sid-armhf",
+          "debian-sid-riscv64",
+          "ubuntu-noble-amd64",
+          "ubuntu-noble-arm64",
+          "ubuntu-resolute-amd64",
+          "ubuntu-resolute-arm64",
+          "fedora-43-x86_64",
+          "fedora-43-aarch64",
+          "fedora-44-x86_64",
+          "fedora-44-aarch64",
+          "rocky-9-x86_64",
+          "rocky-9-aarch64",
+          "rocky-10-x86_64",
+          "rocky-10-aarch64",
+          "raspberrypios-bookworm-arm64",
+          "raspberrypios-trixie-arm64"
+        ]
+      }
+    },
+    {
+      "package": "codexui",
+      "repo": "SNodeC/CodexUI",
+      "tag": "master",
+      "commit": "3cf08d7b24a02ea1154a7db9f8329fcc87132753",
+      "ci_commit": "3cf08d7b24a02ea1154a7db9f8329fcc87132753",
+      "ci_tree": "f1f5fc477a9eb4d7ad4e44eac4535839d1db5d31",
+      "version": "0.3.0",
+      "declaration": {
+        "schema": 2,
+        "package": "codexui",
+        "title": "CodexUI",
+        "depends_on": [
+          {
+            "package": "aisuite",
+            "version": ">=0.0.0"
+          },
+          {
+            "package": "snodec",
+            "version": ">=3.0.0,<4"
+          }
+        ],
+        "build": {
+          "deb": "ci/package/native.sh",
+          "rpm": "ci/package/native.sh"
+        },
+        "build_dependencies": {
+          "deb": [
+            "cmake",
+            "g++",
+            "make",
+            "pkg-config",
+            "libssl-dev",
+            "openssl",
+            "nlohmann-json3-dev",
+            "libmagic-dev",
+            "libbluetooth-dev",
+            "libmariadb-dev",
+            "libncurses-dev",
+            "qt6-base-dev",
+            "libkf6sonnet-dev",
+            "sonnet6-plugins",
+            "hunspell-en-us",
+            "hunspell-de-at",
+            "libgit2-dev",
+            "python3",
+            "xvfb",
+            "xauth"
+          ],
+          "rpm": [
+            "cmake",
+            "gcc-c++",
+            "make",
+            "pkgconf-pkg-config",
+            "openssl-devel",
+            "openssl",
+            "json-devel",
+            "file-devel",
+            "bluez-libs-devel",
+            "mariadb-connector-c-devel",
+            "ncurses-devel",
+            "qt6-qtbase-devel",
+            "kf6-sonnet-devel",
+            "kf6-sonnet-hunspell",
+            "hunspell-en-US",
+            "hunspell-de",
+            "libgit2-devel",
+            "python3",
+            "xorg-x11-server-Xvfb",
+            "xorg-x11-xauth"
+          ],
+          "openwrt": []
+        },
+        "targets": [
+          "debian-trixie-amd64",
+          "debian-trixie-arm64",
+          "debian-trixie-armhf",
+          "debian-forky-amd64",
+          "debian-forky-arm64",
+          "debian-forky-armhf",
+          "debian-sid-amd64",
+          "debian-sid-arm64",
+          "debian-sid-armhf",
+          "ubuntu-resolute-amd64",
+          "ubuntu-resolute-arm64",
+          "fedora-43-x86_64",
+          "fedora-43-aarch64",
+          "fedora-44-x86_64",
+          "fedora-44-aarch64",
+          "raspberrypios-trixie-arm64"
+        ]
+      }
+    },
+    {
+      "package": "mqttsuite",
+      "repo": "SNodeC/mqttsuite",
+      "tag": "master",
+      "commit": "e07616551b20520067a26eb73f81a8ab68e9d528",
+      "ci_commit": "e07616551b20520067a26eb73f81a8ab68e9d528",
+      "ci_tree": "4542870cdd365fe17432546af917d1de55441dac",
+      "version": "1.1.1",
+      "declaration": {
+        "schema": 2,
+        "package": "mqttsuite",
+        "title": "MQTTSuite",
+        "depends_on": [
+          {
+            "package": "snodec",
+            "version": ">=3.0.0,<4"
+          }
+        ],
+        "build": {
+          "deb": "ci/package/native.sh",
+          "rpm": "ci/package/native.sh",
+          "openwrt": "ci/package/openwrt.sh"
+        },
+        "build_dependencies": {
+          "deb": [
+            "cmake",
+            "g++",
+            "make",
+            "pkg-config",
+            "libssl-dev",
+            "nlohmann-json3-dev",
+            "libmagic-dev",
+            "libbluetooth-dev",
+            "libmariadb-dev",
+            "libncurses-dev"
+          ],
+          "rpm": [
+            "cmake",
+            "gcc-c++",
+            "make",
+            "pkgconf-pkg-config",
+            "openssl-devel",
+            "json-devel",
+            "file-devel",
+            "bluez-libs-devel",
+            "mariadb-connector-c-devel",
+            "ncurses-devel"
+          ],
+          "openwrt": [
+            "nlohmannjson",
+            "snode.c"
+          ],
+          "rpm@rocky-9": [
+            "gcc-toolset-14-gcc-c++"
+          ]
+        },
+        "targets": [
+          "debian-trixie-amd64",
+          "debian-trixie-arm64",
+          "debian-trixie-armhf",
+          "debian-trixie-riscv64",
+          "debian-forky-amd64",
+          "debian-forky-arm64",
+          "debian-forky-armhf",
+          "debian-forky-riscv64",
+          "debian-sid-amd64",
+          "debian-sid-arm64",
+          "debian-sid-armhf",
+          "debian-sid-riscv64",
+          "ubuntu-noble-amd64",
+          "ubuntu-noble-arm64",
+          "ubuntu-resolute-amd64",
+          "ubuntu-resolute-arm64",
+          "fedora-43-x86_64",
+          "fedora-43-aarch64",
+          "fedora-44-x86_64",
+          "fedora-44-aarch64",
+          "rocky-9-x86_64",
+          "rocky-9-aarch64",
+          "rocky-10-x86_64",
+          "rocky-10-aarch64",
+          "raspberrypios-bookworm-arm64",
+          "raspberrypios-trixie-arm64",
+          "openwrt-24.10-aarch64_cortex-a53",
+          "openwrt-24.10-aarch64_generic",
+          "openwrt-24.10-arm_cortex-a7_neon-vfpv4",
+          "openwrt-24.10-arm_cortex-a9",
+          "openwrt-24.10-mips_24kc",
+          "openwrt-24.10-mipsel_24kc",
+          "openwrt-24.10-x86_64",
+          "openwrt-25.12-aarch64_cortex-a53",
+          "openwrt-25.12-aarch64_generic",
+          "openwrt-25.12-arm_cortex-a7_neon-vfpv4",
+          "openwrt-25.12-arm_cortex-a9",
+          "openwrt-25.12-mips_24kc",
+          "openwrt-25.12-mipsel_24kc",
+          "openwrt-25.12-x86_64"
+        ]
+      }
+    }
+  ],
+  "plan_sha256": "a3c21ddb88bef2fc5d61acf6e56128522f5dc819eb51d7c5570ace5a929ba10a",
+  "plan_branch": "qualification/agnostic-ci-20261127T151137Z",
+  "targets": 40,
+  "units": 173
+}
