@@ -1,22 +1,24 @@
-name: Package publication
+name: Publish packages
+run-name: publish ${{ inputs.publication_id }}/${{ inputs.attempt }}
 on:
   workflow_dispatch:
     inputs:
       publication_id:
-        description: Publication identity
+        description: Frozen publication plan
         required: true
-      plan_url:
-        description: Public JSON plan URL
-      plan_json:
-        description: Base64 JSON plan for manual runs
-      callback_url:
-        description: Publication report endpoint; empty disables callbacks
+      attempt:
+        description: Publication attempt
+        required: true
       feed_branch:
         description: Destination feed
+        required: true
         type: choice
         options: [feed, feed-staging]
-        default: feed
-        required: true
+      fault:
+        description: Staging interruption test
+        type: choice
+        options: [none, after_push]
+        default: none
 permissions:
   contents: write
   actions: read
@@ -24,89 +26,31 @@ concurrency:
   group: publish-${{ inputs.feed_branch }}
   cancel-in-progress: false
 env:
-  FEED_ORIGIN: SNodeC/Packages
-  FEED_LABEL: SNode.C
-  PUBLICATION_ID: ${{ inputs.publication_id }}
-  CALLBACK_URL: ${{ inputs.callback_url }}
+  CORECI_ORIGIN: ${{ vars.CORECI_ORIGIN }}
+  REQUEST_ID: ${{ inputs.publication_id }}
+  ATTEMPT: ${{ inputs.attempt }}
   FEED_BRANCH: ${{ inputs.feed_branch }}
-  PLAN_URL: ${{ inputs.plan_url }}
-  PLAN_JSON: ${{ inputs.plan_json }}
+  FAULT: ${{ inputs.fault }}
 jobs:
-  plan:
-    runs-on: ubuntu-24.04
-    outputs:
-      matrix: ${{ steps.plan.outputs.matrix }}
-      owned: ${{ steps.plan.outputs.owned }}
-    steps:
-      - uses: actions/checkout@v4
-      - id: plan
-        env:
-          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
-        run: python3 tools/plan.py
-  download:
-    needs: plan
-    if: needs.plan.outputs.owned == 'true'
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(needs.plan.outputs.matrix) }}
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/download-artifact@v4
-        id: download
-        continue-on-error: true
-        with:
-          name: ${{ matrix.artifact }}
-          run-id: ${{ matrix.wave_run_id }}
-          github-token: ${{ github.token }}
-          path: artifact
-      - uses: actions/github-script@v7
-        if: ${{ always() && steps.download.outcome != 'success' }}
-        env:
-          WAVE_RUN_ID: ${{ matrix.wave_run_id }}
-          ARTIFACT_NAME: ${{ matrix.artifact }}
-        with:
-          script: |
-            let artifacts = [];
-            try {
-              artifacts = await github.paginate(github.rest.actions.listWorkflowRunArtifacts, {
-                ...context.repo, run_id: process.env.WAVE_RUN_ID
-              });
-            } catch (error) {
-              if (error.status !== 404) { throw error; }
-            }
-            const available = artifacts.some(a => a.name === process.env.ARTIFACT_NAME && !a.expired);
-            require('fs').mkdirSync('artifact', {recursive: true});
-            require('fs').writeFileSync('artifact/download.json', JSON.stringify({available}));
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: ${{ matrix.target }}
-          retention-days: 1
-          path: artifact
-          if-no-files-found: ignore
-          overwrite: true
   publish:
-    needs: [plan, download]
-    if: ${{ always() && needs.plan.outputs.owned == 'true' }}
     runs-on: ubuntu-24.04
     environment: publish
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-      - run: |
+      - id: claim
+        env:
+          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
+        run: python3 tools/common.py claim publications
+      - if: steps.claim.outputs.accepted == 'true'
+        run: |
           sudo apt-get update
           sudo apt-get install -y rpm createrepo-c zstd
-      - env:
+      - if: steps.claim.outputs.accepted == 'true'
+        env:
+          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
+          GITHUB_TOKEN: ${{ github.token }}
           PACKAGES_GPG_PRIVATE_KEY: ${{ secrets.PACKAGES_GPG_PRIVATE_KEY }}
           OPENWRT_USIGN_PRIVATE_KEY: ${{ secrets.OPENWRT_USIGN_PRIVATE_KEY }}
           OPENWRT_APK_PRIVATE_KEY: ${{ secrets.OPENWRT_APK_PRIVATE_KEY }}
-          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
-          GPG_FINGERPRINT: D1AAD199DB3D3E6A34B75E3047F6536301C7C67D
         run: python3 tools/publish.py
-      - if: always()
-        env:
-          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
-          CONCLUSION: ${{ job.status }}
-        run: python3 tools/common.py

@@ -1,0 +1,55 @@
+name: Build package
+run-name: build ${{ inputs.request_id }}/${{ inputs.attempt }}
+on:
+  workflow_dispatch:
+    inputs:
+      request_id:
+        description: Frozen build request
+        required: true
+      attempt:
+        description: Build attempt
+        required: true
+      feed_branch:
+        description: Feed branch
+        required: true
+        type: choice
+        options: [feed, feed-staging]
+permissions:
+  contents: read
+env:
+  CORECI_ORIGIN: ${{ vars.CORECI_ORIGIN }}
+  REQUEST_ID: ${{ inputs.request_id }}
+  ATTEMPT: ${{ inputs.attempt }}
+jobs:
+  build:
+    runs-on: ${{ startsWith(inputs.request_id, 'arm.') && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - id: claim
+        env:
+          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
+        run: python3 tools/common.py claim requests
+      - if: steps.claim.outputs.accepted == 'true'
+        env:
+          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
+        run: python3 tools/common.py started requests
+      - if: steps.claim.outputs.accepted == 'true'
+        run: python3 tools/build.py
+      - id: upload
+        if: steps.claim.outputs.accepted == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: coreci-${{ inputs.request_id }}-${{ inputs.attempt }}
+          retention-days: 90
+          path: artifact
+          if-no-files-found: error
+      - if: always() && steps.claim.outputs.accepted == 'true'
+        env:
+          CORECI_CALLBACK_SECRET: ${{ secrets.CORECI_CALLBACK_SECRET }}
+          JOB_STATUS: ${{ job.status }}
+          ARTIFACT_ID: ${{ steps.upload.outputs.artifact-id }}
+          ARTIFACT_DIGEST: ${{ steps.upload.outputs.artifact-digest }}
+        run: python3 tools/common.py finished requests

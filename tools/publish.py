@@ -1,309 +1,343 @@
-"""Retain, index, sign and publish the successful units in one root commit."""
-import datetime
-import email.utils
-import gzip
-import io
+"""Publish the valid items of a claimed, frozen plan using one leased atomic push."""
+
+import json
 import os
 import shutil
+import stat
 import subprocess
+import sys
 import tarfile
+import tempfile
+import time
+import zipfile
 from pathlib import Path
+from urllib.error import HTTPError
+from urllib.request import Request, build_opener
 
-from common import callback, fetch, load_plan, owns_publication, read_json, run, sha256, version, write_json
-from plan import publication_items
+from build import unpack_sdk
+from common import (BRANCHES, COMMIT, DIGEST, FAMILIES, NAME, NATIVE_NAME, NoRedirect, Workflow, capture, digest, fetch,
+                    matches, namespace, positive, read_json, require, run, version, write_json)
+from indices import index
+from metadata import metadata
 
 
-class PublicationError(RuntimeError):
-    def __init__(self, failure, reason):
-        super().__init__(reason)
-        self.failure = failure
+class ItemError(ValueError):
+    def __init__(self, code, message):
+        super().__init__(message)
+        self.code = code
+        return None
 
 
-def sign(*args):
+def group(item):
+    result = [item[key] for key in ("package", "version", "revision")] + [item["target"]["id"]]
+    return result
+
+
+def index_group(target):
+    result = namespace(target), target["codename"] if target["family"] == "deb" else ""
+    return result
+
+
+def native(entry, target):
+    result = (namespace(target), entry["name"], entry["version"], entry["arch"])
+    return result
+
+
+def api(path):
+    origin = os.environ.get("GITHUB_API_URL", "https://api.github.com")
+    url = origin + "/repos/" + os.environ["GITHUB_REPOSITORY"] + "/actions/" + path
+    request = Request(url, headers={"Authorization": "Bearer " + os.environ["GITHUB_TOKEN"],
+                                   "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"})
+    result = build_opener(NoRedirect()).open(request, timeout=30)
+    return result
+
+
+def artifact(item, destination):
+    artifact_id = item["artifact_id"]
+    zip_path = destination / "download.zip"
     try:
-        run(*args)
-    except Exception as error:
-        raise PublicationError("signing", str(error)) from error
-    return None
-
-
-def retained(publications):
-    versions = {}
-    selected = []
-    for publication in reversed(publications):
-        key = (publication["unit"]["package"], publication["target"]["id"])
-        versions.setdefault(key, set())
-        identity = (publication["unit"]["version"], publication["unit"]["revision"])
-        if len(versions[key]) < 2 and identity not in versions[key]:
-            versions[key].add(identity)
-            selected.append(publication)
-    result = list(reversed(selected))
-    return result
-
-
-def release(codename, architectures, files, date):
-    lines = ["Origin: " + os.environ["FEED_ORIGIN"], "Label: " + os.environ["FEED_LABEL"], "Suite: " + codename,
-             "Codename: " + codename, "Components: main", "Architectures: " + " ".join(sorted(architectures)),
-             "Date: " + email.utils.format_datetime(date, usegmt=True), "Acquire-By-Hash: yes", "SHA256:"]
-    for name, (digest, size) in sorted(files.items()):
-        lines.append(f" {digest} {size:16d} {name}")
-    result = "\n".join(lines) + "\n"
-    return result
-
-
-def capture(*args, **kwargs):
-    result = subprocess.check_output(args, text=True, **kwargs).strip()
-    return result
-
-
-def gpg(*args):
-    sign("gpg", "--batch", "--yes", "--homedir", str(Path("signing/gnupg").resolve()), *args)
-    return None
-
-
-def openwrt_tools(catalog):
-    directory = Path("/tmp/codex/build/Packages/publish/sdk")
-    if not directory.exists():
-        sdk = next(target["sdk"] for target in catalog if target["family"] == "apk" and target["arch"] == "x86_64")
-        directory.mkdir(parents=True)
-        archive = directory.parent / "sdk.tar.zst"
-        archive.write_bytes(fetch(sdk["url"]))
-        assert sha256(archive) == sdk["sha256"]
-        run("tar", "--zstd", "-xf", str(archive), "-C", str(directory), "--strip-components=1")
-    result = directory / "staging_dir/host/bin"
-    return result
-
-
-def apt_indices(feed, publications, codename):
-    suite = feed / "apt/dists" / codename
-    shutil.rmtree(suite, ignore_errors=True)
-    entries = [item for item in publications if item["target"]["family"] == "deb" and
-               item["target"]["codename"] == codename]
-    architectures = {item["target"]["arch"] for item in entries}
-    hashes = {}
-    for arch in sorted(architectures):
-        binary = suite / "main" / ("binary-" + arch)
-        binary.mkdir(parents=True)
-        stanzas = []
-        files = sorted({file for item in entries if item["target"]["arch"] == arch for file in item["files"]})
-        for file in files:
-            package = feed / file
-            stanza = capture("dpkg-deb", "--field", str(package))
-            stanza += "\nFilename: " + str(Path(file).relative_to("apt"))
-            stanza += f"\nSize: {package.stat().st_size}\nSHA256: {sha256(package)}\n\n"
-            stanzas.append(stanza)
-        packages = "".join(stanzas).encode()
-        (binary / "Packages").write_bytes(packages)
-        (binary / "Packages.gz").write_bytes(gzip.compress(packages, mtime=0))
-        for name in ("Packages", "Packages.gz"):
-            index = binary / name
-            digest = sha256(index)
-            hashed = binary / "by-hash/SHA256" / digest
-            hashed.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(index, hashed)
-            hashes[str(index.relative_to(suite))] = (digest, index.stat().st_size)
-    (suite / "Release").write_text(release(codename, architectures, hashes, datetime.datetime.now(datetime.timezone.utc)))
-    gpg("--armor", "--detach-sign", "--output", str(suite / "Release.gpg"), str(suite / "Release"))
-    gpg("--clearsign", "--output", str(suite / "InRelease"), str(suite / "Release"))
-    return None
-
-
-def ipk_index(directory):
-    stanzas = []
-    for package in sorted(directory.glob("*.ipk")):
-        with tarfile.open(package) as outer:
-            control = next(member for member in outer if member.name.lstrip("./") == "control.tar.gz")
-            with tarfile.open(fileobj=io.BytesIO(outer.extractfile(control).read())) as inner:
-                member = next(member for member in inner if member.name.lstrip("./") == "control")
-                stanza = inner.extractfile(member).read().decode().rstrip()
-        stanzas.append(stanza + f"\nFilename: {package.name}\nSize: {package.stat().st_size}\nSHA256sum: {sha256(package)}\n\n")
-    (directory / "Packages").write_text("".join(stanzas))
-    return None
-
-
-def place(feed, target, unit, source, verified):
-    family = target["family"]
-    if family == "deb":
-        destination = Path("apt/pool/main") / unit["package"] / target["id"] / version(unit, target)
-    elif family == "rpm":
-        destination = Path("rpm") / target["distribution"] / target["release"] / target["arch"]
-    else:
-        destination = Path("openwrt") / target["release"] / target["arch"]
-    (feed / destination).mkdir(parents=True, exist_ok=True)
-    files = {}
-    packages = []
-    for package in sorted(source.glob("*." + family)):
-        assert str(package.relative_to(source.parent)) in verified
-        relative = destination / package.name
-        output = feed / relative
-        shutil.copy2(package, output)
-        if family == "rpm":
-            sign("rpmsign", "--define", "_gpg_name " + os.environ["GPG_FINGERPRINT"],
-                "--define", "_gpg_path " + str(Path("signing/gnupg").resolve()), "--addsign", str(output))
-            packages.append(capture("rpm", "-qp", "--qf", "%{NAME}", str(output)))
-        elif family == "deb":
-            packages.append(capture("dpkg-deb", "--field", str(output), "Package"))
-        files[str(relative)] = sha256(output)
-    assert files, "no packages in successful unit artifact"
-    result = {"unit": {key: value for key, value in unit.items() if key != "declaration"},
-              "target": {key: value for key, value in target.items()
-                         if key not in ("units", "feed_branch", "feed_commit")},
-              "files": files, "packages": packages}
-    return result
-
-
-def publication_identity(unit, target):
-    result = (unit["package"], target["id"], unit["version"], unit["revision"])
-    return result
-
-
-def publish(plan):
-    feed = Path("feed-work")
-    feed.mkdir()
-    branch = os.environ["FEED_BRANCH"]
-    assert branch in ("feed", "feed-staging")
-    exists = subprocess.run(["git", "ls-remote", "--exit-code", "--heads", "origin", branch], capture_output=True)
-    assert exists.returncode in (0, 2), exists.stderr.decode()
-    commit = None
-    if exists.returncode == 0:
-        run("git", "fetch", "--depth=1", "origin", branch)
-        commit = capture("git", "rev-parse", "FETCH_HEAD")
-        archive = subprocess.check_output(["git", "archive", "FETCH_HEAD"])
-        with tarfile.open(fileobj=io.BytesIO(archive)) as contents:
-            contents.extractall(feed, filter="data")
-    ledger = read_json(feed / "publications.json") if (feed / "publications.json").exists() else []
-    added = []
-    published = []
-    identities = {publication_identity(item["unit"], item["target"]): item for item in ledger}
-    catalog = {target["id"]: target for target in read_json("ci/targets.json")["targets"]}
-    for planned in publication_items(plan, catalog):
-        manifest = Path("artifacts") / planned["target"] / "manifest.json"
-        if not manifest.is_file():
-            evidence = manifest.parent / "download.json"
-            unavailable = evidence.is_file() and read_json(evidence)["available"] is False
-            raise PublicationError("artifact-unavailable" if unavailable else "other", "missing artifact: " + planned["artifact"])
-        data = read_json(manifest)
-        target = catalog[planned["target"]]
-        assert data["target"]["id"] == target["id"], "artifact target mismatch"
-        for file, digest in data["files"].items():
-            path = manifest.parent / file
-            assert path.resolve().is_relative_to(manifest.parent.resolve())
-            assert sha256(path) == digest, "artifact SHA256 mismatch: " + file
-        for requested in planned["units"]:
-            item = next(item for item in data["units"] if item["unit"]["build_id"] == requested["build_id"])
-            unit = item["unit"]
-            assert item["state"] == "succeeded" and unit["action"] == "build"
-            assert all(unit[key] == value for key, value in requested.items()), "artifact unit mismatch"
-            source = manifest.parent / unit["package"]
-            assert source.resolve().is_relative_to(manifest.parent.resolve())
-            identity = publication_identity(unit, target)
-            previous = identities.get(identity)
-            reason = "already published" if previous else ""
-            if previous:
-                incoming = {Path(file).name: digest for file, digest in data["files"].items()
-                            if Path(file).parts[0] == unit["package"]}
-                original = {}
-                for file, digest in previous["files"].items():
-                    if target["family"] == "rpm":
-                        unsigned = Path("signing/unsigned.rpm")
-                        shutil.copy2(feed / file, unsigned)
-                        run("rpmsign", "--delsign", str(unsigned))
-                        digest = sha256(unsigned)
-                        unsigned.unlink()
-                    original[Path(file).name] = digest
-                if incoming != original:
-                    raise PublicationError("immutable-conflict", "different bytes for published version-revision")
-            else:
-                placed = place(feed, target, unit, source, data["files"])
-                added.append(placed)
-                identities[identity] = placed
-            published.append(dict(unit=unit, reason=reason))
-    if added:
-        combined = ledger + added
-        selected = retained(combined)
-        live = {file for item in selected for file in item["files"]}
-        for file in {file for item in combined for file in item["files"]} - live:
-            (feed / file).unlink()
-        shutil.copytree("keys", feed / "keys", dirs_exist_ok=True)
-        write_json(feed / "publications.json", selected)
-        touched = {item["target"]["id"]: item["target"] for item in added}
-        suites = set()
-        tools = None
-        for target in touched.values():
-            family = target["family"]
-            if family == "deb":
-                suites.add(target["codename"])
-            elif family == "rpm":
-                directory = feed / "rpm" / target["distribution"] / target["release"] / target["arch"]
-                run("createrepo_c", str(directory))
-                gpg("--armor", "--detach-sign", "--output", str(directory / "repodata/repomd.xml.asc"),
-                    str(directory / "repodata/repomd.xml"))
-            else:
-                if tools is None:
-                    tools = openwrt_tools(read_json("ci/targets.json")["targets"])
-                directory = feed / "openwrt" / target["release"] / target["arch"]
-                if family == "ipk":
-                    ipk_index(directory)
-                    sign(str(tools / "usign"), "-S", "-s", "signing/usign.key", "-m", str(directory / "Packages"),
-                        "-x", str(directory / "Packages.sig"))
-                else:
-                    sign(str(tools / "apk"), "mkndx", "--allow-untrusted", "--sign-key", str(Path("signing/apk.pem").resolve()),
-                         "--output", str(directory / "packages.adb"), *[str(p) for p in sorted(directory.glob("*.apk"))])
-        for codename in sorted(suites):
-            apt_indices(feed, selected, codename)
-        environment = dict(os.environ, GIT_DIR=str(Path(".git").resolve()), GIT_WORK_TREE=str(feed.resolve()),
-                           GIT_INDEX_FILE=str(Path("feed.index").resolve()), GIT_AUTHOR_NAME="github-actions[bot]",
-                           GIT_AUTHOR_EMAIL="41898282+github-actions[bot]@users.noreply.github.com",
-                           GIT_COMMITTER_NAME="github-actions[bot]", GIT_COMMITTER_EMAIL="41898282+github-actions[bot]@users.noreply.github.com")
-        run("git", "read-tree", "--empty", env=environment)
-        paths = [path.name for path in feed.iterdir()]
-        run("git", "add", "--", *paths, cwd=feed, env=environment)
-        tree = capture("git", "write-tree", env=environment)
-        new_commit = capture("git", "commit-tree", tree, "-m", "Publish " + os.environ["PUBLICATION_ID"], env=environment)
-    if owns_publication():
-        if added:
-            try:
-                run("git", "push", "--force-with-lease=refs/heads/" + branch + ":" + (commit or ""),
-                    "origin", new_commit + ":refs/heads/" + branch)
-            except Exception as error:
-                raise PublicationError("feed-push", str(error)) from error
-            commit = new_commit
-    else:
-        published = []
-        commit = None
-    return published, commit
-
-
-def main():
-    plan = load_plan()
-    publication_items(plan, {target["id"]: target for target in read_json("ci/targets.json")["targets"]})
-    if owns_publication():
-        try:
-            try:
-                os.umask(0o077)
-                Path("signing/gnupg").mkdir(parents=True, mode=0o700)
-                for environment, name in (("PACKAGES_GPG_PRIVATE_KEY", "gpg.asc"),
-                                          ("OPENWRT_USIGN_PRIVATE_KEY", "usign.key"),
-                                          ("OPENWRT_APK_PRIVATE_KEY", "apk.pem")):
-                    Path("signing", name).write_text(os.environ[environment])
-                gpg("--import", "signing/gpg.asc")
-            except Exception as error:
-                raise PublicationError("signing", str(error)) from error
-            published, commit = publish(plan)
-        except Exception as error:
-            failure = getattr(error, "failure", "other")
-            for item in plan["items"]:
-                for unit in item["units"]:
-                    print(f'{unit["build_id"]}: failure={failure}: {error}', flush=True)
-                    callback("unit", "failed", build_id=unit["build_id"], phase="publish", reason=str(error),
-                             failure=failure)
+        with api(f"artifacts/{artifact_id}") as response:
+            info = json.load(response)
+    except HTTPError as error:
+        if error.code == 404:
+            with api(f'runs/{item["run_id"]}') as response:
+                require(json.load(response)["id"] == item["run_id"], "artifact run identity mismatch")
+            raise ItemError("artifact-expired", "artifact missing from its origin run") from error
+        raise
+    require(info["id"] == artifact_id and info["workflow_run"]["id"] == item["run_id"] and
+            info["name"] == f'coreci-{item["request"]}-{item["attempt"]}', "artifact identity mismatch")
+    if info["expired"]:
+        raise ItemError("artifact-expired", "artifact expired")
+    try:
+        with api(f"artifacts/{artifact_id}/zip") as stream, zip_path.open("wb") as output:
+            shutil.copyfileobj(stream, output)
+    except HTTPError as error:
+        if error.code == 302:
+            location = error.headers["Location"]
+            require(location.startswith("https://"), "invalid artifact download location")
+            fetch(location, zip_path)
+        elif error.code == 410:
+            raise ItemError("artifact-expired", "artifact expired during download") from error
+        else:
             raise
-        for item in published:
-            print(item["unit"]["build_id"] + ": " + (item["reason"] or "published"), flush=True)
-            callback("unit", "succeeded", build_id=item["unit"]["build_id"], phase="publish", feed_commit=commit,
-                     reason=item["reason"])
+    require(digest(zip_path) == item["artifact_digest"], "artifact digest mismatch")
+    control = {"manifest.json", "inventory.json"}
+    with zipfile.ZipFile(zip_path) as archive:
+        files = {entry.filename: entry for entry in archive.infolist()}
+        require(len(files) == len(archive.infolist()) and control <= files.keys(), "invalid artifact contents")
+        manifest = json.loads(archive.read("manifest.json"))
+        expected = {key: item[key] for key in ("package", "version", "revision")}
+        require(manifest["unit"] == expected and manifest["target"] == item["target"]["id"] and
+                all(manifest[key] == item[key] for key in ("request", "attempt")), "manifest identity mismatch")
+        checksums = manifest["files"]
+        require(bool(checksums) and files.keys() == control | checksums.keys(), "artifact manifest contents mismatch")
+        declared = json.loads(archive.read("inventory.json"))
+        require(declared == item["inventory"], "artifact inventory does not match the build report")
+        for filename, checksum in checksums.items():
+            mode = stat.S_IFMT(files[filename].external_attr >> 16)
+            require(matches(NATIVE_NAME, filename) and filename.endswith("." + item["target"]["family"]) and
+                    mode in (0, stat.S_IFREG) and matches(DIGEST, checksum), "unsafe artifact member")
+            package = destination / filename
+            with archive.open(filename) as source, package.open("wb") as output:
+                shutil.copyfileobj(source, output)
+            require(digest(package) == checksum, "package digest mismatch")
+    return checksums
+
+
+def check_plan(plan, workflow):
+    branch = os.environ["FEED_BRANCH"]
+    fault = os.environ["FAULT"]
+    require(branch in BRANCHES and plan["feed_branch"] == branch and fault == plan["fault"] and
+            (fault == "none" or (fault == "after_push" and branch == "feed-staging")), "invalid feed or fault")
+    require(plan["publication"] == workflow.owner["id"] and plan["attempt"] == workflow.owner["attempt"] and
+            matches(COMMIT, plan["expected_head"]) and time.time() < plan["deadline"], "invalid or expired publication")
+    require(plan["items"] or plan["retirements"] or plan["retire_legacy_apt"], "empty publication")
+    seen = set()
+    for item in plan["items"]:
+        target = item["target"]
+        require(matches(NAME, item["request"]) and item["request"] not in seen and
+                all(positive(item[key]) for key in ("attempt", "revision", "run_id", "artifact_id")) and
+                all(matches(DIGEST, item[key]) for key in ("identity", "artifact_digest")), "invalid publication item")
+        require(target["family"] in FAMILIES and all(matches(NAME, target[key]) for key in
+                ("distribution", "release", "codename", "arch", "id")) and matches(NAME, item["package"]),
+                "invalid publication target")
+        seen.add(item["request"])
+    return None
+
+
+def remote_refs(*patterns):
+    text = capture("git", "ls-remote", "--refs", "origin", *patterns)
+    result = {ref: commit for commit, ref in (line.split("\t") for line in text.splitlines())}
+    return result
+
+
+def stream_tree(feed, branch, expected):
+    run("git", "fetch", "--depth=1", "origin", "refs/heads/" + branch)
+    require(capture("git", "rev-parse", "FETCH_HEAD") == expected, "expected feed head changed")
+    feed.mkdir()
+    with subprocess.Popen(["git", "archive", expected], stdout=subprocess.PIPE) as process:
+        with tarfile.open(fileobj=process.stdout, mode="r|") as archive:
+            archive.extractall(feed, filter="data")
+        require(process.wait() == 0, "cannot stream feed tree")
+    return None
+
+
+def push(feed, plan, workflow, workspace):
+    branch = plan["feed_branch"]
+    head = "refs/heads/" + branch
+    prefix = "refs/snapshots/" + branch + "/"
+    fresh = prefix + plan["publication"]
+    delete = plan["delete_snapshots"]
+    refs = remote_refs(prefix + "*")
+    require(fresh not in refs and len(delete) == len(set(delete)), "snapshot already exists or duplicate deletion")
+    for ref in delete:
+        require(ref.startswith(prefix) and matches(NAME, ref[len(prefix):]) and ref in refs and
+                ref != prefix + "pre-x" and refs[ref] != plan["expected_head"], "protected or unknown snapshot")
+    environment = dict(os.environ, GIT_DIR=str(Path(".git").resolve()), GIT_WORK_TREE=str(feed),
+                       GIT_INDEX_FILE=str(workspace / "index"), GIT_AUTHOR_NAME="github-actions[bot]",
+                       GIT_AUTHOR_EMAIL="41898282+github-actions[bot]@users.noreply.github.com",
+                       GIT_COMMITTER_NAME="github-actions[bot]",
+                       GIT_COMMITTER_EMAIL="41898282+github-actions[bot]@users.noreply.github.com")
+    run("git", "add", "--", ".", cwd=feed, env=environment)
+    tree = capture("git", "write-tree", env=environment)
+    commit = capture("git", "commit-tree", tree, "-m", "Publish " + plan["publication"])
+    workflow.document(Path(".claim").read_text())
+    require(time.time() < plan["deadline"], "publication deadline elapsed before push")
+    leases = [f"--force-with-lease={head}:{plan['expected_head']}", f"--force-with-lease={fresh}:"]
+    leases.extend(f"--force-with-lease={ref}:{refs[ref]}" for ref in delete)
+    run("git", "push", "--atomic", *leases, "origin", f"{commit}:{head}", f"{commit}:{fresh}",
+        *[":" + ref for ref in delete])
+    return commit
+
+
+def load_ledger(feed):
+    path = feed / "publications.json"
+    data = read_json(path)
+    if isinstance(data, list):
+        data = dict(entries=[], receipts=[], by_hash={},
+                    legacy=[item for item in data if item["target"]["family"] != "deb"])
+    return data
+
+
+def import_legacy(feed, ledger, plan, touched, apk):
+    pending = []
+    snapshot = "refs/snapshots/" + plan["feed_branch"] + "/pre-x"
+    date = None
+    for entry in ledger["legacy"]:
+        target = entry["target"]
+        if namespace(target) in touched:
+            if date is None:
+                run("git", "fetch", "--depth=1", "origin", snapshot)
+                date = int(capture("git", "show", "-s", "--format=%ct", "FETCH_HEAD"))
+            record = {**entry["unit"], "target": target, "legacy": True}
+            record["published_at"] = plan["legacy_dates"].get("/".join(map(str, group(record))), date)
+            known = []
+            for path in sorted(entry["files"]):
+                package = feed / path
+                data = metadata(target["family"], package, apk=apk)
+                known.append(dict(data, path=path, sha256="unknown", served_sha256=digest(package)))
+            ledger["entries"].append(dict(record, inventory=known))
+        else:
+            pending.append(entry)
+    ledger["legacy"] = pending
+    return None
+
+
+def signers(workspace):
+    files = {}
+    for name, variable in (("gpg", "PACKAGES_GPG_PRIVATE_KEY"), ("usign", "OPENWRT_USIGN_PRIVATE_KEY"),
+                           ("apk", "OPENWRT_APK_PRIVATE_KEY")):
+        path = workspace / (name + ".key")
+        path.touch(mode=0o600)
+        path.write_text(os.environ.pop(variable))
+        files[name] = path
+    home = workspace / "gnupg"
+    home.mkdir(mode=0o700)
+
+    def gpg(*args):
+        result = capture("gpg", "--batch", "--yes", "--homedir", str(home), *args)
+        return result
+
+    gpg("--import", str(files["gpg"]))
+    pairs = gpg("--with-colons", "--list-secret-keys").splitlines()
+    fingerprint = next(line.split(":")[9] for line in pairs if line.startswith("fpr:"))
+    return files, gpg, home, fingerprint
+
+
+def place(feed, item, source, checksums, known, apk, home, fingerprint):
+    target = item["target"]
+    family = target["family"]
+    space = namespace(target)
+    inventory, pending, identities = [], [], set()
+    for filename, checksum in sorted(checksums.items()):
+        try:
+            record = metadata(family, source / filename, apk=apk)
+        except subprocess.CalledProcessError as error:
+            raise ItemError("malformed-artifact", "cannot read native package metadata") from error
+        require(record["version"] == version(item, target), "native artifact version mismatch")
+        require(record["arch"] in {target["arch"], "all", "noarch"}, "native artifact architecture mismatch")
+        token = native(record, target)
+        require(token not in identities, "duplicate split identity")
+        identities.add(token)
+        previous = known.get(token)
+        if previous:
+            if previous["sha256"] != checksum:
+                raise ItemError("immutable-conflict", "different original digest for native identity")
+            inventory.append(previous)
+        else:
+            path = space / filename
+            if family == "deb":
+                path = space / "pool/main" / item["package"] / target["id"] / filename
+            if (feed / path).exists():
+                raise ItemError("immutable-conflict", "native filename already present in namespace")
+            pending.append((filename, dict(record, path=path.as_posix(), sha256=checksum)))
+    for filename, record in pending:
+        path = feed / record["path"]
+        path.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(source / filename, path)
+        if family == "rpm":
+            run("rpmsign", "--define", "_gpg_name " + fingerprint, "--define", "_gpg_path " + str(home),
+                "--addsign", str(path))
+        record["served_sha256"] = digest(path)
+        known[native(record, target)] = record
+        inventory.append(record)
+    return inventory, bool(pending)
+
+
+def publish(plan, workflow, workspace):
+    feed = workspace / "feed"
+    stream_tree(feed, plan["feed_branch"], plan["expected_head"])
+    ledger = load_ledger(feed)
+    files, gpg, home, fingerprint = signers(workspace)
+    touched = {index_group(item["target"]): item["target"] for item in plan["items"]}
+    expired = {(tuple(entry)) for entry in plan["retirements"]}
+    for entry in ledger["entries"]:
+        if tuple(group(entry)) in expired:
+            target = entry["target"]
+            touched[index_group(target)] = target
+    tools = workspace / "openwrt"
+    if any(target["family"] in {"ipk", "apk"} for target in touched.values()):
+        catalog = read_json("ci/targets.json")["targets"]
+        sdk = next(target for target in catalog if target["family"] == "apk" and target["arch"] == "x86_64")
+        unpack_sdk(sdk, tools)
+    tools /= "staging_dir/host/bin"
+    apk = str(tools / "apk")
+    import_legacy(feed, ledger, plan, {space for space, _ in touched}, apk)
+    known = {native(record, entry["target"]): record for entry in ledger["entries"] for record in entry["inventory"]}
+    results = []
+    for number, item in enumerate(plan["items"]):
+        receipt = {key: item[key] for key in ("request", "revision", "identity", "artifact_digest")}
+        receipt.update(publication=plan["publication"], attempt=plan["attempt"], inventory=[])
+        source = workspace / f"artifact-{number}"
+        source.mkdir()
+        try:
+            checksums = artifact(item, source)
+            inventory, added = place(feed, item, source, checksums, known, apk, home, fingerprint)
+            entry = {key: item[key] for key in ("package", "version", "revision", "target", "identity")}
+            if added or not any(group(existing) == group(entry) for existing in ledger["entries"]):
+                ledger["entries"].append(dict(entry, inventory=inventory, published_at=int(time.time())))
+            receipt.update(outcome="published", reason="" if added else "already published", inventory=inventory)
+        except (ValueError, TypeError, KeyError, RuntimeError, zipfile.BadZipFile, tarfile.TarError, StopIteration) as error:
+            receipt.update(outcome="failed", reason=str(error), failure=getattr(error, "code", "malformed-artifact"))
+        results.append(receipt)
+    old_paths = {record["path"] for entry in ledger["entries"] for record in entry["inventory"]}
+    old_paths.update(path for history in ledger["by_hash"].values() for gen in history for path in gen["paths"])
+    ledger["entries"] = [entry for entry in ledger["entries"] if tuple(group(entry)) not in expired]
+    for target in touched.values():
+        if target["family"] == "deb":
+            index(feed, ledger, target, fingerprint, tools, gpg, files)
+    live = {record["path"] for entry in ledger["entries"] for record in entry["inventory"]}
+    live.update(path for history in ledger["by_hash"].values() for gen in history for path in gen["paths"])
+    for path in old_paths - live:
+        (feed / path).unlink()
+    for target in touched.values():
+        if target["family"] != "deb":
+            index(feed, ledger, target, fingerprint, tools, gpg, files)
+    if plan["retire_legacy_apt"]:
+        for directory in ("apt/dists", "apt/pool"):
+            shutil.rmtree(feed / directory, ignore_errors=True)
+    acknowledged = {tuple(key) for key in plan["acknowledged_receipts"]}
+    ledger["receipts"] = [r for r in ledger["receipts"]
+                          if (r["publication"], r["attempt"], r["request"]) not in acknowledged] + results
+    shutil.copytree("keys", feed / "keys", dirs_exist_ok=True)
+    write_json(feed / "publications.json", ledger)
+    commit = push(feed, plan, workflow, workspace)
+    if plan["fault"] == "after_push":
+        sys.exit("qualification fault after successful feed push")
+    for receipt in results:
+        workflow.report("item", receipt=json.dumps(receipt), feed_commit=commit)
     return None
 
 
 if __name__ == "__main__":
-    main()
+    workflow = Workflow("publications")
+    plan = read_json(".document")
+    check_plan(plan, workflow)
+    workflow.report("started")
+    with tempfile.TemporaryDirectory(dir=os.environ["RUNNER_TEMP"]) as directory:
+        try:
+            publish(plan, workflow, Path(directory))
+        except Exception as error:
+            workflow.report("finished", outcome="failed", reason=str(error))
+            raise
+    workflow.report("finished", outcome="published")
