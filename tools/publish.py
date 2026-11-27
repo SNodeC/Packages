@@ -293,7 +293,8 @@ def publish(plan, workflow, workspace):
         try:
             checksums = artifact(item, source)
             inventory, added = place(feed, item, source, checksums, known, apk, home, fingerprint)
-            entry = {key: item[key] for key in ("package", "version", "revision", "target", "identity")}
+            entry = {key: item[key] for key in ("package", "version", "revision", "target", "identity",
+                                               "repo", "commit", "ci_commit", "bindings", "closure")}
             if added or not any(group(existing) == group(entry) for existing in ledger["entries"]):
                 ledger["entries"].append(dict(entry, inventory=inventory, published_at=int(time.time())))
             receipt.update(outcome="published", reason="" if added else "already published", inventory=inventory)

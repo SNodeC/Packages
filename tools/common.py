@@ -193,7 +193,7 @@ class Workflow:
         return None
 
 
-def workflow_cli():
+if __name__ == "__main__":
     import sys
 
     action, kind = sys.argv[1:]
@@ -211,12 +211,8 @@ def workflow_cli():
         checksum = os.environ.get("ARTIFACT_DIGEST", "")
         if status == "success" and artifact:
             require(matches(DIGEST, checksum), "missing artifact digest")
+            timings = dict(read_json("artifact/manifest.json")["timings"], upload=int(time.time()) - int(os.environ["UPLOAD_STARTED"]))
             workflow.report("finished", outcome="built", artifact_id=artifact,
-                            artifact_digest=checksum, inventory=Path("artifact/inventory.json").read_text())
+                            artifact_digest=checksum, inventory=Path("artifact/inventory.json").read_text(), timings=json.dumps(timings))
         else:
             workflow.report("finished", outcome="failed", reason=kind)
-    return None
-
-
-if __name__ == "__main__":
-    workflow_cli()

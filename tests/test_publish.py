@@ -32,7 +32,8 @@ def command(*args):
 def item(name, revision, target=DEB):
     result = dict(package=name, version="1.0.0", revision=revision, request=f"{name}-{revision}",
                   target=target, identity="a" * 64, artifact_id=5, artifact_digest="b" * 64,
-                  attempt=1, run_id=42)
+                  attempt=1, run_id=42, repo="fixture/" + name, commit="a" * 40,
+                  ci_commit="b" * 40, bindings=[], closure=[])
     return result
 
 

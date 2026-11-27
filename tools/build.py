@@ -6,6 +6,7 @@ import os
 import shutil
 import subprocess
 import tarfile
+import time
 from pathlib import Path
 
 from common import (COMMIT, DIGEST, FAMILIES, NAME, NATIVE_NAME, digest, fetch, matches, positive, read_json,
@@ -203,6 +204,7 @@ def hook(unit, target, action, dependencies):
 
 
 def build(inputs):
+    start = time.monotonic()
     target = inputs["target"]
     family = target["family"]
     openwrt = family in OPENWRT
@@ -245,15 +247,19 @@ def build(inputs):
                 hook(unit, target, "ci/package/openwrt-register.sh", dependencies[package])
             feeds = sorted({p for declared in declarations.values() for p in resolved_packages(declared, target)})
             builder("sh", "-ec", 'cd /work/sdk; ./scripts/feeds update -a; ./scripts/feeds install "$@"', "sh", *feeds)
+            staging = time.monotonic()
             exact_dependencies(inputs)
             for unit in closure:
                 package = unit["package"]
                 hook(unit, target, declarations[package]["build"]["openwrt"], dependencies[package])
         else:
             install(family, target_packages)
+            staging = time.monotonic()
             exact_dependencies(inputs)
             checkout(inputs)
+        compiling = time.monotonic()
         hook(inputs, target, declarations[root]["build"]["openwrt" if openwrt else family], dependencies[root])
+        timings = dict(setup=round(staging - start), staging=round(compiling - staging), build=round(time.monotonic() - compiling))
         path = WORK / "output" / root
         outputs = sorted(path.glob("*." + family))
         require(outputs and all(output.is_file() and not output.is_symlink() for output in outputs),
@@ -270,7 +276,7 @@ def build(inputs):
             shutil.copyfile(output, artifact / output.name)
         write_json(artifact / "inventory.json", inventory)
         write_json(artifact / "manifest.json", dict(unit=identity(inputs), target=target["id"],
-                   request=os.environ["REQUEST_ID"], attempt=int(os.environ["ATTEMPT"]),
+                   request=os.environ["REQUEST_ID"], attempt=int(os.environ["ATTEMPT"]), timings=timings,
                    files={entry["file"]: entry["sha256"] for entry in inventory}))
     finally:
         subprocess.run(["docker", "rm", "-f", CONTAINER], check=False)
