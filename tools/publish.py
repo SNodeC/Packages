@@ -42,7 +42,7 @@ def retained(publications):
 
 
 def release(codename, architectures, files, date):
-    lines = ["Origin: SNodeC/Packages", "Label: SNode.C", "Suite: " + codename,
+    lines = ["Origin: " + os.environ["FEED_ORIGIN"], "Label: " + os.environ["FEED_LABEL"], "Suite: " + codename,
              "Codename: " + codename, "Components: main", "Architectures: " + " ".join(sorted(architectures)),
              "Date: " + email.utils.format_datetime(date, usegmt=True), "Acquire-By-Hash: yes", "SHA256:"]
     for name, (digest, size) in sorted(files.items()):

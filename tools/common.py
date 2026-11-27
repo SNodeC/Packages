@@ -32,6 +32,13 @@ def fetch(url):
     return result
 
 
+def resolved_packages(declaration, target):
+    family = "openwrt" if target["family"] in ("ipk", "apk") else target["family"]
+    lists = declaration["build_dependencies"]
+    result = lists[family] + lists.get(f'{family}@{target["distribution"]}-{target["release"]}', [])
+    return result
+
+
 def load_plan():
     inline = os.environ.get("PLAN_JSON", "")
     url = os.environ.get("PLAN_URL", "")

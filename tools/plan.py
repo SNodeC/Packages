@@ -1,4 +1,4 @@
-"""Resolve a public plan and tag-bound declarations into the Actions matrix."""
+"""Resolve a public plan and repository-owned declarations into the Actions matrix."""
 import json
 import os
 import re
@@ -17,20 +17,37 @@ def prepare(plan, catalog, repositories):
         target = dict(catalog[planned["id"]])
         assert any(unit["action"] == "build" for unit in planned["units"])
         seen = set()
+        selected = {}
         for unit in planned["units"]:
             assert unit["repo"] in repositories
-            assert re.fullmatch(r"[0-9a-f]{40}", unit["commit"])
+            assert all(re.fullmatch(r"[0-9a-f]{40}", unit[key]) for key in ("commit", "ci_commit"))
             declaration = json.loads(fetch(
-                f'https://raw.githubusercontent.com/{unit["repo"]}/{unit["commit"]}/ci/packages.json'))
-            assert declaration["schema"] == 1
+                f'https://raw.githubusercontent.com/{unit["repo"]}/{unit["ci_commit"]}/ci/packages.json'))
+            assert type(declaration["schema"]) is int and declaration["schema"] == 2
             assert all(isinstance(declaration["build_dependencies"].get(family), list)
                        for family in ("deb", "rpm", "openwrt"))
+            for selector, packages in declaration["build_dependencies"].items():
+                assert re.fullmatch(r"(deb|rpm|openwrt)(@[A-Za-z0-9._-]+-[A-Za-z0-9._-]+)?", selector)
+                assert isinstance(packages, list) and all(isinstance(name, str) and name for name in packages)
+            for hook in declaration["build"].values():
+                assert re.fullmatch(r"ci/[A-Za-z0-9._-]+(/[A-Za-z0-9._-]+)*", hook)
+                assert not {".", ".."} & set(hook.split("/"))
+            requirements = declaration["depends_on"]
+            assert isinstance(requirements, list)
+            assert all(re.fullmatch(r"(>=|>|<=|<|==)(0|[1-9][0-9]*)(\.(0|[1-9][0-9]*)){0,2}"
+                                    r"(,(>=|>|<=|<|==)(0|[1-9][0-9]*)(\.(0|[1-9][0-9]*)){0,2})*", item["version"])
+                       for item in requirements)
+            assert len({item["package"] for item in requirements}) == len(requirements)
             assert declaration["package"] == unit["package"]
             assert target["id"] in declaration["targets"]
-            assert set(declaration["depends_on"]) <= seen
+            assert {item["package"] for item in requirements} <= seen
+            assert unit["dependencies"] == [dict(package=item["package"], version=selected[item["package"]]["version"],
+                                                 revision=selected[item["package"]]["revision"])
+                                             for item in sorted(requirements, key=lambda item: item["package"])]
             assert unit["action"] in ("build", "reuse")
             unit["declaration"] = declaration
             seen.add(unit["package"])
+            selected[unit["package"]] = unit
         target["units"] = planned["units"]
         target["feed_branch"] = plan["feed_branch"]
         target["feed_commit"] = feed_commit
