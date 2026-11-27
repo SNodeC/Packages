@@ -1,3 +1,4 @@
+import gzip
 import io
 import json
 import os
@@ -8,6 +9,7 @@ import tarfile
 import tempfile
 import time
 import unittest
+import xml.etree.ElementTree as ET
 import zipfile
 from contextlib import chdir
 from pathlib import Path
@@ -144,11 +146,11 @@ class PublisherTests(unittest.TestCase):
             shutil.copyfile(source, directory / source.name)
             return {source.name: digest(source)}
 
+        self.addCleanup(command, "gpgconf", "--homedir", str(workspace / "gnupg"), "--kill", "gpg-agent")
         with patch.dict(os.environ, PACKAGES_GPG_PRIVATE_KEY=private,
                         OPENWRT_USIGN_PRIVATE_KEY="fixture", OPENWRT_APK_PRIVATE_KEY="fixture"), \
                 patch("publish.artifact", side_effect=copy):
             publisher.publish(plan, self.workflow, workspace)
-        command("gpgconf", "--homedir", str(workspace / "gnupg"), "--kill", "gpg-agent")
         head = publisher.remote_refs("refs/heads/feed-staging")["refs/heads/feed-staging"]
         return workspace / "feed", head
 
@@ -270,6 +272,36 @@ class PublisherTests(unittest.TestCase):
         self.assertEqual(rpm_entry["served_sha256"], digest(rpm_path))
         self.assertEqual(ipk_entry["served_sha256"], digest(ipk_path))
         self.assertEqual(ipk_entry["runtime_dependencies"], ["runtime"])
+        publisher.index(feed, ledger, RPM, "fixture", self.root, Mock(), {})
+        location = ET.parse(rpm / "repodata/repomd.xml").find(".//{*}data[@type='primary']/{*}location")
+        primary = rpm / location.attrib["href"]
+        contents = (gzip.decompress(primary.read_bytes()) if primary.suffix == ".gz"
+                    else subprocess.check_output(["zstd", "-dc", str(primary)]))
+        self.assertIn(rpm_path.name.encode(), contents)
+        with patch("indices.run") as signer:
+            key = self.root / "usign.key"
+            publisher.index(feed, ledger, IPK, "fixture", self.root, Mock(), {"usign": key})
+        self.assertIn(ipk_path.name, (ipk / "Packages").read_text())
+        self.assertEqual(gzip.decompress((ipk / "Packages.gz").read_bytes()), (ipk / "Packages").read_bytes())
+        signer.assert_called_once_with(str(self.root / "usign"), "-S", "-s", str(key),
+                                       "-m", str(ipk / "Packages"), "-x", str(ipk / "Packages.sig"))
+        return None
+
+    def test_staging_fault_leaves_receipt_in_pushed_snapshot_without_callback(self):
+        expected = self.initialize_feed([])
+        private = self.signing_key()
+        package = make_deb(self.root, "fixture", 1)
+        plan = self.plan("fault", expected, [item("fixture", 1)], fault="after_push")
+        with self.assertRaisesRegex(SystemExit, "after successful feed push"):
+            self.execute_plan(plan, {"fixture-1": package}, private)
+        self.workflow.report.assert_not_called()
+        head = publisher.remote_refs("refs/heads/feed-staging")["refs/heads/feed-staging"]
+        self.assertNotEqual(head, expected)
+        refs = publisher.remote_refs("refs/snapshots/feed-staging/*")
+        self.assertEqual(refs["refs/snapshots/feed-staging/fault"], head)
+        receipt, = json.loads(command("git", "show", head + ":publications.json"))["receipts"]
+        self.assertEqual((receipt["publication"], receipt["request"], receipt["outcome"]),
+                         ("fault", "fixture-1", "published"))
         return None
 
     def test_expected_head_and_pre_x_snapshots_are_protected(self):
