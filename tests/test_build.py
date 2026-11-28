@@ -32,34 +32,50 @@ class BuildTests(unittest.TestCase):
         temporary = self.enterContext(tempfile.TemporaryDirectory(dir=root))
         self.enterContext(chdir(temporary))
         self.enterContext(patch.dict(os.environ, GITHUB_REPOSITORY="fixture/packages",
-                                    REQUEST_ID="b1", ATTEMPT="1", RUNNER_ARCH="X64"))
+                                    REQUEST_ID="b.1", ATTEMPT="1", RUNNER_ARCH="X64"))
         return None
 
-    def test_selectors_match_only_the_distribution_and_release(self):
-        declaration = dict(build_dependencies={"deb": ["base"], "rpm": ["native"], "openwrt": ["feed"],
-                                               "rpm@rocky-9": ["compiler"], "openwrt@openwrt-24.10": ["extra"]})
-        for id, expected in (("rocky-9-x86_64", ["native", "compiler"]), ("rocky-10-x86_64", ["native"]),
-                             ("debian-trixie-amd64", ["base"]), ("openwrt-24.10-x86_64", ["feed", "extra"]),
-                             ("openwrt-25.12-x86_64", ["feed"])):
+    def test_selectors_match_distribution_release_and_optional_architecture(self):
+        declaration = dict(build_dependencies={"rpm": ["native"], "rpm@rocky-9": ["compiler"],
+                                               "rpm@rocky-9-x86_64": ["x86"], "deb@debian-trixie-amd64": ["amd64"],
+                                               "openwrt@openwrt-24.10-aarch64_cortex-a53": ["extra"]})
+        for id, expected in (("rocky-9-x86_64", ["native", "compiler", "x86"]), ("rocky-9-aarch64", ["native", "compiler"]),
+                             ("rocky-10-x86_64", ["native"]), ("debian-trixie-amd64", ["amd64"]),
+                             ("debian-trixie-arm64", []), ("openwrt-24.10-aarch64_cortex-a53", ["extra"]),
+                             ("openwrt-24.10-x86_64", []), ("openwrt-25.12-x86_64", [])):
             self.assertEqual(resolved_packages(declaration, target(id)), expected)
         return None
 
     def test_request_validation_rejects_mismatching_owner_environment_and_closure(self):
+        Path("ci").mkdir()
+        (Path("ci") / "targets.json").write_bytes((ROOT / "ci/targets.json").read_bytes())
         work = unit("fixture", repo="owner/fixture", target=target("debian-trixie-amd64"), contract="Xv2",
                     feed_commit="f" * 40, closure=[unit("lib", repository="owner/lib", bindings=[])])
-        request = dict(request="b1", attempt=1, inputs=work)
+        request = dict(request="b.1", attempt=1, inputs=work)
         self.assertEqual(build.check_request(request), work)
         for key, value in (("request", "b2"), ("attempt", 2)):
             with self.assertRaises(ValueError):
                 build.check_request(dict(request, **{key: value}))
         with patch.dict(os.environ, RUNNER_ARCH="ARM64"), self.assertRaisesRegex(ValueError, "runner"):
             build.check_request(request)
+        with patch.dict(os.environ, REQUEST_ID="arm.1"), self.assertRaisesRegex(ValueError, "runner"):
+            build.check_request(dict(request, request="arm.1"))
         for key, value in (("feed_commit", "feed"), ("commit", "main"), ("repo", "owner/../invalid")):
             with self.assertRaises(ValueError):
                 build.check_request(dict(request, inputs=dict(work, **{key: value})))
         work["closure"][0]["bindings"] = [dict(package="later")]
         with self.assertRaisesRegex(ValueError, "topological"):
             build.check_request(request)
+        return None
+
+    def test_runner_label_and_architecture_come_from_the_catalog(self):
+        Path("ci").mkdir()
+        write_json(Path("ci/targets.json"), dict(runners={"fixture-new-runner": dict(request_prefix="new", runner_arch="RISCV64")}))
+        frozen = dict(target("debian-trixie-amd64"), runner="fixture-new-runner")
+        inputs = unit("fixture", repo="owner/fixture", target=frozen, contract="Xv2", feed_commit="f" * 40, closure=[])
+        request = dict(request="new.1", attempt=1, inputs=inputs)
+        with patch.dict(os.environ, REQUEST_ID="new.1", RUNNER_ARCH="RISCV64"):
+            self.assertEqual(build.check_request(request), inputs)
         return None
 
     def test_catalog_environment_is_content_addressed(self):
@@ -159,7 +175,7 @@ class BuildTests(unittest.TestCase):
             name = path.stem
             write_json(path, dict(schema=2, package=name, depends_on=[dict(package=p) for p in graph[name]],
                                   build_dependencies=dict(openwrt=["dependency"]),
-                                  build=dict(openwrt="ci/package/build.sh")))
+                                  build=dict(openwrt="ci/package/build.sh", openwrt_register=f"ci/hooks/{name}-register.sh")))
             return None
 
         def invoke(unit, target, action, dependencies):
@@ -179,8 +195,8 @@ class BuildTests(unittest.TestCase):
                 patch("build.subprocess.run"), patch("build.metadata", return_value={"name": "app"}):
             build.build(app)
         sdk.assert_called_once_with(app["target"])
-        register = "ci/package/openwrt-register.sh"
-        self.assertEqual(trace, [("lib", register, []), ("mid", register, ["lib"]), ("app", register, ["mid"]),
+        self.assertEqual(trace, [("lib", "ci/hooks/lib-register.sh", []), ("mid", "ci/hooks/mid-register.sh", ["lib"]),
+                                ("app", "ci/hooks/app-register.sh", ["mid"]),
                                 "resolve feeds", "install", ("lib", "ci/package/build.sh", []),
                                 ("mid", "ci/package/build.sh", ["lib"]), ("app", "ci/package/build.sh", ["mid"]),
                                 "validate output"])

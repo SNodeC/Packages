@@ -22,7 +22,10 @@ env:
   ATTEMPT: ${{ inputs.attempt }}
 jobs:
   build:
-    runs-on: ${{ startsWith(inputs.request_id, 'arm.') && 'ubuntu-24.04-arm' || 'ubuntu-24.04' }}
+    # BEGIN catalog runner routes
+    if: ${{ startsWith(inputs.request_id, 'b.') || startsWith(inputs.request_id, 'arm.') }}
+    runs-on: ${{ startsWith(inputs.request_id, 'b.') && 'ubuntu-24.04' || startsWith(inputs.request_id, 'arm.') && 'ubuntu-24.04-arm' }}
+    # END catalog runner routes
     timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4

@@ -1,6 +1,7 @@
 import hashlib
 import json
 import os
+import runpy
 import subprocess
 import sys
 import tempfile
@@ -122,6 +123,31 @@ class WorkflowTests(unittest.TestCase):
         self.assertFalse((ROOT / ".github/workflows/wave.yml").exists())
         self.assertFalse((ROOT / ".github/workflows/chain.yml").exists())
         self.assertLessEqual(sum(len(path.read_text().splitlines()) for path in (ROOT / "tools").glob("*.py")), 1000)
+        return None
+
+    def test_build_workflow_routes_match_the_catalog(self):
+        generator = ROOT / "ci/generate_workflow_runners.py"
+        subprocess.run([sys.executable, str(generator), "--check"], check=True)
+        routes = runpy.run_path(str(generator))["routes"]
+        runner = dict(request_prefix="other", runner_arch="RISCV64")
+        catalog = dict(runners={"fixture-riscv": runner}, targets=[dict(runner="fixture-riscv")])
+        self.assertIn("startsWith(inputs.request_id, 'other.') && 'fixture-riscv'", routes(catalog))
+        runner["request_prefix"] = "-invalid"
+        with self.assertRaisesRegex(ValueError, "invalid catalog runner route"):
+            routes(catalog)
+        return None
+
+    def test_archive_keyring_is_verified_before_installation(self):
+        catalog = json.loads((ROOT / "ci/targets.json").read_bytes())
+        setups = [target["repository_setup"] for target in catalog["targets"] if target["distribution"] == "raspberrypios"]
+        self.assertTrue(setups)
+        for setup in setups:
+            before = setup.index(["dpkg", "-i", "/tmp/archive-keyring.deb"])
+            verify = setup[before - 1]
+            self.assertEqual(verify[:2], ["sh", "-ec"])
+            self.assertIn("sha256sum --check", verify[2])
+            self.assertRegex(verify[-2], r"^[0-9a-f]{64}$")
+            self.assertEqual(verify[-1], "/tmp/archive-keyring.deb")
         return None
 
     def test_restore_updates_only_branch_and_requires_expected_head(self):

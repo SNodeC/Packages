@@ -17,6 +17,7 @@ from unittest.mock import Mock, patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
+import build
 import publish as publisher
 from common import capture, digest, read_json, write_json
 
@@ -153,6 +154,95 @@ class PublisherTests(unittest.TestCase):
             publisher.publish(plan, self.workflow, workspace)
         head = publisher.remote_refs("refs/heads/feed-staging")["refs/heads/feed-staging"]
         return workspace / "feed", head
+
+    def test_unknown_deb_repository_builds_and_publishes_from_its_own_ci(self):
+        head = self.initialize_feed([])
+        repo = self.root / "unknown"
+        shutil.copytree(ROOT / "tests/fixtures/unknown-deb", repo)
+        git = lambda *args: command("git", "-C", str(repo), *args)
+        git("init", "-q")
+        git("config", "user.name", "Fixture")
+        git("config", "user.email", "fixture@example.invalid")
+        git("config", "commit.gpgsign", "false")
+        (repo / "payload.txt").write_text("tagged fixture source\n")
+        git("add", "payload.txt")
+        git("commit", "-qm", "source release")
+        source = git("rev-parse", "HEAD")
+        git("tag", "v1.0.0", source)
+        (repo / "payload.txt").write_text("newer default branch source\n")
+        git("add", ".")
+        git("commit", "-qm", "default branch declaration and hook")
+        ci = git("rev-parse", "HEAD")
+        request = dict(item("fixture-unknown", 1), request="b.1", repo="unregistered/unknown-deb", commit=source,
+                       ci_commit=ci, contract="Xv2", feed_commit=head)
+        real_subprocess = subprocess.run
+
+        def fixture_command(args, **kwargs):
+            if tuple(args[:2]) == ("docker", "exec"):
+                arguments = args[7:] if args[3] == "runuser" else args[3:]
+                args = [arg.replace("/work/", str(Path("work").resolve()) + "/") for arg in arguments]
+                result = real_subprocess(args, **kwargs)
+            elif args[0] == "docker":
+                self.assertIn(args[1], ("run", "rm"))
+                result = subprocess.CompletedProcess(args, 0)
+            else:
+                args = [str(repo) if arg == "https://github.com/unregistered/unknown-deb.git" else arg for arg in args]
+                result = real_subprocess(args, **kwargs)
+            return result
+
+        def fixture_declaration(url, path):
+            self.assertEqual(url, f"https://raw.githubusercontent.com/unregistered/unknown-deb/{ci}/ci/packages.json")
+            path.write_text(git("show", f"{ci}:ci/packages.json"))
+            return None
+
+        with patch.dict(os.environ, REQUEST_ID="b.1", ATTEMPT="1", RUNNER_ARCH="X64"), \
+                patch("build.subprocess.run", side_effect=fixture_command), patch("build.fetch", side_effect=fixture_declaration), \
+                patch("build.base_setup"), patch("build.install") as install:
+            build.build(build.check_request(dict(request="b.1", attempt=1, inputs=request)))
+        install.assert_called_once_with("deb", ["fixture-amd64-tool"])
+        artifact = next(Path("artifact").glob("*.deb"))
+        command("dpkg-deb", "-x", str(artifact), str(self.root / "unpacked"))
+        self.assertEqual((self.root / "unpacked/usr/share/fixture-unknown/payload.txt").read_text(), "tagged fixture source\n")
+        request["inventory"] = read_json("artifact/inventory.json")
+        feed, committed = self.execute_plan(self.plan("p.1", head, [request]), {"b.1": artifact}, self.signing_key())
+        self.assertNotEqual(committed, head)
+        ledger = read_json(feed / "publications.json")
+        self.assertEqual(ledger["receipts"][0]["outcome"], "published")
+        entry, = ledger["entries"]
+        self.assertEqual((entry["repo"], entry["commit"], entry["ci_commit"]), (request["repo"], source, ci))
+        package, = entry["inventory"]
+        self.assertEqual(digest(feed / package["path"]), digest(artifact))
+        return None
+
+    def test_openwrt_publication_requires_explicit_signing_sdk(self):
+        head = self.initialize_feed([])
+        catalog = read_json("ci/targets.json")
+        catalog.pop("apk_signing_sdk")
+        write_json(Path("ci/targets.json"), catalog)
+        workspace = self.root / "unconfigured-sdk"
+        workspace.mkdir()
+        plan = self.plan("p.1", head, [item("fixture", 1, IPK)])
+        with patch("publish.signers", return_value=({}, Mock(), workspace, "fixture")), \
+                patch("publish.unpack_sdk") as unpack, self.assertRaisesRegex(ValueError, "catalog apk_signing_sdk"):
+            publisher.publish(plan, self.workflow, workspace)
+        unpack.assert_not_called()
+        self.assertEqual(publisher.remote_refs("refs/heads/feed-staging")["refs/heads/feed-staging"], head)
+        return None
+
+    def test_openwrt_publication_retains_frozen_registration_path(self):
+        head = self.initialize_feed([])
+        artifact = self.root / "fixture_1.0.0-r1_x86_64.ipk"
+        make_ipk(artifact)
+        request = dict(item("fixture", 1, IPK), openwrt_register="ci/hooks/recipe.sh")
+        plan = self.plan("p.1", head, [request])
+        with patch("publish.unpack_sdk") as unpack, patch("publish.index"):
+            feed, _ = self.execute_plan(plan, {request["request"]: artifact}, self.signing_key())
+        self.assertEqual(unpack.call_args.args[0]["id"], read_json("ci/targets.json")["apk_signing_sdk"])
+        ledger = read_json(feed / "publications.json")
+        self.assertEqual(ledger["receipts"][0]["outcome"], "published")
+        self.assertEqual(ledger["entries"][0]["openwrt_register"], "ci/hooks/recipe.sh")
+        self.assertEqual(ledger["entries"][0]["ci_commit"], request["ci_commit"])
+        return None
 
     def test_atomic_push_legacy_apt_receipts_by_hash_and_retired_payloads(self):
         expected = self.initialize_feed([])

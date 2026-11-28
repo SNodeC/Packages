@@ -72,7 +72,8 @@ def fetch(url, destination):
 def resolved_packages(declaration, target):
     family = "openwrt" if target["family"] in ("ipk", "apk") else target["family"]
     lists = declaration["build_dependencies"]
-    result = lists[family] + lists.get(f'{family}@{target["distribution"]}-{target["release"]}', [])
+    selector = f'{family}@{target["distribution"]}-{target["release"]}'
+    result = lists.get(family, []) + lists.get(selector, []) + lists.get(f'{selector}-{target["arch"]}', [])
     return result
 
 

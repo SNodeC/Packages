@@ -1,0 +1,10 @@
+{
+  "schema": 2,
+  "package": "fixture-unknown",
+  "title": "Unknown Debian-only repository",
+  "releases": ">=1.0.0",
+  "depends_on": [],
+  "build": {"deb": "ci/hooks/build-deb.sh"},
+  "build_dependencies": {"deb@debian-trixie-amd64": ["fixture-amd64-tool"]},
+  "targets": ["debian-trixie-amd64"]
+}
