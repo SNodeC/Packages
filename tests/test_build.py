@@ -88,6 +88,11 @@ class BuildTests(unittest.TestCase):
                 self.assertEqual(sum(" base " in feed for feed in sdk["feeds"]), 1, item["id"])
                 for feed in sdk["feeds"]:
                     self.assertRegex(feed, r"\^[a-f0-9]{40}$")
+                self.assertEqual(sum("/kmods/" in repo for repo in sdk["runtime_repositories"]), 1, item["id"])
+                if item["family"] == "ipk":
+                    bootstrap = sdk["runtime_bootstrap"]
+                    self.assertEqual({Path(entry["url"]).name.split("_")[0] for entry in bootstrap}, {"kernel", "libc"})
+                    self.assertTrue(all(matches(r"[0-9a-f]{64}", entry["sha256"]) for entry in bootstrap))
         return None
 
     def test_exact_inventory_uses_pinned_commit_and_verifies_each_split(self):
@@ -153,6 +158,8 @@ class BuildTests(unittest.TestCase):
 
     def test_ipk_install_creates_its_offline_root_lock_directory(self):
         paths = ["/work/locked/lib_1.0.0-r1_x86_64.ipk"]
+        release = target("openwrt-24.10-x86_64")
+        bootstrap = ["/work/" + Path(entry["url"]).name for entry in release["sdk"]["runtime_bootstrap"]]
         operations = []
 
         def opkg(*arguments):
@@ -162,8 +169,25 @@ class BuildTests(unittest.TestCase):
             return None
 
         with patch("build.docker", side_effect=opkg):
-            build.openwrt_install(target("openwrt-24.10-x86_64"), paths)
-        self.assertEqual(operations, [("update",), ("install", *paths)])
+            build.openwrt_install(release, paths)
+        self.assertEqual(operations, [("update",), ("install", *bootstrap, *paths)])
+        return None
+
+    def test_runtime_bootstrap_rejects_an_unverified_package(self):
+        release = target("openwrt-24.10-x86_64")
+
+        def unpack(_, directory):
+            directory.mkdir(parents=True)
+            return None
+
+        def download(_, path):
+            path.write_bytes(b"wrong bootstrap package")
+            return None
+
+        with patch("build.unpack_sdk", side_effect=unpack), patch("build.fetch", side_effect=download), \
+                self.assertRaisesRegex(ValueError, "runtime bootstrap SHA256 mismatch"):
+            build.openwrt_setup(release)
+        self.assertFalse(Path("work/sdk/feeds.conf").exists())
         return None
 
     def test_openwrt_registers_complete_closure_before_resolving_feeds_in_one_sdk(self):

@@ -34,11 +34,8 @@ def metadata(family, path, *, in_container=None, apk=None):
     filename = "/" + str(path) if in_container else str(path)
 
     def inspect(*args):
-        if in_container:
-            result = in_container(*args, capture_output=True, text=True).stdout.strip()
-        else:
-            result = capture(*args)
-        return result
+        return (in_container(*args, capture_output=True, text=True).stdout.strip()
+                if in_container else capture(*args))
 
     if family in ("deb", "ipk"):
         stanza = inspect("dpkg-deb", "--field", filename) if family == "deb" else ipk_control(path)

@@ -82,8 +82,7 @@ def release(unit, target):
 
 def version(unit, target):
     marker = "-r" if target["family"] in ("ipk", "apk") else "-"
-    value = unit["version"] + marker + release(unit, target)
-    return value
+    return unit["version"] + marker + release(unit, target)
 
 
 def namespace(target):
