@@ -119,21 +119,24 @@ def capture_build(path):
 
 
 def excerpt(path):
-    important = deque(maxlen=12)
-    tail = deque(maxlen=8)
+    important = deque(maxlen=16)
+    tail = deque(maxlen=24)
     if path.exists():
         with path.open(errors="replace") as log:
             for line in log:
                 text = line.rstrip()[:800]
                 tail.append(text)
-                if re.search(r"fatal error|configure: error|not found|AssertionError|FileNotFoundError|tests FAILED|ERROR:", text, re.I):
+                if re.search(r"error:|AssertionError|FileNotFoundError|tests FAILED|Subprocess aborted|\(Failed\)|"
+                             r"expected by ci/|No rule to make target|undefined reference|glob failed", text, re.I):
                     important.append(text)
-    return list(important or tail)
+    return list(dict.fromkeys([*important, *tail]))
 
 
 def outcome(outcomes, repository, status, reason="", log=None):
     outcomes[repository] = dict(repository=repository, status=status, reason=reason, log=excerpt(log) if log else [])
     print(f"{repository}: {status} {reason}", flush=True)
+    for line in outcomes[repository]["log"]:
+        print(f"  | {line}", flush=True)
     return None
 
 
