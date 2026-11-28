@@ -1,0 +1,45 @@
+name: Package smoke
+run-name: smoke ${{ inputs.target || inputs.family }}
+on:
+  workflow_dispatch:
+    inputs:
+      family:
+        description: Package family for its representative catalog target
+        type: choice
+        default: target
+        options: [target, deb, rpm, ipk, apk]
+      target:
+        description: Exact catalog target ID instead of family
+        type: string
+      repositories:
+        description: Comma-separated registry repositories (empty selects all)
+        type: string
+      refs:
+        description: JSON object mapping repositories to branch, tag, or commit overrides
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    # BEGIN catalog runner routes
+    runs-on: ${{ fromJSON('{"debian-trixie-amd64":"ubuntu-24.04","debian-trixie-arm64":"ubuntu-24.04-arm","debian-trixie-armhf":"ubuntu-24.04-arm","debian-trixie-riscv64":"ubuntu-24.04","debian-forky-amd64":"ubuntu-24.04","debian-forky-arm64":"ubuntu-24.04-arm","debian-forky-armhf":"ubuntu-24.04-arm","debian-forky-riscv64":"ubuntu-24.04","debian-sid-amd64":"ubuntu-24.04","debian-sid-arm64":"ubuntu-24.04-arm","debian-sid-armhf":"ubuntu-24.04-arm","debian-sid-riscv64":"ubuntu-24.04","ubuntu-noble-amd64":"ubuntu-24.04","ubuntu-noble-arm64":"ubuntu-24.04-arm","ubuntu-resolute-amd64":"ubuntu-24.04","ubuntu-resolute-arm64":"ubuntu-24.04-arm","fedora-43-x86_64":"ubuntu-24.04","fedora-43-aarch64":"ubuntu-24.04-arm","fedora-44-x86_64":"ubuntu-24.04","fedora-44-aarch64":"ubuntu-24.04-arm","rocky-9-x86_64":"ubuntu-24.04","rocky-9-aarch64":"ubuntu-24.04-arm","rocky-10-x86_64":"ubuntu-24.04","rocky-10-aarch64":"ubuntu-24.04-arm","raspberrypios-bookworm-arm64":"ubuntu-24.04-arm","raspberrypios-trixie-arm64":"ubuntu-24.04-arm","openwrt-24.10-aarch64_cortex-a53":"ubuntu-24.04","openwrt-24.10-aarch64_generic":"ubuntu-24.04","openwrt-24.10-arm_cortex-a7_neon-vfpv4":"ubuntu-24.04","openwrt-24.10-arm_cortex-a9":"ubuntu-24.04","openwrt-24.10-mips_24kc":"ubuntu-24.04","openwrt-24.10-mipsel_24kc":"ubuntu-24.04","openwrt-24.10-x86_64":"ubuntu-24.04","openwrt-25.12-aarch64_cortex-a53":"ubuntu-24.04","openwrt-25.12-aarch64_generic":"ubuntu-24.04","openwrt-25.12-arm_cortex-a7_neon-vfpv4":"ubuntu-24.04","openwrt-25.12-arm_cortex-a9":"ubuntu-24.04","openwrt-25.12-mips_24kc":"ubuntu-24.04","openwrt-25.12-mipsel_24kc":"ubuntu-24.04","openwrt-25.12-x86_64":"ubuntu-24.04"}')[inputs.target || fromJSON('{"deb":"debian-trixie-amd64","rpm":"fedora-44-x86_64","ipk":"openwrt-24.10-x86_64","apk":"openwrt-25.12-x86_64"}')[inputs.family]] || 'ubuntu-24.04' }}
+    # END catalog runner routes
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - env:
+          SMOKE_FAMILY: ${{ inputs.family != 'target' && inputs.family || '' }}
+          SMOKE_TARGET: ${{ inputs.target }}
+          SMOKE_REPOSITORIES: ${{ inputs.repositories }}
+          SMOKE_REFS: ${{ inputs.refs }}
+        run: python3 ci/smoke.py --family "$SMOKE_FAMILY" --target "$SMOKE_TARGET"
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-${{ inputs.target || inputs.family }}
+          path: artifact/
+          if-no-files-found: error

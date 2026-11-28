@@ -60,5 +60,4 @@ def metadata(family, path, *, in_container=None, apk=None):
         depends, provides = info.get("depends", []), info.get("provides", [])
     require(matches(NATIVE_NAME, name) and bool(re.fullmatch(r"[A-Za-z0-9._:+~%-]+", version)) and matches(NATIVE_NAME, arch),
             "invalid native package identity")
-    result = dict(name=name, version=version, arch=arch, runtime_dependencies=depends, provides=provides)
-    return result
+    return dict(name=name, version=version, arch=arch, runtime_dependencies=depends, provides=provides)

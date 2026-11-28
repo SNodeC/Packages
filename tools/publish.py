@@ -45,8 +45,7 @@ def api(path):
     url = origin + "/repos/" + os.environ["GITHUB_REPOSITORY"] + "/actions/" + path
     request = Request(url, headers={"Authorization": "Bearer " + os.environ["GITHUB_TOKEN"],
                                    "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"})
-    result = build_opener(NoRedirect()).open(request, timeout=30)
-    return result
+    return build_opener(NoRedirect()).open(request, timeout=30)
 
 
 def artifact(item, destination):
@@ -124,8 +123,7 @@ def check_plan(plan, workflow):
 
 def remote_refs(*patterns):
     text = capture("git", "ls-remote", "--refs", "origin", *patterns)
-    result = {ref: commit for commit, ref in (line.split("\t") for line in text.splitlines())}
-    return result
+    return {ref: commit for commit, ref in (line.split("\t") for line in text.splitlines())}
 
 
 def stream_tree(feed, branch, expected):
