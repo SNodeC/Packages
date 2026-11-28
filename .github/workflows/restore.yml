@@ -1,4 +1,5 @@
 name: Restore package feed
+run-name: restore ${{ inputs.feed_branch }} ${{ inputs.snapshot_ref }}
 on:
   workflow_dispatch:
     inputs:

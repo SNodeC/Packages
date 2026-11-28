@@ -321,7 +321,7 @@ def publish(plan, workflow, workspace):
     ledger["receipts"] = [r for r in ledger["receipts"]
                           if (r["publication"], r["attempt"], r["request"]) not in acknowledged] + results
     shutil.copytree("keys", feed / "keys", dirs_exist_ok=True)
-    write_json(feed / "publications.json", ledger)
+    write_json(feed / "publications.json", dict(ledger, publication=plan["publication"]))
     commit = push(feed, plan, workflow, workspace)
     if plan["fault"] == "after_push":
         sys.exit("qualification fault after successful feed push")
