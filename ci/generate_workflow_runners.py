@@ -15,7 +15,7 @@ def routes(catalog):
     choices = []
     for label, runner in sorted(configured.items()):
         prefix = runner["request_prefix"]
-        if (not re.fullmatch(r"[A-Za-z0-9._-]+", label) or not re.fullmatch(r"[a-z0-9-]{1,24}", prefix)
+        if (not re.fullmatch(r"[A-Za-z0-9._-]+", label) or not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,23}", prefix)
                 or prefix in prefixes or not re.fullmatch(r"[A-Z0-9]+", runner["runner_arch"])):
             raise ValueError(f"invalid catalog runner route {label!r}")
         prefixes.add(prefix)
