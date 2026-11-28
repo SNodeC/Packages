@@ -1,4 +1,15 @@
 {
+  "runners": {
+    "ubuntu-24.04": {
+      "request_prefix": "b",
+      "runner_arch": "X64"
+    },
+    "ubuntu-24.04-arm": {
+      "request_prefix": "arm",
+      "runner_arch": "ARM64"
+    }
+  },
+  "apk_signing_sdk": "openwrt-25.12-x86_64",
   "targets": [
     {
       "id": "debian-trixie-amd64",
@@ -404,6 +415,14 @@
           "https://archive.raspberrypi.com/debian/pool/main/r/raspberrypi-archive-keyring/raspberrypi-archive-keyring_2025.1+rpt1_all.deb"
         ],
         [
+          "sh",
+          "-ec",
+          "printf '%s  %s\\n' \"$1\" \"$2\" | sha256sum --check -",
+          "sh",
+          "2e727149d7acb8cc7f604e66d0049161039c8aa1eaf1175e54f9e69d963d60e4",
+          "/tmp/archive-keyring.deb"
+        ],
+        [
           "dpkg",
           "-i",
           "/tmp/archive-keyring.deb"
@@ -439,6 +458,14 @@
           "-o",
           "/tmp/archive-keyring.deb",
           "https://archive.raspberrypi.com/debian/pool/main/r/raspberrypi-archive-keyring/raspberrypi-archive-keyring_2025.1+rpt1_all.deb"
+        ],
+        [
+          "sh",
+          "-ec",
+          "printf '%s  %s\\n' \"$1\" \"$2\" | sha256sum --check -",
+          "sh",
+          "2e727149d7acb8cc7f604e66d0049161039c8aa1eaf1175e54f9e69d963d60e4",
+          "/tmp/archive-keyring.deb"
         ],
         [
           "dpkg",

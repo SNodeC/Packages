@@ -268,14 +268,13 @@ def publish(plan, workflow, workspace):
     files, gpg, home, fingerprint = signers(workspace)
     touched = {index_group(item["target"]): item["target"] for item in plan["items"]}
     expired = {(tuple(entry)) for entry in plan["retirements"]}
-    for entry in ledger["entries"]:
-        if tuple(group(entry)) in expired:
-            target = entry["target"]
-            touched[index_group(target)] = target
+    touched.update((index_group(entry["target"]), entry["target"])
+                   for entry in ledger["entries"] if tuple(group(entry)) in expired)
     tools = workspace / "openwrt"
     if any(target["family"] in {"ipk", "apk"} for target in touched.values()):
-        catalog = read_json("ci/targets.json")["targets"]
-        sdk = next(target for target in catalog if target["family"] == "apk" and target["arch"] == "x86_64")
+        catalog = read_json("ci/targets.json")
+        sdk = next((target for target in catalog["targets"] if target["id"] == catalog.get("apk_signing_sdk")), None)
+        require(sdk and sdk["family"] == "apk" and "sdk" in sdk, "catalog apk_signing_sdk must name an apk target with an SDK")
         unpack_sdk(sdk, tools)
     tools /= "staging_dir/host/bin"
     apk = str(tools / "apk")
@@ -293,7 +292,7 @@ def publish(plan, workflow, workspace):
             entry = {key: item[key] for key in ("package", "version", "revision", "target", "identity",
                                                "repo", "commit", "ci_commit", "bindings", "closure")}
             if added or not any(group(existing) == group(entry) for existing in ledger["entries"]):
-                ledger["entries"].append(dict(entry, inventory=inventory, published_at=int(time.time())))
+                ledger["entries"].append(dict(entry, inventory=inventory, published_at=int(time.time()), openwrt_register=item.get("openwrt_register", "")))
             receipt.update(outcome="published", reason="" if added else "already published", inventory=inventory)
         except (ValueError, TypeError, KeyError, RuntimeError, zipfile.BadZipFile, tarfile.TarError, StopIteration) as error:
             receipt.update(outcome="failed", reason=str(error), failure=getattr(error, "code", "malformed-artifact"))

@@ -87,9 +87,7 @@ request or plan by SHA-256. A rejected claim with status 409 ends the workflow
 successfully without building or publishing. The publisher verifies the plan
 again immediately before the push.
 
-Each build runs on the hosted platform selected by core-ci from the frozen
-target catalog. Requests beginning with `arm.` select the native ARM runner.
-The build verifies that runner against the signed target, installs the complete
+The target catalog assigns runner labels, request prefixes, and runner architectures. The build workflow uses an allowlist generated from that catalog, and the build checks the runner against the signed target. It installs the complete
 bound inventory from `feed_commit`, and checks the installed native identities.
 Only the requested item's packages are uploaded. The artifact remains available
 for 90 days, subject to GitHub's repository retention setting.
@@ -112,8 +110,7 @@ applies to the pre-cutover feed and the 30-day legacy retention period.
 The schema-2 declaration at `ci_commit` specifies the supported release range,
 targets, hooks, direct `depends_on` version ranges, and build dependencies.
 Targets derive system repository setup, base images, and OpenWrt SDK and feed
-pins from `ci/targets.json`. A selector such as `rpm@rocky-9` adds dependencies
-only on matching targets. A range such as `>=3.0,<4` combines its conditions with AND.
+pins from `ci/targets.json`. Family dependency lists can be empty or omitted. Selectors such as `rpm@rocky-9` and `rpm@rocky-9-aarch64` add dependencies for matching targets. A range such as `>=3.0,<4` requires both conditions.
 
 | Hook environment | Meaning |
 | --- | --- |
@@ -126,27 +123,20 @@ only on matching targets. A range such as `>=3.0,<4` combines its conditions wit
 | `PACKAGE_RELEASE` | Revision with the native packaging suffix, or the numeric OpenWrt revision |
 | `SDK_DIR` | Shared build SDK for OpenWrt |
 
-OpenWrt declarations provide a recipe registration hook at
-`ci/package/openwrt-register.sh`. The workflow registers the entire closure
-before resolving feeds, then builds each bound output in dependency order so
-`Build/InstallDev` stages the required development files in one SDK.
+OpenWrt targets require both `build.openwrt` and `build.openwrt_register`. The registration hook is a path under the repository’s `ci/` directory. The workflow registers every package in the frozen closure before resolving feeds, then stages development files in one SDK in dependency order. The catalog’s `apk_signing_sdk` names the SDK target that supplies the publisher’s signing tool.
 
-### CodexUI availability
+## New repository
 
-CodexUI requires Qt6 Widgets/Network ≥ 6.6, KF6Sonnet ≥ 6.13, and libgit2 from standard repositories.
+- [ ] Add the repository to the allowlist in `ci/registry.json`.
+- [ ] Add `ci/packages.json` with schema 2, target IDs, and any dependency ranges.
+- [ ] Declare the hooks for each target family. The scheduler marks targets with missing hooks as unsupported.
+- [ ] Add repository-owned package recipes and metadata under `ci/`.
+- [ ] Set the `releases` range to the stable versions those hooks can build.
+- [ ] Push the first stable tag in the supported range.
 
-Decision: Qt desktop application; 13 functional test failures under riscv64 emulation, tracked as [CodexUI issue #121](https://github.com/SNodeC/CodexUI/issues/121). Debian riscv64 is excluded from CodexUI's package declaration.
+The catalog defines the target environments. When runner routes change, regenerate the workflow with `python3 ci/generate_workflow_runners.py`.
 
-| Distribution | Releases | Architectures | Repository evidence |
-| --- | --- | --- | --- |
-| Debian | trixie, forky, sid | amd64, arm64, armhf | [Qt6](https://packages.debian.org/trixie/qt6-base-dev), [Sonnet](https://packages.debian.org/trixie/libkf6sonnet-dev), [libgit2](https://packages.debian.org/trixie/libgit2-dev) |
-| Ubuntu | resolute | amd64, arm64 | [Qt6](https://packages.ubuntu.com/resolute/qt6-base-dev), [Sonnet](https://packages.ubuntu.com/resolute/libkf6sonnet-dev), [libgit2](https://packages.ubuntu.com/resolute/libgit2-dev) |
-| Fedora | 43, 44 | x86_64, aarch64 | [Qt6](https://packages.fedoraproject.org/pkgs/qt6-qtbase/qt6-qtbase-devel/), [Sonnet](https://packages.fedoraproject.org/pkgs/kf6-sonnet/kf6-sonnet-devel/), [libgit2](https://packages.fedoraproject.org/pkgs/libgit2/libgit2-devel/) |
-| Raspberry Pi OS | trixie | arm64 | Debian trixie base repositories |
-
-Ubuntu noble and Raspberry Pi OS bookworm have older Qt/KF versions; Rocky's standard repositories lack the required KF6Sonnet. core-ci excludes Raspberry Pi OS bookworm's GCC-12 toolchain. Rocky 9 uses GCC Toolset 14. Raspberry Pi OS containers use Debian arm64 plus Raspberry Pi's signed archive.
-
-armhf runs natively on `ubuntu-24.04-arm`: [runner qualification](https://github.com/SNodeC/Packages/actions/runs/43633330866) confirmed 32-bit execution with no QEMU handler. RISC-V uses Ubuntu's `qemu-user-static` on `ubuntu-24.04`. Contract X builds one package and target per job, including on emulated architectures. OpenWrt SDKs run on x86_64 using point releases 24.10.8 and 25.12.6. For OpenWrt reuse, the exact source recipe supplies SDK development headers, then the signed published runtime packages are installed into that staging tree.
+Raspberry Pi OS targets use Debian arm64 containers and Raspberry Pi's signed archive. The catalog also specifies whether each target uses native execution or emulation. Native armhf execution was verified on the ARM runner. [Runner qualification](https://github.com/SNodeC/Packages/actions/runs/43633330866)
 
 ## Verification
 

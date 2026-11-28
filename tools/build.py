@@ -45,8 +45,9 @@ def check_request(request):
             "invalid build environment")
     require(all(matches(NAME, target[key]) for key in ("id", "codename", "distribution", "release", "arch")),
             "invalid target")
-    expected_arch = {"ubuntu-24.04": "X64", "ubuntu-24.04-arm": "ARM64"}
-    require(os.environ["RUNNER_ARCH"] == expected_arch[target["runner"]], "runner does not match frozen target")
+    runner = read_json("ci/targets.json")["runners"].get(target["runner"])
+    require(runner and os.environ["RUNNER_ARCH"] == runner["runner_arch"] and
+            request["request"].startswith(runner["request_prefix"] + "."), "runner does not match frozen target")
     seen = set()
     for unit in [*inputs["closure"], inputs]:
         package = unit["package"]
@@ -236,7 +237,6 @@ def build(inputs):
     try:
         base_setup(target)
         declare(inputs)
-        target_packages = resolved_packages(declarations[root], target)
         if openwrt:
             openwrt_setup(target)
             for unit in [*closure, inputs]:
@@ -244,7 +244,7 @@ def build(inputs):
                 if package != root:
                     declare(unit)
                 checkout(unit)
-                hook(unit, target, "ci/package/openwrt-register.sh", dependencies[package])
+                hook(unit, target, declarations[package]["build"]["openwrt_register"], dependencies[package])
             feeds = sorted({p for declared in declarations.values() for p in resolved_packages(declared, target)})
             builder("sh", "-ec", 'cd /work/sdk; ./scripts/feeds update -a; ./scripts/feeds install "$@"', "sh", *feeds)
             staging = time.monotonic()
@@ -253,7 +253,7 @@ def build(inputs):
                 package = unit["package"]
                 hook(unit, target, declarations[package]["build"]["openwrt"], dependencies[package])
         else:
-            install(family, target_packages)
+            install(family, resolved_packages(declarations[root], target))
             staging = time.monotonic()
             exact_dependencies(inputs)
             checkout(inputs)

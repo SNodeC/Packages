@@ -124,6 +124,23 @@ class WorkflowTests(unittest.TestCase):
         self.assertLessEqual(sum(len(path.read_text().splitlines()) for path in (ROOT / "tools").glob("*.py")), 1000)
         return None
 
+    def test_build_workflow_routes_match_the_catalog(self):
+        subprocess.run([sys.executable, str(ROOT / "ci/generate_workflow_runners.py"), "--check"], check=True)
+        return None
+
+    def test_archive_keyring_is_verified_before_installation(self):
+        catalog = json.loads((ROOT / "ci/targets.json").read_bytes())
+        setups = [target["repository_setup"] for target in catalog["targets"] if target["distribution"] == "raspberrypios"]
+        self.assertTrue(setups)
+        for setup in setups:
+            before = setup.index(["dpkg", "-i", "/tmp/archive-keyring.deb"])
+            verify = setup[before - 1]
+            self.assertEqual(verify[:2], ["sh", "-ec"])
+            self.assertIn("sha256sum --check", verify[2])
+            self.assertRegex(verify[-2], r"^[0-9a-f]{64}$")
+            self.assertEqual(verify[-1], "/tmp/archive-keyring.deb")
+        return None
+
     def test_restore_updates_only_branch_and_requires_expected_head(self):
         git = lambda *args: subprocess.run(["git", *args], check=True, text=True, capture_output=True).stdout.strip()
         git("init", "--bare", "remote.git")
