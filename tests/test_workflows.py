@@ -2,6 +2,7 @@ import hashlib
 import json
 import os
 import runpy
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -13,6 +14,7 @@ from unittest.mock import Mock, patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
+from build import base_setup
 from common import Workflow, signature
 from publish import check_plan
 
@@ -139,15 +141,56 @@ class WorkflowTests(unittest.TestCase):
 
     def test_archive_keyring_is_verified_before_installation(self):
         catalog = json.loads((ROOT / "ci/targets.json").read_bytes())
-        setups = [target["repository_setup"] for target in catalog["targets"] if target["distribution"] == "raspberrypios"]
-        self.assertTrue(setups)
-        for setup in setups:
-            before = setup.index(["dpkg", "-i", "/tmp/archive-keyring.deb"])
-            verify = setup[before - 1]
-            self.assertEqual(verify[:2], ["sh", "-ec"])
-            self.assertIn("sha256sum --check", verify[2])
-            self.assertRegex(verify[-2], r"^[0-9a-f]{64}$")
-            self.assertEqual(verify[-1], "/tmp/archive-keyring.deb")
+        targets = [target for target in catalog["targets"] if target["distribution"] == "raspberrypios"]
+        self.assertTrue(targets)
+        fixture = Path("fixture")
+        (fixture / "DEBIAN").mkdir(parents=True)
+        (fixture / "DEBIAN/control").write_text(
+            "Package: fixture-archive-keyring\nVersion: 1\nArchitecture: all\n"
+            "Maintainer: Fixture <fixture@example.invalid>\nDescription: Archive keyring fixture\n"
+        )
+        (fixture / "fixture-keyring").write_text("fixture keyring\n")
+        subprocess.run(["dpkg-deb", "--build", "--root-owner-group", str(fixture), "fixture.deb"],
+                       check=True, capture_output=True)
+        checksum = hashlib.sha256(Path("fixture.deb").read_bytes()).hexdigest()
+        archive = "/tmp/archive-keyring.deb"
+        download = "downloaded-keyring.deb"
+        env = dict(os.environ, PATH=os.environ["PATH"] + ":/usr/sbin:/sbin")
+
+        for target in targets:
+            with self.subTest(target=target["id"]):
+                setup = target["repository_setup"]
+                before = setup.index(["dpkg", "-i", archive])
+                verify = setup[before - 1].copy()
+                self.assertEqual(verify[:2], ["sh", "-ec"])
+                self.assertIn("sha256sum --check", verify[2])
+                self.assertRegex(verify[-2], r"^[0-9a-f]{64}$")
+                self.assertEqual(verify[-1], archive)
+                setup = [*setup[:before - 1], verify, *setup[before:]]
+                root = Path(target["id"]).resolve()
+                root.mkdir()
+                installed = root / "fixture-keyring"
+
+                def container(*command):
+                    if command[0] == "curl":
+                        self.assertEqual(command[-2], archive)
+                        shutil.copyfile("fixture.deb", download)
+                    elif command[:3] == tuple(verify[:3]):
+                        subprocess.run([*command[:-1], download], check=True, text=True, capture_output=True)
+                    elif command == ("dpkg", "-i", archive):
+                        subprocess.run(["dpkg", "--force-not-root", f"--root={root}", f"--log={root}/dpkg.log",
+                                        "-i", download], check=True, capture_output=True, env=env)
+                    return None
+
+                with patch("build.docker", side_effect=container):
+                    verify[-2] = "0" * 64
+                    with self.assertRaises(subprocess.CalledProcessError) as error:
+                        base_setup(dict(target, repository_setup=setup))
+                    self.assertIn("archive keyring SHA256 verification failed", error.exception.stderr)
+                    self.assertFalse(installed.exists())
+                    verify[-2] = checksum
+                    base_setup(dict(target, repository_setup=setup))
+                    self.assertEqual(installed.read_text(), "fixture keyring\n")
         return None
 
     def test_restore_updates_only_branch_and_requires_expected_head(self):
