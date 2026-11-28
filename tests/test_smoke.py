@@ -104,3 +104,12 @@ class SmokeTests(unittest.TestCase):
         self.assertEqual([call.args[0]["repo"] for call in hook.call_args_list], repos[::-1])
         self.assertEqual(install.call_args.args, ("rpm", ["/work/output/library/output.rpm"]))
         return None
+
+    def test_excerpt_keeps_both_diagnostics_and_final_build_context(self):
+        path = Path("build.log")
+        diagnostic = "nlohmann_json 3.12.0 ≠ 3.11.2 expected by ci/"
+        path.write_text(diagnostic + "\n" + "configure probe not found\n" * 40 + "make: Error 2\n")
+        result = smoke.excerpt(path)
+        self.assertEqual(result[0], diagnostic)
+        self.assertEqual(result[-1], "make: Error 2")
+        return None
