@@ -27,23 +27,19 @@ def require(condition, message):
 
 
 def matches(pattern, value):
-    result = isinstance(value, str) and re.fullmatch(pattern, value) is not None
-    return result
+    return isinstance(value, str) and re.fullmatch(pattern, value) is not None
 
 
 def positive(value):
-    result = type(value) is int and value > 0
-    return result
+    return type(value) is int and value > 0
 
 
 def run(*args, **kwargs):
-    result = subprocess.run(args, check=True, **kwargs)
-    return result
+    return subprocess.run(args, check=True, **kwargs)
 
 
 def capture(*args, **kwargs):
-    result = run(*args, capture_output=True, text=True, **kwargs).stdout.strip()
-    return result
+    return run(*args, capture_output=True, text=True, **kwargs).stdout.strip()
 
 
 def digest(path):
@@ -53,8 +49,7 @@ def digest(path):
 
 
 def read_json(path):
-    result = json.loads(Path(path).read_bytes())
-    return result
+    return json.loads(Path(path).read_bytes())
 
 
 def write_json(path, data):
@@ -73,8 +68,7 @@ def resolved_packages(declaration, target):
     family = "openwrt" if target["family"] in ("ipk", "apk") else target["family"]
     lists = declaration["build_dependencies"]
     selector = f'{family}@{target["distribution"]}-{target["release"]}'
-    result = lists.get(family, []) + lists.get(selector, []) + lists.get(f'{selector}-{target["arch"]}', [])
-    return result
+    return lists.get(family, []) + lists.get(selector, []) + lists.get(f'{selector}-{target["arch"]}', [])
 
 
 def release(unit, target):
@@ -110,9 +104,8 @@ class NoRedirect(HTTPRedirectHandler):
 
 
 def signature(secret, timestamp, body):
-    result = "sha256=" + hmac.new(secret.encode(), timestamp.encode() + b"." + body,
-                                  hashlib.sha256).hexdigest()
-    return result
+    return "sha256=" + hmac.new(secret.encode(), timestamp.encode() + b"." + body,
+                                hashlib.sha256).hexdigest()
 
 
 class Workflow:

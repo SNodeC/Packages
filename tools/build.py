@@ -7,6 +7,7 @@ import shutil
 import subprocess
 import tarfile
 import time
+from contextlib import contextmanager
 from pathlib import Path
 
 from common import (COMMIT, DIGEST, FAMILIES, NAME, NATIVE_NAME, digest, fetch, matches, positive, read_json,
@@ -21,8 +22,7 @@ OPENWRT = {"ipk", "apk"}
 
 
 def docker(*args, **kwargs):
-    result = run("docker", "exec", CONTAINER, *args, **kwargs)
-    return result
+    return run("docker", "exec", CONTAINER, *args, **kwargs)
 
 
 def builder(*args):
@@ -31,8 +31,7 @@ def builder(*args):
 
 
 def identity(unit):
-    result = {key: unit[key] for key in ("package", "version", "revision")}
-    return result
+    return {key: unit[key] for key in ("package", "version", "revision")}
 
 
 def check_request(request):
@@ -74,9 +73,8 @@ def install(family, packages):
 def checkout(unit):
     package = unit["package"]
     repo = "https://github.com/" + unit.get("repository", unit.get("repo")) + ".git"
-    source = WORK / "source" / package
-    run("git", "init", "-q", str(source))
-    git = ("git", "-C", str(source))
+    git = ("git", "-C", str(WORK / "source" / package))
+    run("git", "init", "-q", git[2])
     run(*git, "fetch", "--depth=1", repo, unit["commit"])
     run(*git, "checkout", "--detach", "FETCH_HEAD")
     run(*git, "submodule", "update", "--init", "--recursive", "--depth=1")
@@ -122,6 +120,17 @@ def openwrt_setup(target):
     return None
 
 
+def prepare_feeds(feeds):
+    return builder("sh", "-ec", 'cd /work/sdk; ./scripts/feeds update -a; ./scripts/feeds install "$@"', "sh", *sorted(feeds))
+
+
+def package_outputs(package, family):
+    outputs = sorted((WORK / "output" / package).glob("*." + family))
+    require(outputs and all(output.is_file() and not output.is_symlink() for output in outputs),
+            "missing or invalid hook output")
+    return outputs
+
+
 def exact_dependencies(inputs):
     target = inputs["target"]
     family = target["family"]
@@ -145,11 +154,10 @@ def exact_dependencies(inputs):
             require(digest(local) == checksum, "snapshot package digest mismatch")
             packages[name] = entry, "/work/locked/" + local.name
     paths = [path for _, path in packages.values()]
-    if packages:
-        if native:
-            install(family, paths)
-        else:
-            openwrt_install(target, paths)
+    if native and paths:
+        install(family, paths)
+    elif paths:
+        openwrt_install(target, paths)
     for name, (entry, _) in packages.items():
         if family == "deb":
             command = ("dpkg-query", "-W", "-f=${Version}\t${Architecture}", name + ":" + entry["arch"])
@@ -204,28 +212,8 @@ def hook(unit, target, action, dependencies):
     return None
 
 
-def build(inputs):
-    start = time.monotonic()
-    target = inputs["target"]
-    family = target["family"]
-    openwrt = family in OPENWRT
-    root = inputs["package"]
-    closure = inputs["closure"]
-    declarations = {}
-    packages = {unit["package"]: unit for unit in closure}
-    dependencies = {}
-
-    def declare(unit):
-        package = unit["package"]
-        repo = unit["repository"] if unit is not inputs else unit["repo"]
-        path = WORK / (package + ".json")
-        fetch(f'https://raw.githubusercontent.com/{repo}/{unit["ci_commit"]}/ci/packages.json', path)
-        declared = read_json(path)
-        require(declared["schema"] == 2 and declared["package"] == package, "frozen declaration mismatch")
-        declarations[package] = declared
-        dependencies[package] = [identity(packages[item["package"]]) for item in declared["depends_on"]]
-        return None
-
+@contextmanager
+def container(target):
     WORK.mkdir()
     (WORK / "output").mkdir()
     if target["emulated"]:
@@ -236,8 +224,36 @@ def build(inputs):
         "-v", str(WORK.resolve()) + ":/work", target["image"], "sleep", "infinity")
     try:
         base_setup(target)
+        yield
+    finally:
+        subprocess.run(["docker", "rm", "-f", CONTAINER], check=False)
+    return None
+
+
+def build(inputs):
+    start = time.monotonic()
+    target = inputs["target"]
+    family = target["family"]
+    root = inputs["package"]
+    closure = inputs["closure"]
+    declarations = {}
+    packages = {unit["package"]: unit for unit in closure}
+    dependencies = {}
+
+    def declare(unit):
+        package = unit["package"]
+        repo = unit.get("repository", unit.get("repo"))
+        path = WORK / (package + ".json")
+        fetch(f'https://raw.githubusercontent.com/{repo}/{unit["ci_commit"]}/ci/packages.json', path)
+        declared = read_json(path)
+        require(declared["schema"] == 2 and declared["package"] == package, "frozen declaration mismatch")
+        declarations[package] = declared
+        dependencies[package] = [identity(packages[item["package"]]) for item in declared["depends_on"]]
+        return None
+
+    with container(target):
         declare(inputs)
-        if openwrt:
+        if family in OPENWRT:
             openwrt_setup(target)
             for unit in [*closure, inputs]:
                 package = unit["package"]
@@ -245,8 +261,7 @@ def build(inputs):
                     declare(unit)
                 checkout(unit)
                 hook(unit, target, declarations[package]["build"]["openwrt_register"], dependencies[package])
-            feeds = sorted({p for declared in declarations.values() for p in resolved_packages(declared, target)})
-            builder("sh", "-ec", 'cd /work/sdk; ./scripts/feeds update -a; ./scripts/feeds install "$@"', "sh", *feeds)
+            prepare_feeds({p for declared in declarations.values() for p in resolved_packages(declared, target)})
             staging = time.monotonic()
             exact_dependencies(inputs)
             for unit in closure:
@@ -258,13 +273,10 @@ def build(inputs):
             exact_dependencies(inputs)
             checkout(inputs)
         compiling = time.monotonic()
-        hook(inputs, target, declarations[root]["build"]["openwrt" if openwrt else family], dependencies[root])
+        hook(inputs, target, declarations[root]["build"]["openwrt" if family in OPENWRT else family], dependencies[root])
         timings = dict(setup=round(staging - start), staging=round(compiling - staging), build=round(time.monotonic() - compiling))
-        path = WORK / "output" / root
-        outputs = sorted(path.glob("*." + family))
-        require(outputs and all(output.is_file() and not output.is_symlink() for output in outputs),
-                "missing or invalid hook output")
-        if openwrt:
+        outputs = package_outputs(root, family)
+        if family in OPENWRT:
             openwrt_install(target, ["/" + str(output) for output in outputs])
         artifact = Path("artifact")
         artifact.mkdir()
@@ -278,8 +290,6 @@ def build(inputs):
         write_json(artifact / "manifest.json", dict(unit=identity(inputs), target=target["id"],
                    request=os.environ["REQUEST_ID"], attempt=int(os.environ["ATTEMPT"]), timings=timings,
                    files={entry["file"]: entry["sha256"] for entry in inventory}))
-    finally:
-        subprocess.run(["docker", "rm", "-f", CONTAINER], check=False)
     return None
 
 

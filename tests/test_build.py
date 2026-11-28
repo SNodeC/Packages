@@ -85,6 +85,7 @@ class BuildTests(unittest.TestCase):
             if item["family"] in ("ipk", "apk"):
                 sdk = item["sdk"]
                 self.assertTrue(matches(r"[0-9a-f]{64}", sdk["sha256"]))
+                self.assertEqual(sum(" base " in feed for feed in sdk["feeds"]), 1, item["id"])
                 for feed in sdk["feeds"]:
                     self.assertRegex(feed, r"\^[a-f0-9]{40}$")
         return None
