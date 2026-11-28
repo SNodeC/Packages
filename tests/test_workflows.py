@@ -141,6 +141,7 @@ class WorkflowTests(unittest.TestCase):
                 git("push", "origin", commit + ":refs/snapshots/feed/" + label)
             git("push", "origin", "HEAD:refs/heads/feed-staging")
             lines = (ROOT / ".github/workflows/restore.yml").read_text().splitlines()
+            self.assertIn("run-name: restore ${{ inputs.feed_branch }} ${{ inputs.snapshot_ref }}", lines)
             script = "\n".join(line[10:] for line in lines[lines.index("        run: |") + 1:])
             before = git("ls-remote", "origin", "refs/snapshots/*")
             env = dict(os.environ, FEED_BRANCH="feed-staging", SNAPSHOT="refs/snapshots/feed/pre-x",

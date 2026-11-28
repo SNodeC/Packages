@@ -174,6 +174,7 @@ class PublisherTests(unittest.TestCase):
         self.assertIn("refs/snapshots/feed-staging/pre-x", refs)
         self.assertEqual(refs["refs/snapshots/feed-staging/p1"], expected)
         ledger = read_json(feed / "publications.json")
+        self.assertEqual(ledger["publication"], plan["publication"])
         self.assertEqual([r["outcome"] for r in ledger["receipts"]], ["published", "published", "failed"])
         index = "apt/debian/dists/trixie/main/binary-amd64"
         first_hash = digest(feed / index / "Packages")
@@ -207,6 +208,7 @@ class PublisherTests(unittest.TestCase):
         command("gpgv", "--keyring", str(self.root / "pub.gpg"), str(release / "InRelease"))
         self.assertEqual(len(list((feed / index / "by-hash/SHA256").iterdir())), 6)
         retired, _ = self.execute_plan(self.plan("p6", expected, [], retire_legacy_apt=True), {}, private)
+        self.assertEqual(read_json(retired / "publications.json")["publication"], "p6")
         self.assertFalse((retired / "apt/dists").exists())
         self.assertFalse((retired / "apt/pool").exists())
         self.assertFalse((retired / "apt/SOURCES.md").exists())
