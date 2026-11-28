@@ -417,7 +417,7 @@
         [
           "sh",
           "-ec",
-          "printf '%s  %s\\n' \"$1\" \"$2\" | sha256sum --check -",
+          "printf '%s  %s\\n' \"$1\" \"$2\" | sha256sum --check - || { echo 'archive keyring SHA256 verification failed' >&2; exit 1; }",
           "sh",
           "2e727149d7acb8cc7f604e66d0049161039c8aa1eaf1175e54f9e69d963d60e4",
           "/tmp/archive-keyring.deb"
@@ -462,7 +462,7 @@
         [
           "sh",
           "-ec",
-          "printf '%s  %s\\n' \"$1\" \"$2\" | sha256sum --check -",
+          "printf '%s  %s\\n' \"$1\" \"$2\" | sha256sum --check - || { echo 'archive keyring SHA256 verification failed' >&2; exit 1; }",
           "sh",
           "2e727149d7acb8cc7f604e66d0049161039c8aa1eaf1175e54f9e69d963d60e4",
           "/tmp/archive-keyring.deb"
