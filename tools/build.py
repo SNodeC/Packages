@@ -115,6 +115,10 @@ def unpack_sdk(target, directory):
 def openwrt_setup(target):
     directory = WORK / "sdk"
     unpack_sdk(target, directory)
+    for package in target["sdk"].get("runtime_bootstrap", []):
+        path = WORK / Path(package["url"]).name
+        fetch(package["url"], path)
+        require(digest(path) == package["sha256"], "runtime bootstrap SHA256 mismatch")
     (directory / "feeds.conf").write_text("\n".join(target["sdk"]["feeds"]) + "\n")
     (directory / ".config").write_text("CONFIG_ALL_NONSHARED=n\nCONFIG_ALL_KMODS=n\nCONFIG_SIGNED_PACKAGES=n\n")
     return None
@@ -185,13 +189,12 @@ def openwrt_install(target, paths):
     (WORK / ("root/tmp" if target["family"] == "ipk" else "root")).mkdir(parents=True, exist_ok=True)
     repos = target["sdk"]["runtime_repositories"]
     if target["family"] == "ipk":
-        conf = WORK / "opkg.conf"
-        lines = [f'arch all 1\narch {target["arch"]} 10', "dest root /"]
-        lines.extend(f"src/gz release{i} {url}" for i, url in enumerate(repos))
-        conf.write_text("\n".join(lines) + "\n")
+        feeds = "".join(f"src/gz release{i} {url}\n" for i, url in enumerate(repos))
+        (WORK / "opkg.conf").write_text(f'arch all 1\narch {target["arch"]} 10\ndest root /\n' + feeds)
         opkg = (TOOLS + "opkg", "-f", "/work/opkg.conf", "--offline-root", "/work/root")
         docker(*opkg, "update")
-        docker(*opkg, "install", *paths)
+        bootstrap = ["/work/" + Path(package["url"]).name for package in target["sdk"].get("runtime_bootstrap", [])]
+        docker(*opkg, "install", *bootstrap, *paths)
     else:
         (WORK / "apk-repositories").write_text("\n".join(repos) + "\n")
         docker(TOOLS + "apk", "--root", "/work/root", "--arch", target["arch"], "--initdb", "--allow-untrusted",
