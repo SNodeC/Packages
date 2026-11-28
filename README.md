@@ -1,6 +1,10 @@
 # SNode.C packages
 
-This repository builds and signs the SNode.C ecosystem's distribution packages. `main` owns the schema-1 registry, target catalog, build-only `wave.yml` and separate `publish.yml`; source repositories own their declarations and build hooks. core-ci supplies ordered wave plans and target batches for publication. The `feed` branch is the production repository; `feed-staging` is used for qualification. Each feed has one root commit and retains the newest two publications per package and target. Published version/revisions are immutable: identical artifacts report "already published" without changing files; different bytes fail with `immutable-conflict`.
+This repository builds and signs distribution packages. The registry and target catalog
+describe the participating repositories and target environments. core-ci owns scheduling
+and sends one immutable request per build and one immutable plan per publication.
+Source repositories own their declarations, hooks, recipes, and package metadata.
+The production feed is `feed`. Qualification uses `feed-staging`.
 
 ## Installation
 
@@ -69,34 +73,63 @@ apk add snodec mqttsuite
 | usign | `bf7bc1c71f9755ef` |
 | apk RSA-4096, SHA-256 of public DER | `c4ea1a8bb852973e4ad9528b645165fef7b208e4e1afbeea312ce38ec005a3c8` |
 
+## Contract X workflows
+
+| Workflow | Dispatch inputs |
+| --- | --- |
+| `build.yml` | `request_id`, `attempt`, `feed_branch` |
+| `publish.yml` | `publication_id`, `attempt`, `feed_branch`, staging-only `fault` |
+| `restore.yml` | `feed_branch`, `snapshot_ref`, `expected_head` |
+
+Build and publication derive the scheduler URL from `vars.CORECI_ORIGIN`.
+The claim verifies ownership for the attempt and authenticates the immutable
+request or plan by SHA-256. A rejected claim with status 409 ends the workflow
+successfully without building or publishing. The publisher verifies the plan
+again immediately before the push.
+
+Each build runs on the hosted platform selected by core-ci from the frozen
+target catalog. Requests beginning with `arm.` select the native ARM runner.
+The build verifies that runner against the signed target, installs the complete
+bound inventory from `feed_commit`, and checks the installed native identities.
+Only the requested item's packages are uploaded. The artifact remains available
+for 90 days, subject to GitHub's repository retention setting.
+
+Publication validates the downloaded archive and each split package, quarantines
+invalid items, and publishes valid items in a single orphan commit. Its atomic
+push checks the feed head lease, creates the publication snapshot, and applies
+the approved snapshot deletions. Receipts in `publications.json` allow core-ci
+to recover after a lost callback or an interruption after the push. The oldest
+rollback point remains protected while it is among the three most recent
+reconciled publications. Restore updates only the feed branch, with a lease.
+
+Contract X introduces per-distribution APT paths. After cutover each new
+source line uses `$base/apt/$distribution $codename main`, for example
+`$base/apt/debian trixie main`. The earlier source line shown under Installation
+applies to the pre-cutover feed and the 30-day legacy retention period.
+
 ## Declarations and hooks
 
-`ci/registry.json` lists participating repositories. `ci/targets.json` contains 40 targets and optional `host_packages` for distribution/SDK prerequisites. Each repository owns a schema-2 `ci/packages.json`: its targets, hooks, versioned `depends_on` entries, and `build_dependencies`. A dependency range such as `>=3.0,<4` uses comma as AND and supports `>=`, `>`, `<=`, `<`, and `==`. Build dependency keys are `deb`, `rpm`, and `openwrt`; an optional selector such as `rpm@rocky-9` adds packages only for that distribution/release.
+The schema-2 declaration at `ci_commit` specifies the supported release range,
+targets, hooks, direct `depends_on` version ranges, and build dependencies.
+Targets derive system repository setup, base images, and OpenWrt SDK and feed
+pins from `ci/targets.json`. A selector such as `rpm@rocky-9` adds dependencies
+only on matching targets. A range such as `>=3.0,<4` combines its conditions with AND.
 
-The chain checks out the tagged source commit with recursive submodules into `SOURCE_DIR` and extracts `ci/` from the plan's independent `ci_commit` into `CI_DIR`. All hook assets belong under `ci/` and must be referenced through `CI_DIR`. Hooks own toolchain activation and build/test/package policy. They run as the unprivileged source owner with network access. The chain installs generic base tooling, catalog host packages and resolved declaration packages; RPM installs allow erasing conflicting packages. OpenWrt installs only the declared feed list into one SDK per target. Rocky CRB/EPEL and Raspberry Pi's signed archive remain generic distribution setup.
-
-| Environment | Meaning |
+| Hook environment | Meaning |
 | --- | --- |
-| `SOURCE_DIR` | Absolute source checkout at the plan commit, including submodules |
-| `CI_DIR` | Absolute `ci/` tree extracted at the frozen `ci_commit` |
-| `DEPENDENCIES_JSON` | Resolved direct dependencies as `[{"package","version","revision"}]` |
-| `OUTPUT_DIR` | Absolute directory for distribution packages |
-| `TARGET_JSON` | JSON string containing the catalog entry and planned units |
-| `PACKAGE_VERSION` | Upstream version from the plan |
-| `PACKAGE_RELEASE` | Debian: revision plus `~codename`; RPM: revision plus `.disttag`; OpenWrt: numeric revision |
-| `SDK_DIR` | Absolute shared OpenWrt SDK path; used by OpenWrt hooks |
+| `SOURCE_DIR` | Tagged source checkout, with nested submodules |
+| `CI_DIR` | Repository's `ci/` tree at the frozen CI commit |
+| `DEPENDENCIES_JSON` | Resolved direct dependencies with package, version, and revision |
+| `OUTPUT_DIR` | Directory for the hook's split binary packages |
+| `TARGET_JSON` | Frozen target catalog entry |
+| `PACKAGE_VERSION` | Upstream version |
+| `PACKAGE_RELEASE` | Revision with the native packaging suffix, or the numeric OpenWrt revision |
+| `SDK_DIR` | Shared build SDK for OpenWrt |
 
-Versions are `<version>-<revision>~<codename>` for DEB, `<version>-<revision>.<disttag>` for RPM, and `<version>-r<revision>` for OpenWrt. Each target artifact contains packages and a SHA-256 manifest. Publication verifies hashes, applies retention, rebuilds touched indices completely, signs packages/indices, and pushes one orphan-root commit. APT supports SHA-256 by-hash paths. `publications.json` records retained publications and binary package names for exact-version reuse.
-
-The `publish` environment holds `PACKAGES_GPG_PRIVATE_KEY`, `OPENWRT_USIGN_PRIVATE_KEY`, and `OPENWRT_APK_PRIVATE_KEY`, and permits `main` only. Only `publish.yml` uses those keys and writes feeds. `CORECI_CALLBACK_SECRET` is a repository secret. Empty `callback_url` disables callbacks; otherwise reports use core-ci's timestamp/body HMAC. Both workflows accept `plan_url`, `callback_url`, `feed_branch`, and optional base64 `plan_json` for manual runs; their identity inputs are `wave_id` and `publication_id`, respectively. Concurrency groups are `wave-<feed_branch>` and `publish-<feed_branch>`, without cancellation. Plans with reused units resolve the feed branch through the checkout's Git transport to one immutable commit for all dependency reads.
-
-Each target builds in one job and uploads `coreci-<wave>-<target>` with successful packages and a SHA-256 manifest, then reports target completion. Publication sends its started callback, downloads the listed artifacts from their wave runs, verifies the manifests and publishes all planned units in one orphan-root commit with a lease. It re-fetches `plan_url` immediately before pushing and requires its own `owner_run_id`; a different owner succeeds without push or subsequent callbacks. All wire callbacks include the Actions `run_id`. Publication failures carry `artifact-unavailable`, `immutable-conflict`, `feed-push`, `signing` or `other` for core-ci's recovery decision.
-
-Wave source artifacts are kept for 7 days; target-named copies used within a publication run expire after 1 day. Publication retries re-download the original wave source. Expired sources use the existing `artifact-unavailable` recovery path and require a rebuild. Artifact retention does not change scheduling, callbacks or badges.
-
-Manual publication retains the same exact owner check. Since an inline plan cannot know its run ID before dispatch, qualification supplies `plan_json` plus a temporary public `plan_url`, binds that public plan to the observed run ID once, and reruns the same run. When both inputs are present, `plan_url` is authoritative; a fetch error never falls back to inline data. Empty callbacks do not waive ownership.
-
-Rollout order: release core-ci 0.3.0 with the existing chain first; then merge these workflows together with the registry conversions to schema 2. Install 0.3.0 with dispatch paused before reconciliation. Do not dispatch schema-2 plans through the old chain.
+OpenWrt declarations provide a recipe registration hook at
+`ci/package/openwrt-register.sh`. The workflow registers the entire closure
+before resolving feeds, then builds each bound output in dependency order so
+`Build/InstallDev` stages the required development files in one SDK.
 
 ### CodexUI availability
 
@@ -113,8 +146,11 @@ Decision: Qt desktop application; 13 functional test failures under riscv64 emul
 
 Ubuntu noble and Raspberry Pi OS bookworm have older Qt/KF versions; Rocky's standard repositories lack the required KF6Sonnet. core-ci excludes Raspberry Pi OS bookworm's GCC-12 toolchain. Rocky 9 uses GCC Toolset 14. Raspberry Pi OS containers use Debian arm64 plus Raspberry Pi's signed archive.
 
-armhf runs natively on `ubuntu-24.04-arm`: [runner qualification](https://github.com/SNodeC/Packages/actions/runs/43633330866) confirmed 32-bit execution with no QEMU handler. RISC-V uses Ubuntu's `qemu-user-static` on `ubuntu-24.04`. CONTRACT W v2 requires one job per target, including emulated targets; the earlier measured chain exceeded five hours, so the hosted runner job deadline remains a qualification risk. Each target progresses independently. OpenWrt SDKs run on x86_64 using point releases 24.10.8 and 25.12.6. For OpenWrt reuse, the exact source recipe supplies SDK development headers, then the signed published runtime packages are installed into that staging tree.
+armhf runs natively on `ubuntu-24.04-arm`: [runner qualification](https://github.com/SNodeC/Packages/actions/runs/43633330866) confirmed 32-bit execution with no QEMU handler. RISC-V uses Ubuntu's `qemu-user-static` on `ubuntu-24.04`. Contract X builds one package and target per job, including on emulated architectures. OpenWrt SDKs run on x86_64 using point releases 24.10.8 and 25.12.6. For OpenWrt reuse, the exact source recipe supplies SDK development headers, then the signed published runtime packages are installed into that staging tree.
 
 ## Verification
 
-Run `python3 -m unittest discover -s tests -v` and `actionlint .github/workflows/*.yml`. Tests cover selector resolution, independent source/CI commits, declared OpenWrt feeds and catalog host packages, absence of project policy in tools/catalog, publication-plan parsing, owner fencing, failure codes, immutable repeats and conflicts, retention, signed APT/RPM feeds, lease rejection, APT Release golden fields, and the callback vector from core-ci `4ee51e7`. Staging qualification builds four canary targets, publishes in two batches, repeats the first batch, rejects a missing artifact, and installs snodec and core-ci in a fresh Debian trixie container.
+Run `python3 -m unittest discover -s tests -v` and
+`actionlint .github/workflows/*.yml`. For native OpenWrt index signing, run
+`python3 tests/openwrt_signing.py SDK_DIR` with the catalog's APK SDK.
+The workflow tests use local fixture repositories and disposable signing keys.

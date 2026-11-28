@@ -1,0 +1,39 @@
+name: Restore package feed
+on:
+  workflow_dispatch:
+    inputs:
+      feed_branch:
+        description: Destination feed
+        required: true
+        type: choice
+        options: [feed, feed-staging]
+      snapshot_ref:
+        description: Snapshot ref to restore
+        required: true
+      expected_head:
+        description: Expected feed head
+        required: true
+permissions:
+  contents: write
+concurrency:
+  group: publish-${{ inputs.feed_branch }}
+  cancel-in-progress: false
+jobs:
+  restore:
+    runs-on: ubuntu-24.04
+    environment: publish
+    steps:
+      - uses: actions/checkout@v4
+      - env:
+          FEED_BRANCH: ${{ inputs.feed_branch }}
+          SNAPSHOT: ${{ inputs.snapshot_ref }}
+          EXPECTED_HEAD: ${{ inputs.expected_head }}
+        shell: bash
+        run: |
+          [[ "$FEED_BRANCH" =~ ^feed(-staging)?$ ]]
+          [[ "$SNAPSHOT" =~ ^refs/snapshots/feed(-staging)?/[A-Za-z0-9_.-]+$ ]]
+          [[ "$EXPECTED_HEAD" =~ ^[a-f0-9]{40}$ ]]
+          git check-ref-format "$SNAPSHOT"
+          git fetch --depth=1 origin "$SNAPSHOT"
+          git push --force-with-lease="refs/heads/$FEED_BRANCH:$EXPECTED_HEAD" \
+            origin "FETCH_HEAD:refs/heads/$FEED_BRANCH"
